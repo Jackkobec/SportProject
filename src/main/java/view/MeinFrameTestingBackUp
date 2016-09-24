@@ -1,0 +1,128 @@
+package view;
+
+import model.roles.Gymnastic;
+import view.view_components.components.*;
+
+import javax.swing.*;
+import javax.swing.plaf.basic.BasicTabbedPaneUI;
+import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.*;
+import java.util.List;
+
+import static java.awt.FlowLayout.TRAILING;
+
+/**
+ * MainFrameTraining
+ */
+public class MainFrameTraining extends JFrame {
+    private final JTabbedPane pane = new JTabbedPane();
+
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    public static int sizeWidth = 800;
+    public static int sizeHeight = 600;
+    public int locationX = (screenSize.width - sizeWidth) / 2;
+    public int locationY = (screenSize.height - sizeHeight) / 2;
+
+     List<Gymnastic> defaultGymnastics;
+
+    public MainFrameTraining() throws HeadlessException {
+
+        setLayout(new BorderLayout());
+        setTitle("Sport Application");
+
+        setBounds(locationX, locationY, sizeWidth, sizeHeight);
+
+        setBounds(locationX, locationY, sizeWidth, sizeHeight);
+
+
+        addComponents(getContentPane());
+        getRootPane().setBackground(Color.orange);
+
+        setVisible(true);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
+
+    }
+
+    private void addComponents(Container contentPane) {
+        contentPane.setLayout(new BorderLayout());
+
+        Font font = new Font("Tamoha", Font.BOLD, 16);
+        MenuLookDemo md = new MenuLookDemo();
+        JMenuBar menuBar = md.createMenuBar();
+        menuBar.setBackground(Color.ORANGE.brighter());
+        menuBar.setFont(font);
+
+        Font fontButtons = new Font("Verdana", Font.PLAIN, 8);
+
+        JButton scs = new VerticalButton("Button 1", false);
+        scs.setFont(font);
+        scs.setPreferredSize(new Dimension(25, 100));
+
+        JButton scs2 = new VerticalButton("Button 2", false);
+        scs2.setFont(font);
+        scs.setPreferredSize(new Dimension(25, 100));
+
+        JButton scs3 = new VerticalButton("Button 3", false);
+        scs3.setFont(font);
+        scs3.setPreferredSize(new Dimension(25, 50));
+
+        JPanel panel = new JPanel(new GridLayout(0, 1));
+        panel.add(scs);
+        panel.add(scs2);
+//
+       /* *//**
+         * Работает на 1 вкладку
+         *//*
+
+        JTabbedPane pane = new JTabbedPane();
+        final int tabNumber = 2;
+        pane.removeAll();
+        pane.add("Tab1", new JLabel("Tab1"));
+        pane.setTabComponentAt(0,
+                new ButtonTabComponent(pane));
+
+        pane.setTabLayoutPolicy(JTabbedPane.WRAP_TAB_LAYOUT);*/
+//
+        JTabbedPane pane = new JTabbedPane();
+
+        for (int i = 0; i < 3; i++) {
+            String title = "Вкладка " + i;
+            pane.add(title, new JLabel(title));//это поле самой вкладки в виде new JLabel
+            pane.setTabComponentAt(i,
+                    new ButtonTabComponent(pane));
+        }
+        pane.add("+", new JLabel());
+        pane.add("JPanel", new JPanel());
+ //
+
+
+
+        contentPane.setBackground(Color.ORANGE.darker());
+        contentPane.add(menuBar, BorderLayout.NORTH);
+        contentPane.add(panel, BorderLayout.LINE_START);
+        contentPane.add(pane, BorderLayout.CENTER);
+
+    }
+    public void runTest() {
+        int tabNumber = 5;
+        pane.removeAll();
+        for (int i = 0; i < tabNumber; i++) {
+            String title = "Tab " + i;
+            pane.add(title, new JLabel(title));
+            initTabComponent(i);
+        }
+
+        pane.setTabLayoutPolicy(JTabbedPane.WRAP_TAB_LAYOUT);
+        setSize(new Dimension(400, 200));
+        setLocationRelativeTo(null);
+        setVisible(true);
+    }
+    private void initTabComponent(int i) {
+        pane.setTabComponentAt(i,
+                new ButtonTabComponent(pane));
+    }
+
+}

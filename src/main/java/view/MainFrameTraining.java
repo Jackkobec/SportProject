@@ -1,0 +1,479 @@
+package view;
+
+import model.app_db.factory.DefaultData;
+import model.roles.Gymnastic;
+import view.view_components.AllResultTableModel;
+import view.view_components.components.ButtonTabComponent;
+import view.view_components.components.VerticalButton;
+
+import javax.swing.*;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.table.TableColumn;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.List;
+
+/**
+ * MainFrameTraining
+ */
+public class MainFrameTraining extends MainFrame {
+    private final JTabbedPane pane = new JTabbedPane();
+
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    public static int sizeWidth = 800;
+    public static int sizeHeight = 600;
+    public int locationX = (screenSize.width - sizeWidth) / 2;
+    public int locationY = (screenSize.height - sizeHeight) / 2;
+
+    List<Gymnastic> defaultGymnastics = new DefaultData().createListOfDefaultGymnastics();
+
+    public MainFrameTraining() throws HeadlessException {
+
+        setLayout(new BorderLayout());
+        setTitle("Sport Application");
+
+        setBounds(locationX, locationY, sizeWidth, sizeHeight);
+
+        setBounds(locationX, locationY, sizeWidth, sizeHeight);
+
+
+        addComponents(getContentPane());
+        getRootPane().setBackground(Color.orange);
+
+        setVisible(true);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
+
+    }
+
+    private void addComponents(Container contentPane) {
+        contentPane.setLayout(new BorderLayout());
+
+        Font font = new Font("Tamoha", Font.BOLD, 16);
+//        MenuLookDemo md = new MenuLookDemo();
+//        JMenuBar menuBar = md.createMenuBar();
+//        menuBar.setBackground(Color.ORANGE.brighter());
+//        menuBar.setFont(font);
+        MainFrameMenu mfm = new MainFrameMenu();
+        JMenuBar menuBar = mfm.createMenuBar();
+        menuBar.setBackground(Color.ORANGE.brighter());
+
+
+        Font fontButtons = new Font("Verdana", Font.PLAIN, 8);
+
+        JButton scs = new VerticalButton("Button 1", false);
+        scs.setFont(font);
+        scs.setPreferredSize(new Dimension(25, 100));
+
+        JButton scs2 = new VerticalButton("Button 2", false);
+        scs2.setFont(font);
+        scs.setPreferredSize(new Dimension(25, 100));
+
+        JButton scs3 = new VerticalButton("Button 3", false);
+        scs3.setFont(font);
+        scs3.setPreferredSize(new Dimension(25, 50));
+
+        JPanel panel = new JPanel(new GridLayout(0, 1));
+        //ставим размеры панели
+        panel.setPreferredSize(new Dimension(20, 50));
+        panel.add(scs);
+        panel.add(scs2);
+//
+       /* *//**
+         * Работает на 1 вкладку
+         *//*
+
+        JTabbedPane pane = new JTabbedPane();
+        final int tabNumber = 2;
+        pane.removeAll();
+        pane.add("Tab1", new JLabel("Tab1"));
+        pane.setTabComponentAt(0,
+                new ButtonTabComponent(pane));
+
+        pane.setTabLayoutPolicy(JTabbedPane.WRAP_TAB_LAYOUT);*/
+//
+        //внутренняя панель для MainFrameTraining
+        JPanel innerTrainingPanelForCenter = new JPanel(new BorderLayout());
+        //вернхние кнопки логаунт и тд тут же будет окно поиска
+        JPanel innerTrainingPanelNorthPanel = new JPanel(new BorderLayout());
+        JButton logout = new JButton("LogOut");
+        logout.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Object[] options = {"Да", "Нет!"};
+                int n = JOptionPane.showOptionDialog(new JFrame(), "Кнопка не активна. Её целесообразность решается.",
+                        "Подтверждение", JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                if (n == 1) {
+                    return;
+                } else return;
+            }
+        });
+        innerTrainingPanelNorthPanel.add(logout, BorderLayout.EAST);
+        /**
+         * создадим панель всех результатов
+         */
+        //создадим панель всех результатов
+        JTable allResOfCurrentTrainingTable = new JTable(new AllResultTableModel(defaultGymnastics));
+        allResOfCurrentTrainingTable.setPreferredSize(new Dimension(400, 200));
+        JScrollPane scrollPanelForAllResOfCurrentTrainingTable = new JScrollPane(allResOfCurrentTrainingTable);
+        //размер скрола scrollPanelForAllResOfCurrentTrainingTable
+        scrollPanelForAllResOfCurrentTrainingTable.setPreferredSize(new Dimension(400, 200));
+        //
+        //создание элемента вкладок для упражнений
+        JTabbedPane pane = new JTabbedPane();
+
+//        for (int i = 0; i < defaultGymnastics.size(); i++) {
+//            String title = "Вкладка " + i;
+//            pane.add(title, new JLabel(title));//это поле самой вкладки в виде new JLabel
+//            pane.setTabComponentAt(i,
+//                    new ButtonTabComponent(pane));
+//        }
+        //циклом создаем вкладки для всех упржнений в данной тренировке
+        int i = 0;
+        for (Gymnastic gym : defaultGymnastics) {
+            String title = gym.getName();
+            pane.add(title, panelForGymCreate(gym, allResOfCurrentTrainingTable));//это поле самой вкладки в виде new JLabel
+            pane.setTabComponentAt(i,
+                    new ButtonTabComponent(pane));//это добавление во вкладку кнопки закрытие как в браузерах
+            i++;
+        }
+        //  pane.add("+", new JLabel());
+        // pane.add("JPanel", new JPanel());
+        //
+
+
+        innerTrainingPanelForCenter.add(innerTrainingPanelNorthPanel, BorderLayout.NORTH);
+        innerTrainingPanelForCenter.add(pane, BorderLayout.CENTER);
+        //добавляем панель скрол с панелью всех результатовмscrollPanelForAllResOfCurrentTrainingTable
+        innerTrainingPanelForCenter.add(scrollPanelForAllResOfCurrentTrainingTable, BorderLayout.SOUTH);
+
+        //заполенине самого MainFrameTraining
+        contentPane.setBackground(Color.ORANGE.darker());
+        contentPane.add(menuBar, BorderLayout.NORTH);
+        contentPane.add(panel, BorderLayout.LINE_START);
+        contentPane.add(innerTrainingPanelForCenter, BorderLayout.CENTER);
+
+    }
+
+    public JPanel panelForGymCreate(Gymnastic gym, JTable allResOfCurrentTrainingTable) {
+        JPanel panelForThisGym = new JPanel(new BorderLayout());
+
+        panelForThisGym.add(new JLabel("Тут будет некоторое описание самого упражнения или описание использования данного окна"), BorderLayout.NORTH);
+        //панель записи текущего результата на текущей тренеровке
+        JPanel tablePanel = new JPanel(new BorderLayout());
+        tablePanel.setBorder(new CompoundBorder(new EmptyBorder(12, 12, 12, 12), new TitledBorder(gym.getName())));
+        /**
+         *  Kепим таблицу
+         * заполняем заголовки табилцы
+         */
+        CurrentResaltTableModel crmodel = new CurrentResaltTableModel();
+        //final JTable[] curentGymnastycResaltsTable = {createjTableHandelsAndData(3)};
+        JTable[] curentGymnastycResaltsTable = {new JTable(crmodel)};
+        //выделять только 1 ячейку
+        // curentGymnastycResaltsTable[0].setCellSelectionEnabled(true);
+        //размер таблицы
+        curentGymnastycResaltsTable[0].setPreferredSize(new Dimension(200, 50));
+        curentGymnastycResaltsTable[0].setFillsViewportHeight(true);
+        //scrollPaneForCurrentResTable для отображения таблицы с именами колонок
+        JScrollPane scrollPaneForCurrentResTable = new JScrollPane(curentGymnastycResaltsTable[0]);
+        //размер скрола
+        scrollPaneForCurrentResTable.setPreferredSize(new Dimension(200, 40));
+
+        /**
+         * Лепим кнопку и формируем резальтат из введенных значений в curentGymnastycResaltsTable
+         *
+         */
+
+
+        /**
+         * лепим считчер подходов
+         */
+        JLabel chooseRepeatLabel = new JLabel("Количество подходов: ");
+        JRadioButton setBy12 = new JRadioButton("1-2 подхода");
+        JRadioButton setBy5 = new JRadioButton("5 подходов");
+        JRadioButton setBy7 = new JRadioButton("7 подходов");
+
+        ButtonGroup selectNumberOfGymnasticSets = new ButtonGroup();
+        selectNumberOfGymnasticSets.add(setBy12);
+        selectNumberOfGymnasticSets.add(setBy5);
+        selectNumberOfGymnasticSets.add(setBy7);
+
+        JPanel chooseRepeatOfSetPanel = new JPanel(new FlowLayout(SwingConstants.HORIZONTAL));
+        // chooseRepeatOfSetPanel.setBounds(60, 80, 550, 45);
+
+        JButton setDefaultRepeatOfSets = new JButton("Установить по умолчанию(3)");
+        setDefaultRepeatOfSets.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Object[] options = {"Да", "Нет!"};
+                int n = JOptionPane.showOptionDialog(new JFrame(), "Установить количество подходов = 3? Данные в текущей таблице подходов будут стерты!",
+                        "Подтверждение", JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+
+                if (n == 1) {
+                    return;
+                } else
+                    tablePanel.setVisible(false);
+                JPanel tablePanel2 = panelForGymCreate(gym, allResOfCurrentTrainingTable);
+                panelForThisGym.add(tablePanel2, BorderLayout.NORTH);
+                panelForThisGym.revalidate();
+
+            }
+        });
+        setDefaultRepeatOfSets.hide();
+
+        JButton confirmSetButton = new JButton(">Установить");
+        chooseRepeatOfSetPanel.add(confirmSetButton);
+        confirmSetButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String radioButtonText = getSelectedButtonText(selectNumberOfGymnasticSets);
+                if (radioButtonText == null) {
+                    JOptionPane.showMessageDialog(new JFrame(), "Пожалуйста выберете количество подходов");
+                    return;
+                }
+
+                switch (radioButtonText) {
+
+
+                    case "5 подходов":
+                        setBy12.hide();
+                        setBy7.hide();
+                        confirmSetButton.hide();
+                        setDefaultRepeatOfSets.show();
+//                        TableColumn col4 = new TableColumn();
+//                        col4.setHeaderValue("Подход 4");
+//                        TableColumn col5 = new TableColumn();
+//                        col5.setHeaderValue("Подход 5");
+//
+//                        curentGymnastycResaltsTable[0].addColumn(col4);
+//                        curentGymnastycResaltsTable[0].addColumn(col5);
+                        curentGymnastycResaltsTable[0].setModel(new CurrentResaltTableModel(5));
+                        curentGymnastycResaltsTable[0].revalidate();
+//
+                        break;
+                    case "1-2 подхода":
+
+                        setBy5.hide();
+                        setBy7.hide();
+                        confirmSetButton.hide();
+                        setDefaultRepeatOfSets.show();
+                        curentGymnastycResaltsTable[0].setModel(new CurrentResaltTableModel(2));
+                        //curentGymnastycResaltsTable[0].removeColumn(curentGymnastycResaltsTable[0].getColumnModel().getColumn(curentGymnastycResaltsTable[0].getColumnCount() - 1));
+                        curentGymnastycResaltsTable[0].revalidate();
+
+                        break;
+                    case "7 подходов":
+                        setBy12.hide();
+                        setBy5.hide();
+                        confirmSetButton.hide();
+                        setDefaultRepeatOfSets.show();
+
+//                        TableColumn col74 = new TableColumn();
+//                        col74.setHeaderValue("Подход 4");
+//                        TableColumn col75 = new TableColumn();
+//                        col75.setHeaderValue("Подход 5");
+//                        TableColumn col76 = new TableColumn();
+//                        col76.setHeaderValue("Подход 6");
+//                        TableColumn col77 = new TableColumn();
+//                        col77.setHeaderValue("Подход 7");
+//
+//                        curentGymnastycResaltsTable[0].addColumn(col74);
+//                        curentGymnastycResaltsTable[0].addColumn(col75);
+//                        curentGymnastycResaltsTable[0].addColumn(col76);
+//                        curentGymnastycResaltsTable[0].addColumn(col77);
+                        curentGymnastycResaltsTable[0].setModel(new CurrentResaltTableModel(7));
+                        curentGymnastycResaltsTable[0].revalidate();
+//
+                        break;
+                }
+
+            }
+        });
+        JButton writeResultsOfSetsButton = new JButton("Записать результаты");
+        writeResultsOfSetsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Object[] options = {"Да", "Нет!"};
+                int n = JOptionPane.showOptionDialog(new JFrame(), "Записать результаты текущего упражнения в таблицу результатов?",
+                        "Подтверждение", JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                if (n == 1) {
+                    return;
+                } else {
+                    try {
+                        //останавливаем редактирование таблицы
+                        curentGymnastycResaltsTable[0].getCellEditor().stopCellEditing();
+
+
+                        HashMap<String, List<Object>> resultsOfCurrentMap = new HashMap<>();
+
+                        List<Object> resultsOfCurrentTrAttay = new ArrayList<>();
+                        resultsOfCurrentTrAttay.clear();
+                        for (int i = 0; i < curentGymnastycResaltsTable[0].getColumnCount(); i++) {
+                            Object r = curentGymnastycResaltsTable[0].getValueAt(0, i);
+                            resultsOfCurrentTrAttay.add(r);
+                            System.out.println("i: " + i + ", Obj: " + r.toString());
+                        }
+                        resultsOfCurrentMap.put(gym.getName(), resultsOfCurrentTrAttay);
+
+                        System.out.println(resultsOfCurrentTrAttay.toString());
+                        resultsOfCurrentMap.forEach((s, list) -> System.out.println(s + "" + list));
+
+
+                        //формируем результат таблицы результатов allResOfCurrentTrainingTable
+                        allResOfCurrentTrainingTableWritter(allResOfCurrentTrainingTable, resultsOfCurrentTrAttay,
+                                findColumByName(allResOfCurrentTrainingTable, gym));
+
+                        /*if (gym.getName() == "Отжимания") {
+                            for (int j = 0, k = 0; j < resultsOfCurrentTrAttay.size()
+                                    && k < resultsOfCurrentTrAttay.size(); ++j, ++k) {
+                                allResOfCurrentTrainingTable.setValueAt(resultsOfCurrentTrAttay.get(k), j, 0);
+                                allResOfCurrentTrainingTable.updateUI();
+                            }
+                        }
+                        if (gym.getName() == "Брусья") {
+                            for (int j = 0, k = 0; j < resultsOfCurrentTrAttay.size()
+                                    && k < resultsOfCurrentTrAttay.size(); ++j, ++k) {
+                                allResOfCurrentTrainingTable.setValueAt(resultsOfCurrentTrAttay.get(k), j, 1);
+                                allResOfCurrentTrainingTable.updateUI();
+                            }
+                        }
+                        if (gym.getName() == "Подтягивания") {
+                            for (int j = 0, k = 0; j < resultsOfCurrentTrAttay.size()
+                                    && k < resultsOfCurrentTrAttay.size(); ++j, ++k) {
+                                allResOfCurrentTrainingTable.setValueAt(resultsOfCurrentTrAttay.get(k), j, 2);
+                                allResOfCurrentTrainingTable.updateUI();
+                            }
+                        }
+                        if (gym.getName() == "Приседания") {
+                            for (int j = 0, k = 0; j < resultsOfCurrentTrAttay.size()
+                                    && k < resultsOfCurrentTrAttay.size(); ++j, ++k) {
+                                allResOfCurrentTrainingTable.setValueAt(resultsOfCurrentTrAttay.get(k), j, 3);
+                                allResOfCurrentTrainingTable.updateUI();
+                            }
+                        }
+                        if (gym.getName() == "Подъемы ног") {
+                            for (int j = 0, k = 0; j < resultsOfCurrentTrAttay.size()
+                                    && k < resultsOfCurrentTrAttay.size(); ++j, ++k) {
+                                allResOfCurrentTrainingTable.setValueAt(resultsOfCurrentTrAttay.get(k), j, 4);
+                                allResOfCurrentTrainingTable.updateUI();
+                            }
+                        }
+                        if (gym.getName() == "Борцовский мостик") {
+                            for (int j = 0, k = 0; j < resultsOfCurrentTrAttay.size()
+                                    && k < resultsOfCurrentTrAttay.size(); ++j, ++k) {
+                                allResOfCurrentTrainingTable.setValueAt(resultsOfCurrentTrAttay.get(k), j, 5);
+                                allResOfCurrentTrainingTable.updateUI();
+                            }
+                        }*/
+
+
+                    } catch (NullPointerException ex) {
+                        JOptionPane.showMessageDialog(new JFrame(), "Таблмца не была изменена");
+                        return;
+                    }
+                }
+            }
+        });
+
+        chooseRepeatOfSetPanel.add(writeResultsOfSetsButton);
+        chooseRepeatOfSetPanel.add(chooseRepeatLabel);
+        chooseRepeatOfSetPanel.add(setBy12);
+        chooseRepeatOfSetPanel.add(setBy5);
+        chooseRepeatOfSetPanel.add(setBy7);
+        chooseRepeatOfSetPanel.add(confirmSetButton);
+        chooseRepeatOfSetPanel.add(setDefaultRepeatOfSets);
+
+
+        //заполняем панель добавления резальтатов текущей тренировки с переключателем количетсва подходов
+        tablePanel.add(new JLabel("ЗАПОЛНИТЕ РЕЗУЛЬТАТЫ ТЕКУЩЕЙ ТРЕНИРОВКИ"), BorderLayout.NORTH);
+        tablePanel.add(scrollPaneForCurrentResTable, BorderLayout.CENTER);
+        tablePanel.add(chooseRepeatOfSetPanel, BorderLayout.SOUTH);
+/**
+ *
+ */
+
+
+        //верхняя панель с таблицей текущей тренировки и перевлючателем количества подходов
+        panelForThisGym.add(tablePanel, BorderLayout.NORTH);
+        panelForThisGym.add(new JPanel(), BorderLayout.SOUTH);
+
+        return panelForThisGym;
+    }
+
+    private JTable createjTableHandelsAndData(int chooseNumberOfRepats) {
+        String[] columnHeads = new String[chooseNumberOfRepats];
+        for (int i = 0; i < (chooseNumberOfRepats); i++) {
+            columnHeads[i] = "Подход " + (i + 1);
+        }
+        // columnHeads[columnHeads.length - 1] = "Всего";
+
+        //заполняем пустотой чтобы не было нуль эксепшена
+        Object[][] data = new Object[1][chooseNumberOfRepats];
+        for (int i = 0; i < (chooseNumberOfRepats); i++) {
+            data[0][i] = "Test Data";
+
+        }
+
+        return new JTable(data, columnHeads);
+    }
+
+    public void allResOfCurrentTrainingTableWritter(JTable allResOfCurrentTrainingTable, List<Object> resultsOfCurrentTrAttay, int numberColumnToWritte) {
+        for (int j = 0, k = 0; j < resultsOfCurrentTrAttay.size()
+                && k < resultsOfCurrentTrAttay.size(); ++j, ++k) {
+            allResOfCurrentTrainingTable.setValueAt(resultsOfCurrentTrAttay.get(k), j, numberColumnToWritte);
+            allResOfCurrentTrainingTable.updateUI();
+        }
+    }
+
+    public int findColumByName(JTable allResOfCurrentTrainingTable, Gymnastic gym) {
+        for (int i = 0; i < allResOfCurrentTrainingTable.getColumnCount(); ++i) {
+            System.out.println(gym.getName());
+            if (gym.getName().equals(allResOfCurrentTrainingTable.getColumnName(i))) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private String getSelectedButtonText(ButtonGroup buttonGroup) {
+        for (Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons.hasMoreElements(); ) {
+            AbstractButton button = buttons.nextElement();
+
+            if (button.isSelected()) {
+                return button.getText();
+            }
+        }
+
+        return null;
+    }
+
+    public void runTest() {
+        int tabNumber = 5;
+        pane.removeAll();
+        for (int i = 0; i < tabNumber; i++) {
+            String title = "Tab " + i;
+            pane.add(title, new JLabel(title));
+            initTabComponent(i);
+        }
+
+        pane.setTabLayoutPolicy(JTabbedPane.WRAP_TAB_LAYOUT);
+        setSize(new Dimension(400, 200));
+        setLocationRelativeTo(null);
+        setVisible(true);
+    }
+
+    private void initTabComponent(int i) {
+        pane.setTabComponentAt(i,
+                new ButtonTabComponent(pane));
+    }
+
+}

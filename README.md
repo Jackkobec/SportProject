@@ -1,7 +1,7 @@
 # SportProject
 SportProject original repository
 
-Maven, Swing, JavaCORE, JavaSE 1.8, JUnit
+Maven, Swing, JavaCORE, JavaSE 1.8, JUnit,
 MVC, S.O.L.I.D, KISS, OOP
 
 https://github.com/Jackkobec/SportProject

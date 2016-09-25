@@ -110,6 +110,10 @@ public class MainFrameTraining extends MainFrame {
                 int n = JOptionPane.showOptionDialog(new JFrame(), "Кнопка не активна. Её целесообразность решается.",
                         "Подтверждение", JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                //проверяем если нисего не было выбрано и был нажат крестик - то просто закрываем диалог и возвращаемся в программу
+                if (n == -1) {
+                    return;
+                }
                 if (n == 1) {
                     return;
                 } else return;
@@ -180,6 +184,8 @@ public class MainFrameTraining extends MainFrame {
         // curentGymnastycResaltsTable[0].setCellSelectionEnabled(true);
         //размер таблицы
         curentGymnastycResaltsTable[0].setPreferredSize(new Dimension(200, 50));
+        //запрет перемещения колонок между собой перетаскиванием
+        curentGymnastycResaltsTable[0].getTableHeader().setReorderingAllowed(false);
         curentGymnastycResaltsTable[0].setFillsViewportHeight(true);
         //scrollPaneForCurrentResTable для отображения таблицы с именами колонок
         JScrollPane scrollPaneForCurrentResTable = new JScrollPane(curentGymnastycResaltsTable[0]);
@@ -216,7 +222,10 @@ public class MainFrameTraining extends MainFrame {
                 int n = JOptionPane.showOptionDialog(new JFrame(), "Установить количество подходов = 3? Данные в текущей таблице подходов будут стерты!",
                         "Подтверждение", JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-
+                //проверяем если нисего не было выбрано и был нажат крестик - то просто закрываем диалог и возвращаемся в программу
+                if (n == -1) {
+                    return;
+                }
                 if (n == 1) {
                     return;
                 } else
@@ -239,6 +248,7 @@ public class MainFrameTraining extends MainFrame {
                     JOptionPane.showMessageDialog(new JFrame(), "Пожалуйста выберете количество подходов");
                     return;
                 }
+
 
                 switch (radioButtonText) {
 
@@ -305,6 +315,10 @@ public class MainFrameTraining extends MainFrame {
                 int n = JOptionPane.showOptionDialog(new JFrame(), "Записать результаты текущего упражнения в таблицу результатов?",
                         "Подтверждение", JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                //проверяем если нисего не было выбрано и был нажат крестик - то просто закрываем диалог и возвращаемся в программу
+                if (n == -1) {
+                    return;
+                }
                 if (n == 1) {
                     return;
                 } else {

@@ -39,16 +39,14 @@ public class MainFrameTraining extends MainFrame {
         setTitle("Sport Application");
 
         setBounds(locationX, locationY, sizeWidth, sizeHeight);
-
-        setBounds(locationX, locationY, sizeWidth, sizeHeight);
-
+        //set minimal size of window
+        setMinimumSize(new Dimension(800, 600));
 
         addComponents(getContentPane());
         getRootPane().setBackground(Color.orange);
 
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-
 
     }
 
@@ -129,7 +127,6 @@ public class MainFrameTraining extends MainFrame {
         JScrollPane scrollPanelForAllResOfCurrentTrainingTable = new JScrollPane(allResOfCurrentTrainingTable);
         //размер скрола scrollPanelForAllResOfCurrentTrainingTable
         scrollPanelForAllResOfCurrentTrainingTable.setPreferredSize(new Dimension(400, 200));
-        //
         //создание элемента вкладок для упражнений
         JTabbedPane pane = new JTabbedPane();
 
@@ -148,10 +145,6 @@ public class MainFrameTraining extends MainFrame {
                     new ButtonTabComponent(pane));//это добавление во вкладку кнопки закрытие как в браузерах
             i++;
         }
-        //  pane.add("+", new JLabel());
-        // pane.add("JPanel", new JPanel());
-        //
-
 
         innerTrainingPanelForCenter.add(innerTrainingPanelNorthPanel, BorderLayout.NORTH);
         innerTrainingPanelForCenter.add(pane, BorderLayout.CENTER);
@@ -248,37 +241,24 @@ public class MainFrameTraining extends MainFrame {
                     JOptionPane.showMessageDialog(new JFrame(), "Пожалуйста выберете количество подходов");
                     return;
                 }
-
-
                 switch (radioButtonText) {
-
-
                     case "5 подходов":
                         setBy12.hide();
                         setBy7.hide();
                         confirmSetButton.hide();
                         setDefaultRepeatOfSets.show();
-//                        TableColumn col4 = new TableColumn();
-//                        col4.setHeaderValue("Подход 4");
-//                        TableColumn col5 = new TableColumn();
-//                        col5.setHeaderValue("Подход 5");
-//
-//                        curentGymnastycResaltsTable[0].addColumn(col4);
-//                        curentGymnastycResaltsTable[0].addColumn(col5);
+
                         curentGymnastycResaltsTable[0].setModel(new CurrentResaltTableModel(5));
                         curentGymnastycResaltsTable[0].revalidate();
-//
                         break;
                     case "1-2 подхода":
-
                         setBy5.hide();
                         setBy7.hide();
                         confirmSetButton.hide();
                         setDefaultRepeatOfSets.show();
-                        curentGymnastycResaltsTable[0].setModel(new CurrentResaltTableModel(2));
-                        //curentGymnastycResaltsTable[0].removeColumn(curentGymnastycResaltsTable[0].getColumnModel().getColumn(curentGymnastycResaltsTable[0].getColumnCount() - 1));
-                        curentGymnastycResaltsTable[0].revalidate();
 
+                        curentGymnastycResaltsTable[0].setModel(new CurrentResaltTableModel(2));
+                        curentGymnastycResaltsTable[0].revalidate();
                         break;
                     case "7 подходов":
                         setBy12.hide();
@@ -286,25 +266,10 @@ public class MainFrameTraining extends MainFrame {
                         confirmSetButton.hide();
                         setDefaultRepeatOfSets.show();
 
-//                        TableColumn col74 = new TableColumn();
-//                        col74.setHeaderValue("Подход 4");
-//                        TableColumn col75 = new TableColumn();
-//                        col75.setHeaderValue("Подход 5");
-//                        TableColumn col76 = new TableColumn();
-//                        col76.setHeaderValue("Подход 6");
-//                        TableColumn col77 = new TableColumn();
-//                        col77.setHeaderValue("Подход 7");
-//
-//                        curentGymnastycResaltsTable[0].addColumn(col74);
-//                        curentGymnastycResaltsTable[0].addColumn(col75);
-//                        curentGymnastycResaltsTable[0].addColumn(col76);
-//                        curentGymnastycResaltsTable[0].addColumn(col77);
                         curentGymnastycResaltsTable[0].setModel(new CurrentResaltTableModel(7));
                         curentGymnastycResaltsTable[0].revalidate();
-//
                         break;
                 }
-
             }
         });
         JButton writeResultsOfSetsButton = new JButton("Записать результаты");

@@ -23,8 +23,8 @@ public class MainFrame extends JFrame {
         setTitle("Sport Application");
 
         setBounds(locationX, locationY, sizeWidth, sizeHeight);
-
-        setBounds(locationX, locationY, sizeWidth, sizeHeight);
+        //set minimal size of window
+        setMinimumSize(new Dimension(800, 600));
 
 
         addComponents(getContentPane());

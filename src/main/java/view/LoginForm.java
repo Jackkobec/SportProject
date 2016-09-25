@@ -26,7 +26,8 @@ public class LoginForm extends JFrame {
 //
 //        pack();
         setBounds(locationX, locationY, sizeWidth, sizeHeight);
-
+        //set minimal size of window
+        setMinimumSize(new Dimension(320, 240));
 
         addComponents(getContentPane());
         getRootPane().setBackground(Color.orange);

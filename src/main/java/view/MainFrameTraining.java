@@ -83,10 +83,10 @@ public class MainFrameTraining extends MainFrame {
         panel.add(scs);
         panel.add(scs2);
 //
-       /* *//**
+        /**
          * Работает на 1 вкладку
-         *//*
-
+         */
+         /*
         JTabbedPane pane = new JTabbedPane();
         final int tabNumber = 2;
         pane.removeAll();
@@ -148,7 +148,7 @@ public class MainFrameTraining extends MainFrame {
 
         innerTrainingPanelForCenter.add(innerTrainingPanelNorthPanel, BorderLayout.NORTH);
         innerTrainingPanelForCenter.add(pane, BorderLayout.CENTER);
-        //добавляем панель скрол с панелью всех результатовмscrollPanelForAllResOfCurrentTrainingTable
+        //добавляем панель скрол с панелью всех результатовм scrollPanelForAllResOfCurrentTrainingTable
         innerTrainingPanelForCenter.add(scrollPanelForAllResOfCurrentTrainingTable, BorderLayout.SOUTH);
 
         //заполенине самого MainFrameTraining

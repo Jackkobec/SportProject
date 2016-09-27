@@ -14,9 +14,7 @@ import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
 
 /**
@@ -127,6 +125,41 @@ public class MainFrameTraining extends MainFrame {
         JScrollPane scrollPanelForAllResOfCurrentTrainingTable = new JScrollPane(allResOfCurrentTrainingTable);
         //размер скрола scrollPanelForAllResOfCurrentTrainingTable
         scrollPanelForAllResOfCurrentTrainingTable.setPreferredSize(new Dimension(400, 200));
+        scrollPanelForAllResOfCurrentTrainingTable.setBorder(new CompoundBorder(new EmptyBorder(12, 12, 12, 12), new TitledBorder("ТАБЛИЦА ВСЕХ РЕЗУЛЬТАТОВ ТЕКУЩЕЙ ТРЕНИРОВКИ")));
+/**
+ * тестовый собиратель данных с таблицы
+ */
+        JButton vvv = new JButton("Собрать данные с табицы");
+        vvv.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //линкед мап для считывания результатов каждого упражнения в таблицу(линкед - чтобы помнить порядок)
+                Map<String, List<Object>> collectionForAllResOfCurrentTraining = new LinkedHashMap<>();
+                //запись информации в мапу для каждой колонки, ключ - имя колонки(упражнения), результаты как лист значений мапы
+                for (int i = 0; i < allResOfCurrentTrainingTable.getColumnCount(); i++) {
+                    //listFormer(ressOfCurrentGimFromTable, i);
+                    collectionForAllResOfCurrentTraining.put(allResOfCurrentTrainingTable.getColumnName(i),
+                            listFormer(i));
+                }
+                System.out.println(collectionForAllResOfCurrentTraining.toString());
+            }
+
+            //формирователь листа для каждой колонки - тоесть каждого упражнения, считывает инфу с строк данной колонки и сует в лист
+            private List<Object> listFormer(int columnindex) {
+                List<Object> ressOfCurrentGimFromTable2 = new ArrayList<>();
+                for (int i = 0; i < allResOfCurrentTrainingTable.getRowCount(); i++) {
+                    ressOfCurrentGimFromTable2.add(allResOfCurrentTrainingTable.getValueAt(i, columnindex));
+                }
+                return ressOfCurrentGimFromTable2;
+            }
+        });
+        JButton ccc = new JButton("ccc");
+        //Панель, где будет таблица всех результатов текущей тренировки и тд
+        JPanel innerTrainingPanelForSouth = new JPanel(new BorderLayout());
+        innerTrainingPanelForSouth.add(scrollPanelForAllResOfCurrentTrainingTable, BorderLayout.NORTH);
+        innerTrainingPanelForSouth.add(vvv, BorderLayout.CENTER);
+        innerTrainingPanelForSouth.add(ccc, BorderLayout.SOUTH);
+
         //создание элемента вкладок для упражнений
         JTabbedPane pane = new JTabbedPane();
 
@@ -146,10 +179,12 @@ public class MainFrameTraining extends MainFrame {
             i++;
         }
 
+
         innerTrainingPanelForCenter.add(innerTrainingPanelNorthPanel, BorderLayout.NORTH);
         innerTrainingPanelForCenter.add(pane, BorderLayout.CENTER);
         //добавляем панель скрол с панелью всех результатовм scrollPanelForAllResOfCurrentTrainingTable
-        innerTrainingPanelForCenter.add(scrollPanelForAllResOfCurrentTrainingTable, BorderLayout.SOUTH);
+        innerTrainingPanelForCenter.add(innerTrainingPanelForSouth, BorderLayout.SOUTH);
+
 
         //заполенине самого MainFrameTraining
         contentPane.setBackground(Color.ORANGE.darker());

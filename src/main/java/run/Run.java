@@ -10,8 +10,8 @@ import view.NewTestFame;
  */
 public class Run {
     public static void main(String[] args) {
-        // new LoginForm();
-         new MainFrameTraining();
+         new LoginForm();
+        // new MainFrameTraining();
         //new MainFrame();
         // new NewTestFame();
     }

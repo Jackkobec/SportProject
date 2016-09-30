@@ -29,6 +29,7 @@ public class RegistrationForm extends JFrame implements ActionListener {
         setTitle("Registration");
 
         setBounds(locationX, locationY, sizeWidth, sizeHeight);
+        setMinimumSize(new Dimension(380, 480));
 
 
         addComponents(f, getContentPane(), loginFromMain, passFromMain);
@@ -58,16 +59,23 @@ public class RegistrationForm extends JFrame implements ActionListener {
         //Create everything.
         passwordField = new JPasswordField(10);
         passwordField.setActionCommand(CONFIRM);
-        passwordField.setText(passFromMain);
+//        if (passwordField.getPassword().toString() =="") {
+//            passwordField.setText("");
+//        } else {
+
+        //set empty text on the password field
+        passwordField.setText("");
+
+
         passwordField.addActionListener(this);
 
         fioFild = new JTextField(20);
         fioFild.setActionCommand(CONFIRM);
-        fioFild.setText(loginFromMain);
+
 
         email = new JTextField(16);
         email.setActionCommand(CONFIRM);
-        email.setText(loginFromMain);
+
 
         Font font = new Font("Tamoha", Font.BOLD, 16);
         JLabel loginLabel = new JLabel("Enter new Login*: ");
@@ -93,17 +101,15 @@ public class RegistrationForm extends JFrame implements ActionListener {
         JButton confirmButton = new JButton("CONFIRM");
         JButton backButton = new JButton("BACK");
 
+        //set command CONFIRM to this button
         confirmButton.setActionCommand(CONFIRM);
+        //set action listener (this) means @Override actionPerformed
+        confirmButton.addActionListener(this);
+
+        //set command BACK to this button
         backButton.setActionCommand(BACK);
-
-        backButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-
-dispose();
-                    new LoginForm();
-
-            }});
-
+        //set action listener (this) means @Override actionPerformed
+        backButton.addActionListener(this);
 
 
         p.add(loginLabel);
@@ -121,13 +127,20 @@ dispose();
         p.add(backButton);
         p.add(confirmButton);
 
-
+        contentPane.setBackground(Color.ORANGE);
         contentPane.add(p, BorderLayout.PAGE_START);
 
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
-
+        String cmd = e.getActionCommand();
+        if (CONFIRM.equals(cmd)) {
+        }
+        if (BACK.equals(cmd)) {
+            dispose();
+            new LoginForm();
+        }
     }
 
 }

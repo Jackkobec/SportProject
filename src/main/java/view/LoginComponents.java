@@ -170,6 +170,7 @@ public class LoginComponents extends JPanel
 
         if (OK.equals(cmd)) { //Process the password.
             char[] input = passwordField.getPassword();
+            //send request for compare 2 arrays
             if (isPasswordCorrect(input)) {
                 JOptionPane.showMessageDialog(controllingFrame,
                         "Success! You typed the right password.");
@@ -187,10 +188,10 @@ public class LoginComponents extends JPanel
             resetFocus();
         } else { //The user has asked for help.
             JOptionPane.showMessageDialog(controllingFrame,
-                    "You can get the password by searching this example's\n"
-                            + "source code for the string \"correctPassword\".\n"
-                            + "Or look at the section How to Use Password Fields in\n"
-                            + "the components section of The Java Tutorial.");
+                    "Войдите под раннее соданым аккаунтом или зарегистрируйтесь.\n"
+                            + "Так же Вы можете запустить программу из совего приватного файла тренировок\n"
+                            + "При регистрации Вам будет предложено выбрать место хранения приватного файла,\n"
+                            + "в котором будут храниться Ваши данные и резальтаты тренировок.");
         }
     }
 
@@ -206,6 +207,7 @@ public class LoginComponents extends JPanel
         if (input.length != correctPassword.length) {
             isCorrect = false;
         } else {
+            //compare 2 arrays: char[] correctPassword and input data
             isCorrect = Arrays.equals(input, correctPassword);
         }
 

@@ -14,6 +14,8 @@ import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.*;
 import java.util.List;
 
@@ -107,10 +109,7 @@ public class MainFrameTraining extends MainFrame {
                         "Подтверждение", JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
                 //проверяем если нисего не было выбрано и был нажат крестик - то просто закрываем диалог и возвращаемся в программу
-                if (n == -1) {
-                    return;
-                }
-                if (n == 1) {
+                if (n == 1 || n == -1) {
                     return;
                 } else return;
             }
@@ -128,6 +127,7 @@ public class MainFrameTraining extends MainFrame {
         scrollPanelForAllResOfCurrentTrainingTable.setBorder(new CompoundBorder(new EmptyBorder(12, 12, 12, 12), new TitledBorder("ТАБЛИЦА ВСЕХ РЕЗУЛЬТАТОВ ТЕКУЩЕЙ ТРЕНИРОВКИ")));
 /**
  * тестовый собиратель данных с таблицы
+ * Test Data Collector
  */
         JButton vvv = new JButton("Собрать данные с табицы");
         vvv.addActionListener(new ActionListener() {
@@ -175,7 +175,7 @@ public class MainFrameTraining extends MainFrame {
             String title = gym.getName();
             pane.add(title, panelForGymCreate(gym, allResOfCurrentTrainingTable));//это поле самой вкладки в виде new JLabel
             pane.setTabComponentAt(i,
-                    new ButtonTabComponent(pane));//это добавление во вкладку кнопки закрытие как в браузерах
+                    new ButtonTabComponent(pane));//это добавление во вкладку кнопки закрытие как в браузерах, логика в классе ButtonTabComponent
             i++;
         }
 
@@ -251,10 +251,7 @@ public class MainFrameTraining extends MainFrame {
                         "Подтверждение", JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
                 //проверяем если нисего не было выбрано и был нажат крестик - то просто закрываем диалог и возвращаемся в программу
-                if (n == -1) {
-                    return;
-                }
-                if (n == 1) {
+                if (n == 1 || n == -1) {
                     return;
                 } else
                     tablePanel.setVisible(false);
@@ -316,10 +313,7 @@ public class MainFrameTraining extends MainFrame {
                         "Подтверждение", JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
                 //проверяем если нисего не было выбрано и был нажат крестик - то просто закрываем диалог и возвращаемся в программу
-                if (n == -1) {
-                    return;
-                }
-                if (n == 1) {
+                if (n == 1 || n == -1) {
                     return;
                 } else {
                     try {

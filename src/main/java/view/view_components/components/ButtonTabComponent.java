@@ -70,7 +70,7 @@ public class ButtonTabComponent extends JPanel {
             int n = JOptionPane.showOptionDialog(new JFrame(), "Закрыть эту вкладу? Чтобы вернуть её нужно будет перезапустить тренеровку.",
                     "Закрытие вкладки", JOptionPane.YES_NO_OPTION,
                     JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-            if (n == 1) {
+            if (n == 1 || n == -1) {
                 return;
                 //операция закрытия вкладки
             } else {
@@ -96,7 +96,7 @@ public class ButtonTabComponent extends JPanel {
             g2.setStroke(new BasicStroke(2));
             g2.setColor(Color.BLACK);
             if (getModel().isRollover()) {
-                g2.setColor(Color.MAGENTA);
+                g2.setColor(Color.RED);
             }
             int delta = 6;
             g2.drawLine(delta, delta, getWidth() - delta - 1, getHeight() - delta - 1);

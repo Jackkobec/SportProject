@@ -193,7 +193,7 @@ public class LoginComponents extends JPanel
                         JOptionPane.ERROR_MESSAGE);
             }
         }
-
+//repushing comment
         passwordField.selectAll();
         resetFocus();
         if (HELP.equals(cmd)) { //The user has asked for help.

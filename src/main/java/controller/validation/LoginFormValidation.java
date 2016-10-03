@@ -25,4 +25,12 @@ public class LoginFormValidation {
         return rule.matcher(password).matches();
     }
 
+    public static boolean emailValidator(String email) {
+        if (email.isEmpty() || email.equals(null)) {
+            return false;
+        }
+        Pattern rule = Pattern.compile("[a-zA-Z\\d@_\\-\\.]+?@([a-zA-Z]+\\.){1,2}[a-zA-Z]{2,3}");
+        return rule.matcher(email).matches();
+    }
+
 }

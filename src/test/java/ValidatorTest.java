@@ -1,6 +1,7 @@
 import controller.validation.LoginFormValidation;
 import org.junit.Test;
 
+import static controller.validation.LoginFormValidation.emailValidator;
 import static controller.validation.LoginFormValidation.loginValidator;
 import static controller.validation.LoginFormValidation.passwordValidator;
 import static org.junit.Assert.assertFalse;
@@ -23,6 +24,7 @@ public class ValidatorTest {
         assertFalse(loginValidator("7"));
         assertFalse(loginValidator(""));
     }
+
     @Test
     public void testValidationPassword() {
 
@@ -33,5 +35,17 @@ public class ValidatorTest {
         assertFalse(passwordValidator("77777777777777777777"));
         assertFalse(loginValidator("7"));
         assertFalse(passwordValidator(""));
+    }
+
+    @Test
+    public void testValidationEmail() {
+
+        assertTrue(emailValidator("Jack@mail.ru"));
+        assertTrue(emailValidator("jack@gmail.com"));
+        assertTrue(emailValidator("jk@i.ua"));
+        assertFalse(emailValidator("@mail.ru"));
+        assertFalse(emailValidator("VASA"));
+        assertFalse(emailValidator("@"));
+        assertFalse(emailValidator(""));
     }
 }

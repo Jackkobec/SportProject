@@ -10,6 +10,8 @@ import java.io.File;
 import java.util.Arrays;
 
 import static com.sun.deploy.uitoolkit.ToolkitStore.dispose;
+import static controller.validation.LoginFormValidation.loginValidator;
+import static controller.validation.LoginFormValidation.passwordValidator;
 
 /* LoginComponents.java requires no other files. */
 
@@ -141,16 +143,15 @@ public class LoginComponents extends JPanel
         startFromFile.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                int returnVal = new FileChooser().fc.showOpenDialog(new FileChooser());
-                if (returnVal == JFileChooser.APPROVE_OPTION) {
-                    File file = new FileChooser().fc.getSelectedFile();
-                    new MainFrameTraining();
+                    int returnVal = new FileChooser().fc.showOpenDialog(new FileChooser());
+                    if (returnVal == JFileChooser.APPROVE_OPTION) {
+                        File file = new FileChooser().fc.getSelectedFile();
+                        new MainFrameTraining();
 
-                    f.setVisible(false);
-                    getParent().setVisible(false);
-                    dispose();
-                }
-
+                        f.setVisible(false);
+                        getParent().setVisible(false);
+                        dispose();
+                    }
 
 
                 } catch (Exception e1) {
@@ -167,39 +168,51 @@ public class LoginComponents extends JPanel
 
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
-
+        //String password = passwordField.getPassword().toString();
+        String password = passwordField.getText();
         if (OK.equals(cmd)) { //Process the password.
-            char[] input = passwordField.getPassword();
-            //send request for compare 2 arrays
-            if (isPasswordCorrect(input)) {
+            if (loginField.getText().isEmpty() && password.isEmpty()) {
                 JOptionPane.showMessageDialog(controllingFrame,
-                        "Success! You typed the right password.");
-            } else {
+                        "Please enter login and password",
+                        "Error Message",
+                        JOptionPane.ERROR_MESSAGE);
+            } else if (loginValidator(loginField.getText()) && passwordValidator(password)) {
+                //todo User entering
+                JOptionPane.showMessageDialog(controllingFrame,
+                        "All is good.");
+            } else if (!loginValidator(loginField.getText())) {
+                JOptionPane.showMessageDialog(controllingFrame,
+                        "Invalid login. Try again.",
+                        "Error Message",
+                        JOptionPane.ERROR_MESSAGE);
+                //send request for compare 2 arrays
+            } else if (!passwordValidator(password)) {
                 JOptionPane.showMessageDialog(controllingFrame,
                         "Invalid password. Try again.",
                         "Error Message",
                         JOptionPane.ERROR_MESSAGE);
             }
+        }
 
-            //Zero out the possible password, for security.
-            Arrays.fill(input, '0');
-
-            passwordField.selectAll();
-            resetFocus();
-        } else { //The user has asked for help.
+        passwordField.selectAll();
+        resetFocus();
+        if (HELP.equals(cmd)) { //The user has asked for help.
             JOptionPane.showMessageDialog(controllingFrame,
                     "Войдите под раннее соданым аккаунтом или зарегистрируйтесь.\n"
                             + "Так же Вы можете запустить программу из совего приватного файла тренировок\n"
                             + "При регистрации Вам будет предложено выбрать место хранения приватного файла,\n"
                             + "в котором будут храниться Ваши данные и резальтаты тренировок.");
         }
+
     }
+
 
     /**
      * Checks the passed-in array against the correct password.
      * After this method returns, you should invoke eraseArray
      * on the passed-in array.
      */
+
     private static boolean isPasswordCorrect(char[] input) {
         boolean isCorrect = true;
         char[] correctPassword = {'b', 'u', 'g', 'a', 'b', 'o', 'o'};

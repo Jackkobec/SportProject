@@ -202,7 +202,7 @@ public class MainFrameTraining extends MainFrame {
         JPanel tablePanel = new JPanel(new BorderLayout());
         tablePanel.setBorder(new CompoundBorder(new EmptyBorder(12, 12, 12, 12), new TitledBorder(gym.getName())));
         /**
-         *  Kепим таблицу
+         *  Лепим таблицу
          * заполняем заголовки табилцы
          */
         CurrentResaltTableModel crmodel = new CurrentResaltTableModel();

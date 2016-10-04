@@ -5,6 +5,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import static controller.validation.LoginFormValidation.emailValidator;
+import static controller.validation.LoginFormValidation.loginValidator;
+import static controller.validation.LoginFormValidation.passwordValidator;
+
 /**
  * RegistrationForm
  */
@@ -17,6 +21,7 @@ public class RegistrationForm extends JFrame implements ActionListener {
 
     private static String CONFIRM = "confirm";
     private static String BACK = "back";
+    private JFrame controllingFrame; //needed for dialogs
 
     private JTextField loginField;
     private JPasswordField passwordField;
@@ -111,36 +116,74 @@ public class RegistrationForm extends JFrame implements ActionListener {
         //set action listener (this) means @Override actionPerformed
         backButton.addActionListener(this);
 
-
         p.add(loginLabel);
         p.add(loginField);
 
         p.add(pasLabel);
         p.add(passwordField);
 
-        p.add(fioLabel);
-        p.add(fioFild);
-
         p.add(emailLabel);
         p.add(email);
+
+        p.add(fioLabel);
+        p.add(fioFild);
 
         p.add(backButton);
         p.add(confirmButton);
 
+        //Font fontForRegisterHelp = new Font("Tamoha", Font.BOLD, 14);
+        JLabel registerHelp = new JLabel("<html><font size=\"5\" color=\"red\" face=\"Arial\">Поля Login и password обязательны* к заполнению.</font>" +
+                "<font size=\"4\">Так же Вы можете указать свой email " +
+                "для использования функции отправки приватного файла и восстановления аккаунта.</font></html>");
+
+        JPanel regCenterPanelForHelpInfo = new JPanel(new BorderLayout());
+        regCenterPanelForHelpInfo.add(registerHelp);
+        regCenterPanelForHelpInfo.setBackground(Color.ORANGE);
+
         contentPane.setBackground(Color.ORANGE);
-        contentPane.add(p, BorderLayout.PAGE_START);
+        contentPane.add(p, BorderLayout.NORTH);
+        contentPane.add(regCenterPanelForHelpInfo, BorderLayout.CENTER);
 
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
-        if (CONFIRM.equals(cmd)) {
-        }
+        String password = passwordField.getText();
         if (BACK.equals(cmd)) {
             dispose();
             new LoginForm();
         }
+        if (CONFIRM.equals(cmd)) {
+            if (loginField.getText().isEmpty() && password.isEmpty()) {
+                JOptionPane.showMessageDialog(controllingFrame,
+                        "Please enter login and password",
+                        "Error Message",
+                        JOptionPane.ERROR_MESSAGE);
+            } else if (loginValidator(loginField.getText()) && passwordValidator(password) &&
+                    (email.getText().isEmpty() || emailValidator(email.getText()))) {
+                //todo User creation
+                JOptionPane.showMessageDialog(controllingFrame,
+                        "All is good.");
+            } else if (!loginValidator(loginField.getText())) {
+                JOptionPane.showMessageDialog(controllingFrame,
+                        "Invalid login. Try again.",
+                        "Error Message",
+                        JOptionPane.ERROR_MESSAGE);
+                //send request for compare 2 arrays
+            } else if (!passwordValidator(password)) {
+                JOptionPane.showMessageDialog(controllingFrame,
+                        "Invalid password. Try again.",
+                        "Error Message",
+                        JOptionPane.ERROR_MESSAGE);
+            } else if (!emailValidator(email.getText())) {
+                JOptionPane.showMessageDialog(controllingFrame,
+                        "Invalid email. Try again.",
+                        "Error Message",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
     }
 
 }

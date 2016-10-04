@@ -1,9 +1,6 @@
-import controller.validation.LoginFormValidation;
 import org.junit.Test;
 
-import static controller.validation.LoginFormValidation.emailValidator;
-import static controller.validation.LoginFormValidation.loginValidator;
-import static controller.validation.LoginFormValidation.passwordValidator;
+import static controller.validation.LoginFormValidation.*;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 

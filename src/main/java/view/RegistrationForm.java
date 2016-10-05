@@ -6,6 +6,9 @@ import model.roles.Contacts;
 import model.roles.User;
 
 import javax.swing.*;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,6 +20,9 @@ import java.awt.event.ActionListener;
 public class RegistrationForm extends JFrame implements ActionListener {
     private UserDAO userDAO;
     private Validator validator;
+
+    FileSystemModel fileSystemDataModel = new FileSystemModel();
+    JTree tree = new JTree(fileSystemDataModel);
 
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     public static int sizeWidth = 380;
@@ -141,10 +147,20 @@ public class RegistrationForm extends JFrame implements ActionListener {
         JPanel regCenterPanelForHelpInfo = new JPanel(new BorderLayout());
         regCenterPanelForHelpInfo.add(registerHelp);
         regCenterPanelForHelpInfo.setBackground(Color.ORANGE);
+/**
+ * test Tree File selector
+ */
 
+        //JTree tree =
+        JScrollPane scrollPaneForTreeFileSelector = new JScrollPane(tree);
+        scrollPaneForTreeFileSelector.setSize(100, 50);
+        scrollPaneForTreeFileSelector.setBorder(new CompoundBorder(new EmptyBorder(12, 12, 12, 12), new TitledBorder("Выберете место хранения приватного файла")));
+        scrollPaneForTreeFileSelector.setBackground(Color.ORANGE);
+//selector end
         contentPane.setBackground(Color.ORANGE);
         contentPane.add(p, BorderLayout.NORTH);
-        contentPane.add(regCenterPanelForHelpInfo, BorderLayout.CENTER);
+        contentPane.add(scrollPaneForTreeFileSelector, BorderLayout.CENTER);//
+        contentPane.add(regCenterPanelForHelpInfo, BorderLayout.SOUTH);
 
     }
 
@@ -168,6 +184,9 @@ public class RegistrationForm extends JFrame implements ActionListener {
                 User registeredUser = new User(loginField.getText(), password, new Contacts(email.getText(), fioFild.getText()));
                 userDAO.createUser(registeredUser);
                 System.out.println(registeredUser);
+                //выведление пути выделенной папки
+                System.out.println(tree.getLastSelectedPathComponent());
+
                 JOptionPane.showMessageDialog(controllingFrame,
                         "All is good.");
             } else if (!validator.loginValidator(loginField.getText())) {

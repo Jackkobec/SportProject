@@ -9,6 +9,11 @@ import java.util.List;
  * UserDAOimplement
  */
 public class UserDAOimplement implements UserDAO{
+
+    public UserDAOimplement(AppDB appDB) {
+        this.appDB = appDB;
+    }
+
     private AppDB appDB;
 
     @Override

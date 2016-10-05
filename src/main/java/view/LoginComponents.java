@@ -1,22 +1,24 @@
 package view;
 
+import controller.validation.Validator;
+import model.app_db.UserDAO;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.Arrays;
 
 import static com.sun.deploy.uitoolkit.ToolkitStore.dispose;
-import static controller.validation.LoginFormValidation.loginValidator;
-import static controller.validation.LoginFormValidation.passwordValidator;
+
 
 /* LoginComponents.java requires no other files. */
 
 public class LoginComponents extends JPanel
         implements ActionListener {
+    private UserDAO userDAO;
+    private Validator validator;
     private static String OK = "ok";
     private static String HELP = "help";
 
@@ -24,7 +26,10 @@ public class LoginComponents extends JPanel
     private JTextField loginField;
     private JPasswordField passwordField;
 
-    public LoginComponents(JFrame f) {
+    public LoginComponents(JFrame f, UserDAO userDAO, Validator validator) {
+        this.userDAO = userDAO;
+        this.validator = validator;
+
         //Use the default FlowLayout.
         //  controllingFrame = f;
 
@@ -125,7 +130,7 @@ public class LoginComponents extends JPanel
         registerButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
-                new RegistrationForm(f, loginField.getText(), passwordField.getPassword().toString());
+                new RegistrationForm(f, loginField.getText(), passwordField.getPassword().toString(), userDAO, validator);
                 try {
                     f.setVisible(false);
                     getParent().setVisible(false);
@@ -176,17 +181,17 @@ public class LoginComponents extends JPanel
                         "Please enter login and password",
                         "Error Message",
                         JOptionPane.ERROR_MESSAGE);
-            } else if (loginValidator(loginField.getText()) && passwordValidator(password)) {
+            } else if (validator.loginValidator(loginField.getText()) && validator.passwordValidator(password)) {
                 //todo User entering
                 JOptionPane.showMessageDialog(controllingFrame,
                         "All is good.");
-            } else if (!loginValidator(loginField.getText())) {
+            } else if (!validator.loginValidator(loginField.getText())) {
                 JOptionPane.showMessageDialog(controllingFrame,
                         "Invalid login. Try again.",
                         "Error Message",
                         JOptionPane.ERROR_MESSAGE);
                 //send request for compare 2 arrays
-            } else if (!passwordValidator(password)) {
+            } else if (!validator.passwordValidator(password)) {
                 JOptionPane.showMessageDialog(controllingFrame,
                         "Invalid password. Try again.",
                         "Error Message",
@@ -240,7 +245,7 @@ public class LoginComponents extends JPanel
      * this method should be invoked from the
      * event dispatch thread.
      */
-    private static void createAndShowGUI() {
+   /* private static void createAndShowGUI() {
 
 
         //Create and set up the window.
@@ -275,5 +280,5 @@ public class LoginComponents extends JPanel
                 createAndShowGUI();
             }
         });
-    }
+    }*/
 }

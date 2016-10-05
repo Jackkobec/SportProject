@@ -1,5 +1,6 @@
 package model.app_db;
 
+import model.app_db.factory.DefaultData;
 import model.roles.Gymnastic;
 import model.roles.Training;
 import model.roles.User;
@@ -10,19 +11,22 @@ import java.util.*;
  * AppDB
  */
 public class AppDB {
-//    private static int userIdCounter = 1;
+    private static int userIdCounter = 1;
 //    private static int gymnasticIdCounter = 1;
 //    private static int trainingIdCounter = 1;
 
 
     private List<Gymnastic> allGymnastics;
 
-    private Map<User, List<Training>> userAccounts;
+    private Map<User, List<Training>> userAccounts;// = new ArrayList<>();
     private List<Training> trainingsOfDefaultTrainings;
 
-    public AppDB() {
-    }
 
+    public AppDB() {
+        this.allGymnastics = new DefaultData().createListOfDefaultGymnastics();
+        this.userAccounts = new HashMap<>();
+        this.trainingsOfDefaultTrainings = trainingsOfDefaultTrainings;
+    }
     public AppDB(Map<User, List<Training>> userAccounts) {
         this.userAccounts = userAccounts;
     }
@@ -34,7 +38,7 @@ public class AppDB {
     }
 
     public User addUser(User user) {
-        //user.setId(userIdCounter++);
+        user.setId(userIdCounter++);
         userAccounts.put(user, new ArrayList<>());
         return user;
     }
@@ -44,6 +48,13 @@ public class AppDB {
         return gymnastic;
     }
 
+    public static int getUserIdCounter() {
+        return userIdCounter;
+    }
+
+    public static void setUserIdCounter(int userIdCounter) {
+        AppDB.userIdCounter = userIdCounter;
+    }
 
     public List<Gymnastic> getAllGymnastics() {
         return allGymnastics;

@@ -12,6 +12,15 @@ public class Contacts {
     public Contacts() {
     }
 
+    public Contacts(String email) {
+        this.email = email;
+    }
+
+    public Contacts(String email, String name) {
+        this.email = email;
+        this.name = name;
+    }
+
     public Contacts(String email, String name, String phone, String adress) {
         this.email = email;
         this.name = name;

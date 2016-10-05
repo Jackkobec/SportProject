@@ -5,9 +5,9 @@ import java.util.regex.Pattern;
 /**
  * LoginFormValidation
  */
-public class LoginFormValidation {
+public class LoginFormValidation implements Validator {
 
-    public static boolean loginValidator(String login) {
+    public  boolean loginValidator(String login) {
         if (login.isEmpty() || login.equals(null)) {
             return false;
         }
@@ -16,7 +16,7 @@ public class LoginFormValidation {
         return rule.matcher(login).matches();
     }
 
-    public static boolean passwordValidator(String password) {
+    public  boolean passwordValidator(String password) {
         if (password.isEmpty() || password.equals(null)) {
             return false;
         }
@@ -25,7 +25,7 @@ public class LoginFormValidation {
         return rule.matcher(password).matches();
     }
 
-    public static boolean emailValidator(String email) {
+    public  boolean emailValidator(String email) {
         if (email.isEmpty() || email.equals(null)) {
             return false;
         }

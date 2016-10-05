@@ -11,6 +11,7 @@ public class User {
     private String password;
     private Contacts contacts;
     private List<Training> userTrainings;
+    private int id;
 
     public User() {
     }
@@ -20,17 +21,25 @@ public class User {
         this.password = password;
     }
 
-    public User(String login, String password, List<Training> userTrainings) {
+    public User(String login, String password, Contacts contacts) {
         this.login = login;
         this.password = password;
-        this.userTrainings = userTrainings;
+        this.contacts = contacts;
     }
 
-    public User(String login, String password, Contacts contacts, List<Training> userTrainings) {
+    public User(String login, String password, Contacts contacts, int id) {
+        this.login = login;
+        this.password = password;
+        this.contacts = contacts;
+        this.id = id;
+    }
+
+    public User(String login, String password, Contacts contacts, List<Training> userTrainings, int id) {
         this.login = login;
         this.password = password;
         this.contacts = contacts;
         this.userTrainings = userTrainings;
+        this.id = id;
     }
 
     public String getLogin() {
@@ -65,6 +74,14 @@ public class User {
         this.userTrainings = userTrainings;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -72,6 +89,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", contacts=" + contacts +
                 ", userTrainings=" + userTrainings +
+                ", id=" + id +
                 '}';
     }
 }

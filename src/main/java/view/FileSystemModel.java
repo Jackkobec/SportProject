@@ -14,23 +14,29 @@ class FileSystemModel implements TreeModel {
     private Vector listeners; // Declare the listeners vector
 
     public FileSystemModel() {
-
-        root = System.getProperty("user.dir");
+        File[] froots = File.listRoots();
+        String mainRoot = froots[0].getAbsolutePath();
+        //root = System.getProperty("user.dir");
+        root = mainRoot;
+        // File tempFile = new File(root);
         File tempFile = new File(root);
-        root = tempFile.getParent();
-
+        // root = tempFile.getParent();
+        root = tempFile.getPath();
         listeners = new Vector();
+
     }
 
     public Object getRoot() {
         return (new File(root));
     }
 
+
     public Object getChild(Object parent, int index) {
         File directory = (File) parent;
         String[] directoryMembers = directory.list();
         return (new File(directory, directoryMembers[index]));
     }
+
 
     public int getChildCount(Object parent) {
         File fileSystemMember = (File) parent;

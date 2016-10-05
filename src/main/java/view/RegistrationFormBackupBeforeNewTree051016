@@ -152,20 +152,13 @@ public class RegistrationForm extends JFrame implements ActionListener {
 /**
  * test Tree File selector
  */
+
+        //JTree tree =
         JScrollPane scrollPaneForTreeFileSelector = new JScrollPane(tree);
         scrollPaneForTreeFileSelector.setSize(100, 50);
         scrollPaneForTreeFileSelector.setBorder(new CompoundBorder(new EmptyBorder(12, 12, 12, 12), new TitledBorder("Выберете место хранения приватного файла")));
         scrollPaneForTreeFileSelector.setBackground(Color.ORANGE);
 //selector end
-        /**
-         * test Tree File selector version 2
-         */
-        // JScrollPane scrollPaneForTreeFileSelector = new FileTree().init();
-
-        /**
-         *  selector end version 2
-         */
-
         contentPane.setBackground(Color.ORANGE);
         contentPane.add(p, BorderLayout.NORTH);
         contentPane.add(scrollPaneForTreeFileSelector, BorderLayout.CENTER);//

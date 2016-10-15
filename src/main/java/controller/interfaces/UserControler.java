@@ -1,7 +1,11 @@
 package controller.interfaces;
 
+import model.roles.User;
+
 /**
- * Created by Стас on 16.09.2016.
+ *
  */
 public interface UserControler {
+    public User createUserCont(User user);
+
 }

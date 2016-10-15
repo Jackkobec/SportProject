@@ -1,5 +1,6 @@
 package view;
 
+import controller.interfaces.UserControler;
 import controller.validation.Validator;
 import model.app_db.UserDAO;
 import model.roles.Contacts;
@@ -19,6 +20,7 @@ import java.awt.event.ActionListener;
  * RegistrationForm
  */
 public class RegistrationForm extends JFrame implements ActionListener {
+    private UserControler userController;
     private UserDAO userDAO;
     private Validator validator;
 
@@ -42,9 +44,10 @@ public class RegistrationForm extends JFrame implements ActionListener {
     private JTextField email;
 
 
-    public RegistrationForm(JFrame f, String loginFromMain, String passFromMain, UserDAO userDAO, Validator validator) throws HeadlessException {
+    public RegistrationForm(JFrame f, String loginFromMain, String passFromMain, UserDAO userDAO, Validator validator, UserControler userController) throws HeadlessException {
         this.userDAO = userDAO;
         this.validator = validator;
+        this.userController = userController;//todo aaded controller
 
         setLayout(new BorderLayout());
         setTitle("Registration");
@@ -179,7 +182,7 @@ public class RegistrationForm extends JFrame implements ActionListener {
         String password = passwordField.getText();
         if (BACK.equals(cmd)) {
             dispose();
-            new LoginForm(userDAO, validator);
+            new LoginForm(userDAO, validator, userController);
         }
         if (CONFIRM.equals(cmd)) {
             if (loginField.getText().isEmpty() && password.isEmpty()) {
@@ -191,7 +194,8 @@ public class RegistrationForm extends JFrame implements ActionListener {
                     (email.getText().isEmpty() || validator.emailValidator(email.getText()))) {
                 //todo User creation
                 User registeredUser = new User(loginField.getText(), password, new Contacts(email.getText(), fioFild.getText()));
-                userDAO.createUser(registeredUser);
+                // userDAO.createUser(registeredUser);//todo with controller
+                userController.createUserCont(registeredUser);
                 System.out.println(registeredUser);
                 //выведление пути выделенной папки
                 System.out.println(tree.getLastSelectedPathComponent());

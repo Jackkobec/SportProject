@@ -1,5 +1,6 @@
 package view;
 
+import controller.interfaces.UserControler;
 import controller.validation.Validator;
 import model.app_db.UserDAO;
 
@@ -12,6 +13,7 @@ import java.awt.*;
 public class LoginForm extends JFrame {
     private UserDAO userDAO;
     private Validator validator;
+    private UserControler userController;
 
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     public static int sizeWidth = 640;
@@ -20,10 +22,10 @@ public class LoginForm extends JFrame {
     public int locationY = (screenSize.height - sizeHeight) / 2;
 
 
-    public LoginForm(UserDAO userDAO, Validator validator) throws HeadlessException {
+    public LoginForm(UserDAO userDAO, Validator validator, UserControler userController) throws HeadlessException {
         this.userDAO = userDAO;
         this.validator = validator;
-
+        this.userController = userController;
         setLayout(new BorderLayout());
         setTitle("LoginForm");
 
@@ -46,7 +48,7 @@ public class LoginForm extends JFrame {
     private void addComponents(Container contentPane) {
 
         contentPane.setLayout(new BorderLayout());
-        JComponent logpas = new LoginComponents(this, userDAO, validator);
+        JComponent logpas = new LoginComponents(this, userDAO, validator, userController);
         logpas.getAncestorListeners();
        /* float[] hsb = Color.RGBtoHSB(255, 99, 00, null);
         logpas.setBackground(Color.getHSBColor(hsb[0], hsb[1], hsb[2]));*/
@@ -71,7 +73,7 @@ public class LoginForm extends JFrame {
         contentPane.add(registrationOrLoadFromFile, BorderLayout.SOUTH);
 
 
-        JComponent logpas2 = new LoginComponents(this, userDAO, validator);
+        JComponent logpas2 = new LoginComponents(this, userDAO, validator, userController);
         logpas.setBackground(Color.orange);
         contentPane.add(logpas, BorderLayout.CENTER);
     }

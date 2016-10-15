@@ -1,5 +1,6 @@
 package view;
 
+import controller.interfaces.UserControler;
 import controller.validation.Validator;
 import model.app_db.UserDAO;
 
@@ -25,11 +26,12 @@ public class LoginComponents extends JPanel
     private JFrame controllingFrame; //needed for dialogs
     private JTextField loginField;
     private JPasswordField passwordField;
+    private UserControler userController;
 
-    public LoginComponents(JFrame f, UserDAO userDAO, Validator validator) {
+    public LoginComponents(JFrame f, UserDAO userDAO, Validator validator, UserControler userController) {
         this.userDAO = userDAO;
         this.validator = validator;
-
+        this.userController = userController;
         //Use the default FlowLayout.
         //  controllingFrame = f;
 
@@ -130,7 +132,7 @@ public class LoginComponents extends JPanel
         registerButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
-                new RegistrationForm(f, loginField.getText(), passwordField.getPassword().toString(), userDAO, validator);
+                new RegistrationForm(f, loginField.getText(), passwordField.getPassword().toString(), userDAO, validator, userController);
                 try {
                     f.setVisible(false);
                     getParent().setVisible(false);

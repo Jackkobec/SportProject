@@ -27,7 +27,7 @@ public class RegistrationForm extends JFrame implements ActionListener {
     JTree tree = new JTree(fileSystemDataModel);
 
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    public static int sizeWidth = 380;
+    public static int sizeWidth = 388;
     public static int sizeHeight = 480;
     public int locationX = (screenSize.width - sizeWidth) / 2;
     public int locationY = (screenSize.height - sizeHeight) / 2;
@@ -50,7 +50,7 @@ public class RegistrationForm extends JFrame implements ActionListener {
         setTitle("Registration");
 
         setBounds(locationX, locationY, sizeWidth, sizeHeight);
-        setMinimumSize(new Dimension(380, 480));
+        setMinimumSize(new Dimension(390, 480));
 
 
         addComponents(f, getContentPane(), loginFromMain, passFromMain);
@@ -154,7 +154,7 @@ public class RegistrationForm extends JFrame implements ActionListener {
  */
         JScrollPane scrollPaneForTreeFileSelector = new JScrollPane(tree);
         scrollPaneForTreeFileSelector.setSize(100, 50);
-        scrollPaneForTreeFileSelector.setBorder(new CompoundBorder(new EmptyBorder(12, 12, 12, 12), new TitledBorder("Выберете место хранения приватного файла")));
+        scrollPaneForTreeFileSelector.setBorder(new CompoundBorder(new EmptyBorder(12, 12, 12, 12), new TitledBorder("Выберете место хранения приватного файла(выделете)")));
         scrollPaneForTreeFileSelector.setBackground(Color.ORANGE);
 //selector end
         /**

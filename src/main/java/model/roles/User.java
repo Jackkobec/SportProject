@@ -1,5 +1,7 @@
 package model.roles;
 
+import model.enums.PrivateFileStatus;
+
 import java.util.List;
 
 /**
@@ -12,8 +14,19 @@ public class User {
     private Contacts contacts;
     private List<Training> userTrainings;
     private int id;
+    private PrivateFileStatus privateFileStatus;
+    private String privateFilePath;
 
-    public User() {
+    //test constructor
+
+
+    public User(String login, String password, Contacts contacts, List<Training> userTrainings, PrivateFileStatus privateFileStatus, String privateFilePath) {
+        this.login = login;
+        this.password = password;
+        this.contacts = contacts;
+        this.userTrainings = userTrainings;
+        this.privateFileStatus = privateFileStatus;
+        this.privateFilePath = privateFilePath;
     }
 
     public User(String login, String password) {
@@ -82,6 +95,24 @@ public class User {
         this.id = id;
     }
 
+    public PrivateFileStatus getPrivateFileStatus() {
+        return privateFileStatus;
+    }
+
+    public String getPrivateFilePath() {
+        return privateFilePath;
+    }
+
+    public void setPrivateFilePath(String privateFilePath) {
+        this.privateFilePath = privateFilePath;
+    }
+
+    public void setPrivateFileStatus(PrivateFileStatus privateFileStatus) {
+        this.privateFileStatus = privateFileStatus;
+
+
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -90,6 +121,9 @@ public class User {
                 ", contacts=" + contacts +
                 ", userTrainings=" + userTrainings +
                 ", id=" + id +
+                ", privateFileStatus=" + privateFileStatus +
+                ", privateFilePath='" + privateFilePath + '\'' +
                 '}';
     }
 }
+

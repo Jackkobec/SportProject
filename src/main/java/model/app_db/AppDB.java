@@ -36,7 +36,7 @@ public class AppDB {
         this.userAccounts = userAccounts;
         this.trainingsOfDefaultTrainings = trainingsOfDefaultTrainings;
     }
-
+    //this method in the AppDB because we add ID from DB to the new User
     public User addUser(User user) {
         user.setId(userIdCounter++);
         userAccounts.put(user, new ArrayList<>());

@@ -2,10 +2,7 @@ package view;
 
 import controller.interfaces.UserControler;
 import controller.validation.Validator;
-import model.IOActions;
-import model.IOActionsImplement;
 import model.app_db.UserDAO;
-import model.app_db.constants.Constants;
 import model.app_db.factory.ClassFactory;
 import model.enums.PrivateFileStatus;
 import model.roles.Contacts;
@@ -15,23 +12,23 @@ import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import static model.app_db.constants.Constants.PATH_FOR_SAVE_PRIVATE_FILE;
-
+import static model.enums.PrivateFileStatus.UNSELECTED;
 
 /**
- * RegistrationForm
+ * Created by Jack on 16.10.2016.
  */
-public class RegistrationForm extends JFrame implements ActionListener {
+public class UserUpdateForm extends JFrame implements ActionListener {
+
     private UserControler userController;
     private UserDAO userDAO;
     private Validator validator;
-
+    private User currentUser;
 
     FileSystemModel fileSystemDataModel = new FileSystemModel();
     JTree tree = new JTree(fileSystemDataModel);
@@ -50,13 +47,14 @@ public class RegistrationForm extends JFrame implements ActionListener {
     private JPasswordField passwordField;
     private JTextField fioFild;
     private JTextField email;
+    private JTextField phone;
+    private JTextField address;
 
-
-    public RegistrationForm(JFrame f, String loginFromMain, String passFromMain, UserDAO userDAO, Validator validator, UserControler userController) throws HeadlessException {
+    public UserUpdateForm(JFrame f, User currentUser, UserDAO userDAO, Validator validator, UserControler userController) throws HeadlessException {
         this.userDAO = userDAO;
         this.validator = validator;
         this.userController = userController;//todo aaded controller
-
+        this.currentUser = currentUser;
         setLayout(new BorderLayout());
         setTitle("Registration");
 
@@ -64,21 +62,20 @@ public class RegistrationForm extends JFrame implements ActionListener {
         setMinimumSize(new Dimension(390, 480));
 
 
-        addComponents(f, getContentPane(), loginFromMain, passFromMain);
+        addComponents(f, getContentPane());
         getRootPane().setBackground(Color.orange);
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     }
 
-    private void addComponents(final JFrame f, Container contentPane, String loginFromMain, String passFromMain) {
+    private void addComponents(final JFrame f, Container contentPane) {
         contentPane.setLayout(new BorderLayout());
 
-        JPanel p = new JPanel(new GridLayout(6, 2));
+        JPanel p = new JPanel(new GridLayout(10, 2));
         p.setBackground(Color.orange);
 
         loginField = new JTextField(10);
         loginField.setActionCommand(CONFIRM);
-        loginField.setText(loginFromMain);
         loginField.addActionListener(new ActionListener() {
 
 
@@ -103,6 +100,12 @@ public class RegistrationForm extends JFrame implements ActionListener {
         email = new JTextField(16);
         email.setActionCommand(CONFIRM);
 
+        phone = new JTextField(16);
+        phone.setActionCommand(CONFIRM);
+
+        address = new JTextField(22);
+        address.setActionCommand(CONFIRM);
+
 
         Font font = new Font("Tamoha", Font.BOLD, 16);
         JLabel loginLabel = new JLabel("Enter new Login*: ");
@@ -124,6 +127,14 @@ public class RegistrationForm extends JFrame implements ActionListener {
         JLabel emailLabel = new JLabel("Enter your email: ");
         emailLabel.setFont(font);
         emailLabel.setLabelFor(email);
+
+        JLabel phoneLabel = new JLabel("Enter your phone: ");
+        phoneLabel.setFont(font);
+        phoneLabel.setLabelFor(phone);
+
+        JLabel addressLabel = new JLabel("Enter your address: ");
+        addressLabel.setFont(font);
+        addressLabel.setLabelFor(address);
 
         JButton confirmButton = new JButton("CONFIRM");
         JButton backButton = new JButton("BACK");
@@ -150,6 +161,12 @@ public class RegistrationForm extends JFrame implements ActionListener {
         p.add(fioLabel);
         p.add(fioFild);
 
+        p.add(phoneLabel);
+        p.add(phone);
+
+        p.add(addressLabel);
+        p.add(address);
+
         p.add(backButton);
         p.add(confirmButton);
 
@@ -161,25 +178,23 @@ public class RegistrationForm extends JFrame implements ActionListener {
         regCenterPanelForHelpInfo.add(registerHelp);
         regCenterPanelForHelpInfo.setBackground(Color.ORANGE);
 /**
- * test Tree File selector
+ * Panel with info about PrivateFile status and chose propose
  */
-        JScrollPane scrollPaneForTreeFileSelector = new JScrollPane(tree);
-        scrollPaneForTreeFileSelector.setSize(100, 50);
-        scrollPaneForTreeFileSelector.setBorder(new CompoundBorder(new EmptyBorder(12, 12, 12, 12), new TitledBorder("Выберете место хранения приватного файла(выделете)")));
-        scrollPaneForTreeFileSelector.setBackground(Color.ORANGE);
-//selector end
-        /**
-         * test Tree File selector version 2
-         */
-        // JScrollPane scrollPaneForTreeFileSelector = new FileTree().init();
+        JPanel fileSelectionSttusAndProposePanel = new JPanel(new BorderLayout());
+        fileSelectionSttusAndProposePanel.setBorder(new CompoundBorder(new EmptyBorder(12, 12, 12, 12), new TitledBorder("Выберете место хранения приватного файла(выделете)")));
+        fileSelectionSttusAndProposePanel.setBackground(Color.ORANGE);
+        String status = (currentUser.getPrivateFileStatus() == UNSELECTED ? "<font size=\"5\" color=\"red\">НЕ выбран!</font>" :
+                "<font size=\"4\">Место расположения Приватного Файла: " + currentUser.getPrivateFilePath()) + "</font>";
+        JLabel fileSelectionSttusInfo = new JLabel("<html><font size=\"4\"face=\"Arial\">Поля Login и password обязательны* к заполнению.</font>" +
+                status + "</font></html>");
+        System.out.println(currentUser);
+        fileSelectionSttusAndProposePanel.add(fileSelectionSttusInfo, BorderLayout.NORTH);
 
-        /**
-         *  selector end version 2
-         */
+//selectorStatus end
 
         contentPane.setBackground(Color.ORANGE);
         contentPane.add(p, BorderLayout.NORTH);
-        contentPane.add(scrollPaneForTreeFileSelector, BorderLayout.CENTER);//
+        contentPane.add(fileSelectionSttusAndProposePanel, BorderLayout.CENTER);//
         contentPane.add(regCenterPanelForHelpInfo, BorderLayout.SOUTH);
 
     }
@@ -200,20 +215,18 @@ public class RegistrationForm extends JFrame implements ActionListener {
                         JOptionPane.ERROR_MESSAGE);
             } else if (validator.loginValidator(loginField.getText()) && validator.passwordValidator(password) &&
                     (email.getText().isEmpty() || validator.emailValidator(email.getText()))) {
-                //todo User creation
-                User registeredUser = new User(loginField.getText(), password, new Contacts(email.getText(), fioFild.getText()));
-                // userDAO.createUser(registeredUser);//todo with controller
+                //todo User update
+                User updatedUser = new User(loginField.getText(), password, new Contacts(email.getText(), fioFild.getText()));
                 if (null == tree.getLastSelectedPathComponent()) {
-                    registeredUser.setPrivateFileStatus(PrivateFileStatus.UNSELECTED);
+                    updatedUser.setPrivateFileStatus(UNSELECTED);
                 } else try {
                     new ClassFactory().getIoActions().writeInto(PATH_FOR_SAVE_PRIVATE_FILE, tree.getLastSelectedPathComponent().toString());
-                    registeredUser.setPrivateFilePath(tree.getLastSelectedPathComponent().toString());
-                    registeredUser.setPrivateFileStatus(PrivateFileStatus.SELECTED_AND_SAVED);
+                    updatedUser.setPrivateFileStatus(PrivateFileStatus.SELECTED_AND_SAVED);
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
-                userController.createUserCont(registeredUser);
-                System.out.println(registeredUser);
+                userController.updateUserCont(updatedUser);
+                System.out.println(updatedUser);
                 //выведление пути выделенной папки
                 System.out.println(tree.getLastSelectedPathComponent());
                 JOptionPane.showMessageDialog(controllingFrame,

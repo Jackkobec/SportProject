@@ -18,4 +18,9 @@ public class UserControllerImpl implements UserControler {
     public User createUserCont(User user) {
         return userDAO.createUser(user);
     }
+
+    @Override
+    public User updateUserCont(User newUser) {
+        return userDAO.updateUser(newUser);
+    }
 }

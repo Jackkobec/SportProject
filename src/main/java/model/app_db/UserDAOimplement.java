@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * UserDAOimplement
  */
-public class UserDAOimplement implements UserDAO{
+public class UserDAOimplement implements UserDAO {
 
     public UserDAOimplement(AppDB appDB) {
         this.appDB = appDB;
@@ -22,8 +22,16 @@ public class UserDAOimplement implements UserDAO{
     }
 
     @Override
-    public User updateUser(User user) {
-        return null;
+    public User updateUser(User newUser) {
+        User res = null;
+        for (User us : appDB.getUserAccounts().keySet()) {
+            if (us.getId() == newUser.getId()) {
+
+                us = newUser;
+                res = us;
+            }
+        }
+        return res;
     }
 
     @Override

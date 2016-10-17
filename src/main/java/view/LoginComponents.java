@@ -150,9 +150,14 @@ public class LoginComponents extends JPanel
         startFromFile.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    int returnVal = new FileChooser().fc.showOpenDialog(new FileChooser());
+//                    int returnVal = new FileChooser().fc.showOpenDialog(new FileChooser());
+//                    if (returnVal == JFileChooser.APPROVE_OPTION) {
+//                        File file = new FileChooser().fc.getSelectedFile();
+//                        new MainFrameTraining();
+                    FileChooser fileChooser = new FileChooser();
+                    int returnVal = fileChooser.fc.showDialog(null, "START FROM PRIVATE FILE");
                     if (returnVal == JFileChooser.APPROVE_OPTION) {
-                        File file = new FileChooser().fc.getSelectedFile();
+                        File file = fileChooser.fc.getSelectedFile();
                         new MainFrameTraining();
 
                         f.setVisible(false);

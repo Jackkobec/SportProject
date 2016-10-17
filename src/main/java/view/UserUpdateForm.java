@@ -12,11 +12,15 @@ import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 
+import static com.sun.deploy.uitoolkit.ToolkitStore.dispose;
+import static javax.swing.JFileChooser.DIRECTORIES_ONLY;
 import static model.app_db.constants.Constants.PATH_FOR_SAVE_PRIVATE_FILE;
 import static model.enums.PrivateFileStatus.UNSELECTED;
 
@@ -41,6 +45,7 @@ public class UserUpdateForm extends JFrame implements ActionListener {
 
     private static String CONFIRM = "confirm";
     private static String BACK = "back";
+    private static String CHANGE_PATH = "change path";
     private JFrame controllingFrame; //needed for dialogs
 
     private JTextField loginField;
@@ -71,7 +76,8 @@ public class UserUpdateForm extends JFrame implements ActionListener {
     private void addComponents(final JFrame f, Container contentPane) {
         contentPane.setLayout(new BorderLayout());
 
-        JPanel p = new JPanel(new GridLayout(10, 2));
+        JPanel p = new JPanel(new GridLayout(7, 2));
+
         p.setBackground(Color.orange);
 
         loginField = new JTextField(10);
@@ -181,15 +187,22 @@ public class UserUpdateForm extends JFrame implements ActionListener {
  * Panel with info about PrivateFile status and chose propose
  */
         JPanel fileSelectionSttusAndProposePanel = new JPanel(new BorderLayout());
-        fileSelectionSttusAndProposePanel.setBorder(new CompoundBorder(new EmptyBorder(12, 12, 12, 12), new TitledBorder("Выберете место хранения приватного файла(выделете)")));
+        fileSelectionSttusAndProposePanel.setBorder(new CompoundBorder(new EmptyBorder(12, 12, 12, 12), new TitledBorder("Информация про приватный файл")));
         fileSelectionSttusAndProposePanel.setBackground(Color.ORANGE);
-        String status = (currentUser.getPrivateFileStatus() == UNSELECTED ? "<font size=\"5\" color=\"red\">НЕ выбран!</font>" :
-                "<font size=\"4\">Место расположения Приватного Файла: " + currentUser.getPrivateFilePath()) + "</font>";
-        JLabel fileSelectionSttusInfo = new JLabel("<html><font size=\"4\"face=\"Arial\">Поля Login и password обязательны* к заполнению.</font>" +
-                status + "</font></html>");
-        System.out.println(currentUser);
-        fileSelectionSttusAndProposePanel.add(fileSelectionSttusInfo, BorderLayout.NORTH);
+        String status = (currentUser.getPrivateFileStatus() == UNSELECTED ? "<font size=\"5\" color=\"red\">Место хранения приватного файла НЕ выбрано!</font>" :
+                "<font size=\"5\">Место расположения Приватного Файла: " + "<font size=\"5\" color=\"red\">" + currentUser.getPrivateFilePath()) + "</font></font>";
+        JLabel fileSelectionSttusInfo = new JLabel("<html>" + status + "</html>");
 
+        JPanel chengePathButtonPanel = new JPanel();
+        //Panel for chengePrivateFilePathButton
+        JButton chengePrivateFilePathButton = new JButton("Задать/Изменить место хранения Пиватного Файла");
+        chengePrivateFilePathButton.setActionCommand(CHANGE_PATH);
+        chengePrivateFilePathButton.addActionListener(this);
+        chengePathButtonPanel.add(chengePrivateFilePathButton);
+        chengePathButtonPanel.setBackground(Color.ORANGE);
+
+        fileSelectionSttusAndProposePanel.add(fileSelectionSttusInfo, BorderLayout.NORTH);
+        fileSelectionSttusAndProposePanel.add(chengePathButtonPanel, BorderLayout.SOUTH);
 //selectorStatus end
 
         contentPane.setBackground(Color.ORANGE);
@@ -248,7 +261,26 @@ public class UserUpdateForm extends JFrame implements ActionListener {
                         JOptionPane.ERROR_MESSAGE);
             }
         }
+        if (CHANGE_PATH.equals(cmd)) {
+
+            FileChooser fileChooser = new FileChooser();
+            //disable the all extention selection
+            fileChooser.fc.setAcceptAllFileFilterUsed(false);
+            //filter for extention *.TRN
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("*.TRN","*.*");
+            fileChooser.fc.setFileFilter(filter);
+            //select DIRECTORIES_ONLY
+            fileChooser.fc.setFileSelectionMode(DIRECTORIES_ONLY);
+
+            int returnVal = fileChooser.fc.showDialog(null, "Select");
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                File file = fileChooser.fc.getSelectedFile();
+                System.out.println(file.getAbsolutePath());
+
+
+            }
+
+        }
 
     }
-
 }

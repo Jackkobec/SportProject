@@ -2,6 +2,7 @@ package view;
 
 import view.actions.FileOpenAction;
 import view.actions.FileSaveAction;
+import view.actions.HelpAbourAutorAction;
 import view.view_components.components.MenuLookDemo;
 
 import javax.swing.*;
@@ -21,6 +22,7 @@ public class MainFrameMenu implements ActionListener {
     FileChooser menuFileChoser = new FileChooser();
     Font font = new Font("Tamoha", Font.BOLD, 14);
 
+
     public JMenuBar createMenuBar() {
         JMenuBar menuBar;
         JMenu menu, submenu;
@@ -38,7 +40,7 @@ public class MainFrameMenu implements ActionListener {
                 "The only menu in this program that has menu items");
         menuBar.add(menu);
 
-        ImageIcon icon = new ImageIcon("D://open.gif");
+        ImageIcon icon = new ImageIcon("src/main/java/view/icons/open.gif");
         Action fileOpenAction = new FileOpenAction("Open new Private File", icon, "Open new Private File", KeyEvent.VK_F);
         //a group of JMenuItems
         menuItem = new JMenuItem(fileOpenAction);
@@ -60,7 +62,7 @@ public class MainFrameMenu implements ActionListener {
 
         // menuItem.setActionCommand(OPEN);
         menu.add(menuItem);
-       //Toolkit.getDefaultToolkit().getImage("java/view/icons/open.png");
+        //Toolkit.getDefaultToolkit().getImage("java/view/icons/open.png");
 
         menuItem = new JMenuItem("Both text and icon", icon);
         menuItem.setMnemonic(KeyEvent.VK_B);
@@ -71,7 +73,7 @@ public class MainFrameMenu implements ActionListener {
         menu.add(menuItem);
         //
         menu.addSeparator();
-        ImageIcon icon2 = new ImageIcon("D://save.gif");
+        ImageIcon icon2 = new ImageIcon("src/main/java/view/icons/save.gif");
         FileSaveAction fileSaveAction = new FileSaveAction("Save", icon2, "Save Private File", KeyEvent.VK_S);
         menuItem = new JMenuItem(fileSaveAction);
         menuItem.setBackground(Color.cyan);
@@ -119,10 +121,36 @@ public class MainFrameMenu implements ActionListener {
         menu.add(submenu);
 
         //Build second menu in the menu bar.
-        menu = new JMenu("Another Menu");
+        menu = new JMenu("Edit ");
+        menu.setMnemonic(KeyEvent.VK_E);
+        menu.getAccessibleContext().setAccessibleDescription(
+                "This menu does nothing");
+        menuBar.add(menu);
+        //Build second menu in the menu bar.
+        menu = new JMenu("Another Menu2");
         menu.setMnemonic(KeyEvent.VK_N);
         menu.getAccessibleContext().setAccessibleDescription(
                 "This menu does nothing");
+        menuBar.add(menu);
+
+        //Build second menu in the menu bar.
+        menu = new JMenu("Help");
+        menu.setMnemonic(KeyEvent.VK_H);
+        menu.getAccessibleContext().setAccessibleDescription(
+                "This menu does nothing");
+
+        //a group of JMenuItems
+        HelpAbourAutorAction helpAbourAutorAction = new HelpAbourAutorAction("About Autor", null, "About Autor", KeyEvent.VK_A);
+        menuItem = new JMenuItem(helpAbourAutorAction);
+        menuItem.setBackground(Color.orange);
+        menuItem.setFont(font);
+
+        menuItem.setMnemonic(KeyEvent.VK_F); //used constructor instead
+        menuItem.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_H, ActionEvent.ALT_MASK));
+
+        // menuItem.setActionCommand(OPEN);
+        menu.add(menuItem);
         menuBar.add(menu);
 
         return menuBar;

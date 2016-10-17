@@ -24,8 +24,8 @@ public class Run {
         Validator validator = new LoginFormValidation();//todo factory better then this
 //todo dont forget add initialisation of the controllers and other data
         //new UserUpdateForm(null,userController.createUserCont(new User("Vasa", "777", null, null, SELECTED_AND_SAVED, "C:\\")) , userDAO, validator, userController);
-       new LoginForm(userDAO, validator, userController);
-        // new MainFrameTraining();
+        //new LoginForm(userDAO, validator, userController);
+        new MainFrameTraining();
         //new MainFrame();
         // new NewTestFame();
     }

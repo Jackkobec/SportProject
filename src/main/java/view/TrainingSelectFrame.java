@@ -55,6 +55,10 @@ public class TrainingSelectFrame extends MainFrame implements ActionListener {
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
     }
+    //setter for change user
+    public void setLoginedCurrentUser(User loginedCurrentUser) {
+        this.loginedCurrentUser = loginedCurrentUser;
+    }
 
     private void addComponents(Container contentPane) {
         contentPane.setLayout(new BorderLayout());
@@ -103,7 +107,8 @@ public class TrainingSelectFrame extends MainFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
         if (EDIT.equals(cmd)) {
-            new UserUpdateForm(null, loginedCurrentUser, userDAO, validator, userController);
+            new UserUpdateForm(this, loginedCurrentUser, userDAO, validator, userController);
+            dispose();
         }
         if (LOGOUT.equals(cmd)) {
             Object[] options = {"Да", "Нет!"};

@@ -19,18 +19,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.*;
 
 import static com.sun.deploy.uitoolkit.ToolkitStore.dispose;
 import static javax.swing.JFileChooser.DIRECTORIES_ONLY;
 import static model.app_db.constants.Constants.PATH_FOR_SAVE_PRIVATE_FILE;
 import static model.app_db.constants.Constants.PATH_FOR_SAVE_USER_REG_DATA;
+import static model.enums.PrivateFileStatus.SELECTED_AND_SAVED;
 import static model.enums.PrivateFileStatus.UNSELECTED;
 
 /**
  * Created by Jack on 16.10.2016.
  */
 public class UserUpdateForm extends JFrame implements ActionListener {
-
+    private JFrame parentFrame;
     private UserControler userController;
     private UserDAO userDAO;
     private Validator validator;
@@ -57,7 +59,10 @@ public class UserUpdateForm extends JFrame implements ActionListener {
     private JTextField phone;
     private JTextField address;
 
+    String statusPtivateFile;
+
     public UserUpdateForm(JFrame f, User currentUser, UserDAO userDAO, Validator validator, UserControler userController) throws HeadlessException {
+        this.parentFrame = f;
         this.userDAO = userDAO;
         this.validator = validator;
         this.userController = userController;//todo aaded controller
@@ -75,7 +80,7 @@ public class UserUpdateForm extends JFrame implements ActionListener {
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     }
 
-    private void addComponents(final JFrame f, Container contentPane) {
+    public void addComponents(JFrame f, Container contentPane) {
         contentPane.setLayout(new BorderLayout());
 
         JPanel p = new JPanel(new GridLayout(7, 2));
@@ -104,7 +109,7 @@ public class UserUpdateForm extends JFrame implements ActionListener {
         address = new JTextField(22);
         address.setActionCommand(CONFIRM);
         //auto-complete data
-        if(null != currentUser){
+        if (null != currentUser) {
             loginField.setText(currentUser.getLogin());
             passwordField.setText(currentUser.getPassword());
             fioFild.setText(currentUser.getContacts().getName());
@@ -186,23 +191,79 @@ public class UserUpdateForm extends JFrame implements ActionListener {
 /**
  * Panel with info about PrivateFile status and chose propose
  */
+
         JPanel fileSelectionSttusAndProposePanel = new JPanel(new BorderLayout());
         fileSelectionSttusAndProposePanel.setBorder(new CompoundBorder(new EmptyBorder(12, 12, 12, 12), new TitledBorder("Информация про приватный файл")));
         fileSelectionSttusAndProposePanel.setBackground(Color.ORANGE);
-        String status = (currentUser.getPrivateFileStatus() == UNSELECTED ? "<font size=\"5\" color=\"red\">Место хранения приватного файла НЕ выбрано!</font>" :
+        statusPtivateFile = (currentUser.getPrivateFileStatus() == UNSELECTED ? "<font size=\"5\" color=\"red\">Место хранения приватного файла НЕ выбрано!</font>" :
                 "<font size=\"5\">Место расположения Приватного Файла: " + "<font size=\"5\" color=\"red\">" + currentUser.getPrivateFilePath()) + "</font></font>";
-        JLabel fileSelectionSttusInfo = new JLabel("<html>" + status + "</html>");
+        JLabel fileSelectionStatusInfo = new JLabel("<html>" + statusPtivateFile + "</html>");
 
         JPanel changePathButtonPanel = new JPanel();
         //Panel for changePrivateFilePathButton
         JButton changePrivateFilePathButton = new JButton("Задать/Изменить место хранения Пиватного Файла");
-        changePrivateFilePathButton.setActionCommand(CHANGE_PATH);
-        changePrivateFilePathButton.addActionListener(this);
+
         changePathButtonPanel.add(changePrivateFilePathButton);
         changePathButtonPanel.setBackground(Color.ORANGE);
 
-        fileSelectionSttusAndProposePanel.add(fileSelectionSttusInfo, BorderLayout.NORTH);
+        fileSelectionSttusAndProposePanel.add(fileSelectionStatusInfo, BorderLayout.NORTH);
         fileSelectionSttusAndProposePanel.add(changePathButtonPanel, BorderLayout.SOUTH);
+
+        changePrivateFilePathButton.setActionCommand(CHANGE_PATH);
+        //for dynamic fileSelectionStatusInfo changing
+        int[] count = {1};
+        JLabel[] tempLabel = new JLabel[1];
+
+        changePrivateFilePathButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                count[0]++;
+                System.out.println(count[0]);
+                JLabel[] jl = new JLabel[count[0]];
+                String cmd = e.getActionCommand();
+                if (CHANGE_PATH.equals(cmd)) {
+
+                    FileChooser fileChooser = new FileChooser();
+                    //disable the all extention selection
+                    fileChooser.fc.setAcceptAllFileFilterUsed(false);
+                    //filter for extention *.TRN
+                    FileNameExtensionFilter filter = new FileNameExtensionFilter("*.TRN", "*.*");
+                    fileChooser.fc.setFileFilter(filter);
+                    //select DIRECTORIES_ONLY
+                    fileChooser.fc.setFileSelectionMode(DIRECTORIES_ONLY);
+
+                    int returnVal = fileChooser.fc.showDialog(null, "Select");
+                    if (returnVal == JFileChooser.APPROVE_OPTION) {
+                        File file = fileChooser.fc.getSelectedFile();
+                        currentUser.setPrivateFilePath(file.getAbsolutePath());
+                        currentUser.setPrivateFileStatus(SELECTED_AND_SAVED);
+                        System.out.println(file.getAbsolutePath());
+                        System.out.println(currentUser);
+                        //dynamic fileSelectionStatusInfo changing
+                        statusPtivateFile = (currentUser.getPrivateFileStatus() == UNSELECTED ? "<font size=\"5\" color=\"red\">Место хранения приватного файла НЕ выбрано!</font>" :
+                                "<font size=\"5\">Место расположения Приватного Файла: " + "<font size=\"5\" color=\"red\">" + file.getAbsolutePath()) + "</font></font>";
+                        fileSelectionStatusInfo.setVisible(false);
+                        if (count[0] == 2) {
+                            jl[count[0] - 1] = new JLabel("<html>" + statusPtivateFile + "</html>");
+                            tempLabel[0] = jl[count[0] - 1];
+                            fileSelectionSttusAndProposePanel.add(tempLabel[0], BorderLayout.NORTH);
+                            fileSelectionSttusAndProposePanel.revalidate();
+                        } else if (count[0] > 2)
+                            tempLabel[0].setVisible(false);
+                        jl[count[0] - 1] = new JLabel("<html>" + statusPtivateFile + "</html>");
+                        tempLabel[0] = jl[count[0] - 1];
+                        fileSelectionSttusAndProposePanel.add(tempLabel[0], BorderLayout.NORTH);
+
+                        if (returnVal == JFileChooser.CANCEL_OPTION) {
+                            return;
+                        }
+
+                    }
+
+                }
+            }
+        });
+
 //selectorStatus end
 
         contentPane.setBackground(Color.ORANGE);
@@ -212,15 +273,20 @@ public class UserUpdateForm extends JFrame implements ActionListener {
 
     }
 
+
     @Override
     public void actionPerformed(ActionEvent e) {
+        User updatedUser = currentUser;
         String cmd = e.getActionCommand();
         String password = passwordField.getText();
         if (BACK.equals(cmd)) {
             dispose();
-            new LoginForm(userDAO, validator, userController);
+
+            new TrainingSelectFrame(currentUser, userDAO, validator, userController);
         }
         if (CONFIRM.equals(cmd)) {
+
+
             if (loginField.getText().isEmpty() && password.isEmpty()) {
                 JOptionPane.showMessageDialog(controllingFrame,
                         "Please enter login and password",
@@ -229,18 +295,19 @@ public class UserUpdateForm extends JFrame implements ActionListener {
             } else if (validator.loginValidator(loginField.getText()) && validator.passwordValidator(password) &&
                     (email.getText().isEmpty() || validator.emailValidator(email.getText()))) {
                 //todo User update
-                User updatedUser = new User(loginField.getText(), password, new Contacts(email.getText(), fioFild.getText()));
-                updatedUser.setId(currentUser.getId());
-                if (null == tree.getLastSelectedPathComponent()) {
-                    updatedUser.setPrivateFileStatus(UNSELECTED);
-                } else try {
-                    new ClassFactory().getIoActions().writeInto(PATH_FOR_SAVE_PRIVATE_FILE, tree.getLastSelectedPathComponent().toString());
-                    updatedUser.setPrivateFileStatus(PrivateFileStatus.SELECTED_AND_SAVED);
-                } catch (IOException e1) {
-                    e1.printStackTrace();
+                updatedUser = new User(loginField.getText(), password, new Contacts(email.getText(), fioFild.getText()));
+                try {
+                    if (!currentUser.getPrivateFilePath().isEmpty()) {
+                        updatedUser.setPrivateFilePath(currentUser.getPrivateFilePath());
+                        updatedUser.setPrivateFileStatus(SELECTED_AND_SAVED);
+                    } else updatedUser.setPrivateFileStatus(UNSELECTED);
+                } catch (NullPointerException ignored) {
+
                 }
+                updatedUser.setId(currentUser.getId());
                 System.out.println("before update: " + currentUser);
                 currentUser = userController.updateUserCont(updatedUser);
+
                 System.out.println("after update: " + currentUser);
                 System.out.println("getUsersFromDB: " + userController.getUsersFromDB());
                 try {
@@ -268,28 +335,10 @@ public class UserUpdateForm extends JFrame implements ActionListener {
                         "Error Message",
                         JOptionPane.ERROR_MESSAGE);
             }
+            dispose();
+            new TrainingSelectFrame(currentUser, userDAO, validator, userController);
         }
-        if (CHANGE_PATH.equals(cmd)) {
 
-            FileChooser fileChooser = new FileChooser();
-            //disable the all extention selection
-            fileChooser.fc.setAcceptAllFileFilterUsed(false);
-            //filter for extention *.TRN
-            FileNameExtensionFilter filter = new FileNameExtensionFilter("*.TRN", "*.*");
-            fileChooser.fc.setFileFilter(filter);
-            //select DIRECTORIES_ONLY
-            fileChooser.fc.setFileSelectionMode(DIRECTORIES_ONLY);
-
-            int returnVal = fileChooser.fc.showDialog(null, "Select");
-            if (returnVal == JFileChooser.APPROVE_OPTION) {
-                File file = fileChooser.fc.getSelectedFile();
-                currentUser.setPrivateFilePath(file.getAbsolutePath());
-                System.out.println(file.getAbsolutePath());
-
-
-            }
-
-        }
 
     }
 }

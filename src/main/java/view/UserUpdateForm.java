@@ -2,6 +2,7 @@ package view;
 
 import controller.interfaces.UserControler;
 import controller.validation.Validator;
+import model.app_db.AppDB;
 import model.app_db.UserDAO;
 import model.app_db.factory.ClassFactory;
 import model.enums.PrivateFileStatus;
@@ -22,6 +23,7 @@ import java.io.IOException;
 import static com.sun.deploy.uitoolkit.ToolkitStore.dispose;
 import static javax.swing.JFileChooser.DIRECTORIES_ONLY;
 import static model.app_db.constants.Constants.PATH_FOR_SAVE_PRIVATE_FILE;
+import static model.app_db.constants.Constants.PATH_FOR_SAVE_USER_REG_DATA;
 import static model.enums.PrivateFileStatus.UNSELECTED;
 
 /**
@@ -82,12 +84,6 @@ public class UserUpdateForm extends JFrame implements ActionListener {
 
         loginField = new JTextField(10);
         loginField.setActionCommand(CONFIRM);
-        loginField.addActionListener(new ActionListener() {
-
-
-            public void actionPerformed(ActionEvent e) {
-            }
-        });
 
         //Create everything.
         passwordField = new JPasswordField(10);
@@ -96,12 +92,8 @@ public class UserUpdateForm extends JFrame implements ActionListener {
         //set empty text on the password field
         passwordField.setText("");
 
-
-        passwordField.addActionListener(this);
-
         fioFild = new JTextField(20);
         fioFild.setActionCommand(CONFIRM);
-
 
         email = new JTextField(16);
         email.setActionCommand(CONFIRM);
@@ -111,7 +103,15 @@ public class UserUpdateForm extends JFrame implements ActionListener {
 
         address = new JTextField(22);
         address.setActionCommand(CONFIRM);
-
+        //auto-complete data
+        if(null != currentUser){
+            loginField.setText(currentUser.getLogin());
+            passwordField.setText(currentUser.getPassword());
+            fioFild.setText(currentUser.getContacts().getName());
+            email.setText(currentUser.getContacts().getEmail());
+            phone.setText(currentUser.getContacts().getPhone());
+            address.setText(currentUser.getContacts().getAdress());
+        }
 
         Font font = new Font("Tamoha", Font.BOLD, 16);
         JLabel loginLabel = new JLabel("Enter new Login*: ");
@@ -193,16 +193,16 @@ public class UserUpdateForm extends JFrame implements ActionListener {
                 "<font size=\"5\">Место расположения Приватного Файла: " + "<font size=\"5\" color=\"red\">" + currentUser.getPrivateFilePath()) + "</font></font>";
         JLabel fileSelectionSttusInfo = new JLabel("<html>" + status + "</html>");
 
-        JPanel chengePathButtonPanel = new JPanel();
-        //Panel for chengePrivateFilePathButton
-        JButton chengePrivateFilePathButton = new JButton("Задать/Изменить место хранения Пиватного Файла");
-        chengePrivateFilePathButton.setActionCommand(CHANGE_PATH);
-        chengePrivateFilePathButton.addActionListener(this);
-        chengePathButtonPanel.add(chengePrivateFilePathButton);
-        chengePathButtonPanel.setBackground(Color.ORANGE);
+        JPanel changePathButtonPanel = new JPanel();
+        //Panel for changePrivateFilePathButton
+        JButton changePrivateFilePathButton = new JButton("Задать/Изменить место хранения Пиватного Файла");
+        changePrivateFilePathButton.setActionCommand(CHANGE_PATH);
+        changePrivateFilePathButton.addActionListener(this);
+        changePathButtonPanel.add(changePrivateFilePathButton);
+        changePathButtonPanel.setBackground(Color.ORANGE);
 
         fileSelectionSttusAndProposePanel.add(fileSelectionSttusInfo, BorderLayout.NORTH);
-        fileSelectionSttusAndProposePanel.add(chengePathButtonPanel, BorderLayout.SOUTH);
+        fileSelectionSttusAndProposePanel.add(changePathButtonPanel, BorderLayout.SOUTH);
 //selectorStatus end
 
         contentPane.setBackground(Color.ORANGE);
@@ -230,6 +230,7 @@ public class UserUpdateForm extends JFrame implements ActionListener {
                     (email.getText().isEmpty() || validator.emailValidator(email.getText()))) {
                 //todo User update
                 User updatedUser = new User(loginField.getText(), password, new Contacts(email.getText(), fioFild.getText()));
+                updatedUser.setId(currentUser.getId());
                 if (null == tree.getLastSelectedPathComponent()) {
                     updatedUser.setPrivateFileStatus(UNSELECTED);
                 } else try {
@@ -238,8 +239,15 @@ public class UserUpdateForm extends JFrame implements ActionListener {
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
-                userController.updateUserCont(updatedUser);
-                System.out.println(updatedUser);
+                System.out.println("before update: " + currentUser);
+                currentUser = userController.updateUserCont(updatedUser);
+                System.out.println("after update: " + currentUser);
+                System.out.println("getUsersFromDB: " + userController.getUsersFromDB());
+                try {
+                    new ClassFactory().getIoActions().writeInto(PATH_FOR_SAVE_USER_REG_DATA, updatedUser.toString());
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
                 //выведление пути выделенной папки
                 System.out.println(tree.getLastSelectedPathComponent());
                 JOptionPane.showMessageDialog(controllingFrame,
@@ -267,7 +275,7 @@ public class UserUpdateForm extends JFrame implements ActionListener {
             //disable the all extention selection
             fileChooser.fc.setAcceptAllFileFilterUsed(false);
             //filter for extention *.TRN
-            FileNameExtensionFilter filter = new FileNameExtensionFilter("*.TRN","*.*");
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("*.TRN", "*.*");
             fileChooser.fc.setFileFilter(filter);
             //select DIRECTORIES_ONLY
             fileChooser.fc.setFileSelectionMode(DIRECTORIES_ONLY);
@@ -275,6 +283,7 @@ public class UserUpdateForm extends JFrame implements ActionListener {
             int returnVal = fileChooser.fc.showDialog(null, "Select");
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = fileChooser.fc.getSelectedFile();
+                currentUser.setPrivateFilePath(file.getAbsolutePath());
                 System.out.println(file.getAbsolutePath());
 
 

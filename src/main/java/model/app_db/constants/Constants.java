@@ -5,4 +5,5 @@ package model.app_db.constants;
  */
 public class Constants {
     public final static String PATH_FOR_SAVE_PRIVATE_FILE = "src/main/java/resources/pathForSavePrivateFileE.txt";
+    public final static String PATH_FOR_SAVE_USER_REG_DATA = "src/main/java/resources/pathForSaveUserRegData.txt";
 }

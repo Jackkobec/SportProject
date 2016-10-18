@@ -9,4 +9,6 @@ public interface UserControler {
     User createUserCont(User user);
 
     User updateUserCont(User newUser);
+
+    String getUsersFromDB();
 }

@@ -23,4 +23,9 @@ public class UserControllerImpl implements UserControler {
     public User updateUserCont(User newUser) {
         return userDAO.updateUser(newUser);
     }
+
+    @Override
+    public String getUsersFromDB() {
+        return userDAO.getUsersFromDB();
+    }
 }

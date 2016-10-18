@@ -1,18 +1,13 @@
 package view.actions;
 
-import view.FileChooser;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
-import static java.awt.Color.orange;
 
 /**
  * Created by Jack on 17.10.2016.
@@ -64,7 +59,7 @@ public class HelpAbourAutorAction extends AbstractAction {
                 JOptionPane.showMessageDialog(null,
                         "Данные скопированы в буфер обмена.\n" +
                                 "Skype: skypejs77\n" +
-                                "Email: jackkobec@gmail.com",
+                                "Email:   jackkobec@gmail.com",
                         "Информация об авторе скоп\nирована",
                         JOptionPane.INFORMATION_MESSAGE);
 

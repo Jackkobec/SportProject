@@ -4,6 +4,7 @@ import controller.interfaces.UserControler;
 import controller.validation.Validator;
 import model.IOActions;
 import model.IOActionsImplement;
+import model.app_db.AppDB;
 import model.app_db.UserDAO;
 import model.app_db.constants.Constants;
 import model.app_db.factory.ClassFactory;
@@ -21,7 +22,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+
 import static model.app_db.constants.Constants.PATH_FOR_SAVE_PRIVATE_FILE;
+import static model.app_db.constants.Constants.PATH_FOR_SAVE_USER_REG_DATA;
 
 
 /**
@@ -79,12 +82,6 @@ public class RegistrationForm extends JFrame implements ActionListener {
         loginField = new JTextField(10);
         loginField.setActionCommand(CONFIRM);
         loginField.setText(loginFromMain);
-        loginField.addActionListener(new ActionListener() {
-
-
-            public void actionPerformed(ActionEvent e) {
-            }
-        });
 
         //Create everything.
         passwordField = new JPasswordField(10);
@@ -93,12 +90,8 @@ public class RegistrationForm extends JFrame implements ActionListener {
         //set empty text on the password field
         passwordField.setText("");
 
-
-        passwordField.addActionListener(this);
-
         fioFild = new JTextField(20);
         fioFild.setActionCommand(CONFIRM);
-
 
         email = new JTextField(16);
         email.setActionCommand(CONFIRM);
@@ -212,12 +205,24 @@ public class RegistrationForm extends JFrame implements ActionListener {
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
-                userController.createUserCont(registeredUser);
-                System.out.println(registeredUser);
+
+                // userController.createUserCont(registeredUser);
+
+                new TrainingSelectFrame(userController.createUserCont(registeredUser), userDAO, validator, userController);
+                //System.out.println("regedUser" + regedUser);
+                //new TrainingSelectFrame(regedUser, userDAO, validator, userController);
+                System.out.println("getUsersFromDB: " + userController.getUsersFromDB());
+                try {
+                    new ClassFactory().getIoActions().writeInto(PATH_FOR_SAVE_USER_REG_DATA, registeredUser.toString());
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                System.out.println("registeredUser: " + registeredUser);
                 //выведление пути выделенной папки
                 System.out.println(tree.getLastSelectedPathComponent());
                 JOptionPane.showMessageDialog(controllingFrame,
                         "All is good.");
+                dispose();
             } else if (!validator.loginValidator(loginField.getText())) {
                 JOptionPane.showMessageDialog(controllingFrame,
                         "Invalid login. Try again.",

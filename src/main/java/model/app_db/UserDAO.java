@@ -16,6 +16,6 @@ public interface UserDAO extends AppDBInterface {
 
     List<Training> getTrainingsOfUser(User user);
 
-
+    String getUsersFromDB();
 
 }

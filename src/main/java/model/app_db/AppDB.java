@@ -18,13 +18,13 @@ public class AppDB {
 
     private List<Gymnastic> allGymnastics;
 
-    private Map<User, List<Training>> userAccounts;// = new ArrayList<>();
+    private  Map<User, List<Training>> userAccounts;// = new ArrayList<>();
     private List<Training> trainingsOfDefaultTrainings;
 
 
     public AppDB() {
         this.allGymnastics = new DefaultData().createListOfDefaultGymnastics();
-        this.userAccounts = new HashMap<>();
+        this.userAccounts = new HashMap<User, List<Training>>();
         this.trainingsOfDefaultTrainings = trainingsOfDefaultTrainings;
     }
     public AppDB(Map<User, List<Training>> userAccounts) {

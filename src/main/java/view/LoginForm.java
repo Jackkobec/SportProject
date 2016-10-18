@@ -1,6 +1,6 @@
 package view;
 
-import controller.interfaces.UserControler;
+import controller.interfaces.UserController;
 import controller.validation.Validator;
 import model.app_db.UserDAO;
 
@@ -13,7 +13,7 @@ import java.awt.*;
 public class LoginForm extends JFrame {
     private UserDAO userDAO;
     private Validator validator;
-    private UserControler userController;
+    private UserController userController;
 
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     public static int sizeWidth = 640;
@@ -22,7 +22,7 @@ public class LoginForm extends JFrame {
     public int locationY = (screenSize.height - sizeHeight) / 2;
 
 
-    public LoginForm(UserDAO userDAO, Validator validator, UserControler userController) throws HeadlessException {
+    public LoginForm(UserDAO userDAO, Validator validator, UserController userController) throws HeadlessException {
         this.userDAO = userDAO;
         this.validator = validator;
         this.userController = userController;

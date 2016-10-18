@@ -1,11 +1,9 @@
 package view;
 
-import controller.interfaces.UserControler;
+import controller.interfaces.UserController;
 import controller.validation.Validator;
-import model.app_db.AppDB;
 import model.app_db.UserDAO;
 import model.app_db.factory.ClassFactory;
-import model.enums.PrivateFileStatus;
 import model.roles.Contacts;
 import model.roles.User;
 
@@ -19,11 +17,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
 
-import static com.sun.deploy.uitoolkit.ToolkitStore.dispose;
 import static javax.swing.JFileChooser.DIRECTORIES_ONLY;
-import static model.app_db.constants.Constants.PATH_FOR_SAVE_PRIVATE_FILE;
 import static model.app_db.constants.Constants.PATH_FOR_SAVE_USER_REG_DATA;
 import static model.enums.PrivateFileStatus.SELECTED_AND_SAVED;
 import static model.enums.PrivateFileStatus.UNSELECTED;
@@ -33,7 +28,7 @@ import static model.enums.PrivateFileStatus.UNSELECTED;
  */
 public class UserUpdateForm extends JFrame implements ActionListener {
     private JFrame parentFrame;
-    private UserControler userController;
+    private UserController userController;
     private UserDAO userDAO;
     private Validator validator;
     private User currentUser;
@@ -61,14 +56,14 @@ public class UserUpdateForm extends JFrame implements ActionListener {
 
     String statusPtivateFile;
 
-    public UserUpdateForm(JFrame f, User currentUser, UserDAO userDAO, Validator validator, UserControler userController) throws HeadlessException {
+    public UserUpdateForm(JFrame f, User currentUser, UserDAO userDAO, Validator validator, UserController userController) throws HeadlessException {
         this.parentFrame = f;
         this.userDAO = userDAO;
         this.validator = validator;
-        this.userController = userController;//todo aaded controller
+        this.userController = userController;//todo added controller
         this.currentUser = currentUser;
         setLayout(new BorderLayout());
-        setTitle("Registration");
+        setTitle("Update User Info");
 
         setBounds(locationX, locationY, sizeWidth, sizeHeight);
         setMinimumSize(new Dimension(390, 480));

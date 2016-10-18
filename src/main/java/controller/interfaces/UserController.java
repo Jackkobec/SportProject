@@ -5,7 +5,7 @@ import model.roles.User;
 /**
  *
  */
-public interface UserControler {
+public interface UserController {
     User createUserCont(User user);
 
     User updateUserCont(User newUser);

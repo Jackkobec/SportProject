@@ -1,5 +1,5 @@
 import controller.implement.UserControllerImpl;
-import controller.interfaces.UserControler;
+import controller.interfaces.UserController;
 import model.app_db.AppDB;
 import model.app_db.UserDAO;
 import model.app_db.UserDAOimplement;
@@ -17,7 +17,7 @@ import static org.junit.Assert.assertTrue;
 public class UseeControllerTest {
     AppDB appDB = new AppDB();
     UserDAO userDAO = new UserDAOimplement(appDB);
-    UserControler userController = new UserControllerImpl(userDAO);
+    UserController userController = new UserControllerImpl(userDAO);
 
 
     @Test

@@ -1,14 +1,9 @@
 package view;
 
-import controller.implement.UserControllerImpl;
-import controller.interfaces.UserControler;
-import controller.validation.LoginFormValidation;
+import controller.interfaces.UserController;
 import controller.validation.Validator;
-import model.app_db.AppDB;
 import model.app_db.UserDAO;
-import model.app_db.UserDAOimplement;
 import model.roles.User;
-import view.MainFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,7 +17,7 @@ import java.time.format.DateTimeFormatter;
  */
 public class TrainingSelectFrame extends MainFrame implements ActionListener {
     private User loginedCurrentUser;
-    private UserControler userController;
+    private UserController userController;
     private UserDAO userDAO;
     private Validator validator;
 
@@ -35,7 +30,7 @@ public class TrainingSelectFrame extends MainFrame implements ActionListener {
     private static String LOGOUT = "Logout";
     private static String EDIT = "Edit";
 
-    public TrainingSelectFrame(User loginedCurrentUser, UserDAO userDAO, Validator validator, UserControler userController) throws HeadlessException {
+    public TrainingSelectFrame(User loginedCurrentUser, UserDAO userDAO, Validator validator, UserController userController) throws HeadlessException {
         this.loginedCurrentUser = loginedCurrentUser;
         this.userDAO = userDAO;
         this.validator = validator;

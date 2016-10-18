@@ -1,12 +1,8 @@
 package view;
 
-import controller.interfaces.UserControler;
+import controller.interfaces.UserController;
 import controller.validation.Validator;
-import model.IOActions;
-import model.IOActionsImplement;
-import model.app_db.AppDB;
 import model.app_db.UserDAO;
-import model.app_db.constants.Constants;
 import model.app_db.factory.ClassFactory;
 import model.enums.PrivateFileStatus;
 import model.roles.Contacts;
@@ -16,7 +12,6 @@ import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,7 +26,7 @@ import static model.app_db.constants.Constants.PATH_FOR_SAVE_USER_REG_DATA;
  * RegistrationForm
  */
 public class RegistrationForm extends JFrame implements ActionListener {
-    private UserControler userController;
+    private UserController userController;
     private UserDAO userDAO;
     private Validator validator;
 
@@ -55,7 +50,7 @@ public class RegistrationForm extends JFrame implements ActionListener {
     private JTextField email;
 
 
-    public RegistrationForm(JFrame f, String loginFromMain, String passFromMain, UserDAO userDAO, Validator validator, UserControler userController) throws HeadlessException {
+    public RegistrationForm(JFrame f, String loginFromMain, String passFromMain, UserDAO userDAO, Validator validator, UserController userController) throws HeadlessException {
         this.userDAO = userDAO;
         this.validator = validator;
         this.userController = userController;//todo aaded controller

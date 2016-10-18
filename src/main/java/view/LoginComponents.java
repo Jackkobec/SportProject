@@ -1,6 +1,6 @@
 package view;
 
-import controller.interfaces.UserControler;
+import controller.interfaces.UserController;
 import controller.validation.Validator;
 import model.app_db.UserDAO;
 
@@ -26,9 +26,9 @@ public class LoginComponents extends JPanel
     private JFrame controllingFrame; //needed for dialogs
     private JTextField loginField;
     private JPasswordField passwordField;
-    private UserControler userController;
+    private UserController userController;
 
-    public LoginComponents(JFrame f, UserDAO userDAO, Validator validator, UserControler userController) {
+    public LoginComponents(JFrame f, UserDAO userDAO, Validator validator, UserController userController) {
         this.userDAO = userDAO;
         this.validator = validator;
         this.userController = userController;

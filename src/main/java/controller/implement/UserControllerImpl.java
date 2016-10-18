@@ -1,13 +1,13 @@
 package controller.implement;
 
-import controller.interfaces.UserControler;
+import controller.interfaces.UserController;
 import model.app_db.UserDAO;
 import model.roles.User;
 
 /**
  * UserControllerImpl
  */
-public class UserControllerImpl implements UserControler {
+public class UserControllerImpl implements UserController {
     private UserDAO userDAO;
 
     public UserControllerImpl(UserDAO usedrDAO) {

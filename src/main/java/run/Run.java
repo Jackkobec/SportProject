@@ -7,6 +7,7 @@ import controller.validation.Validator;
 import model.app_db.AppDB;
 import model.app_db.UserDAO;
 import model.app_db.UserDAOimplement;
+import model.roles.User;
 import view.*;
 
 /**
@@ -19,11 +20,11 @@ public class Run {
         UserController userController = new UserControllerImpl(userDAO);
         Validator validator = new LoginFormValidation();//todo factory better then this
         //todo dont forget add initialisation of the controllers and other data
-        //new LoginForm(userDAO, validator, userController);
+        new LoginForm(userDAO, validator, userController);
         //new UserUpdateForm(null,userController.createUserCont(new User("Vasa", "777", null, null, SELECTED_AND_SAVED, "C:\\")) , userDAO, validator, userController);
-        new MainFrameTraining();
+        //new MainFrameTraining();
         //new MainFrame();
         // new NewTestFame();
-       // new TrainingSelectFrame();
+        //new TrainingSelectFrame(new User("Jack", "777"), userDAO, validator, userController);
     }
 }

@@ -80,12 +80,14 @@ public class RegistrationForm extends JFrame implements ActionListener {
 
         loginField = new JTextField(10);
         loginField.setActionCommand(CONFIRM);
+        //подсказка при наведени фокуса
         loginField.setToolTipText("Enter your Login. Length: 3-15, Symbols: A-Z,a-z,0-9_");
         loginField.setText(loginFromMain);
 
         //Create everything.
         passwordField = new JPasswordField(10);
         passwordField.setActionCommand(CONFIRM);
+        //подсказка при наведени фокуса
         passwordField.setToolTipText("Enter your Password. Length: 3-15, Symbols: A-Z,a-z,0-9_");
         //set empty text on the password field
         passwordField.setText("");

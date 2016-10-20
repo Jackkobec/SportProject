@@ -32,8 +32,15 @@ public class JOptionPaneManager {
                         "Подтверждение", JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
                 return m;
+
+            case USER_NOT_FOUND:
+                JOptionPane.showMessageDialog(controllingFrame,
+                        "User not found. Try again.\nEnter your Login end Password.",
+                        "Error Message",
+                        JOptionPane.ERROR_MESSAGE);
+                break;
         }
-        return -100500;//this means nothing
+        return -777;//this means nothing
     }
 
 }

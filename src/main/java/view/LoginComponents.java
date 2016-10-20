@@ -4,6 +4,8 @@ import controller.interfaces.UserController;
 import controller.validation.Validator;
 import model.app_db.UserDAO;
 import model.enums.JOptionsPaneEnums;
+import model.exceptions.UserNotFoundException;
+import model.roles.User;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,9 +16,8 @@ import java.util.Arrays;
 
 import static com.sun.deploy.uitoolkit.ToolkitStore.dispose;
 import static model.enums.JOptionsPaneEnums.ENUM_HELP;
-import static model.enums.ValidationErrors.EMAIL_ERROR;
-import static model.enums.ValidationErrors.LOGIN_ERROR;
-import static model.enums.ValidationErrors.PASSWORD_ERROR;
+import static model.enums.JOptionsPaneEnums.USER_NOT_FOUND;
+import static model.enums.ValidationErrors.*;
 import static view.ErrorValodationDialogs.errorValidationDialog;
 import static view.JOptionPaneManager.showJOptionPane;
 
@@ -25,20 +26,23 @@ import static view.JOptionPaneManager.showJOptionPane;
 
 public class LoginComponents extends JPanel
         implements ActionListener {
-    private UserDAO userDAO;
-    private Validator validator;
     private static String OK = "ok";
     private static String HELP = "help";
 
     private JFrame controllingFrame; //needed for dialogs
     private JTextField loginField;
     private JPasswordField passwordField;
-    private UserController userController;
 
-    public LoginComponents(JFrame f, UserDAO userDAO, Validator validator, UserController userController) {
+    private UserController userController;
+    private UserDAO userDAO;
+    private Validator validator;
+    private JFrame globalParentFrame; //this is LoginForm all frame
+
+    public LoginComponents(JFrame globalParentFrame, UserDAO userDAO, Validator validator, UserController userController) {
         this.userDAO = userDAO;
         this.validator = validator;
         this.userController = userController;
+        this.globalParentFrame = globalParentFrame;
         //Use the default FlowLayout.
         //  controllingFrame = f;
 
@@ -71,7 +75,7 @@ public class LoginComponents extends JPanel
         // add(textPane);
         add(logPasPane);
         add(buttonPane);
-        add(createregAndLoadPanel(f));
+        add(createregAndLoadPanel(globalParentFrame));
 
     }
 
@@ -131,7 +135,7 @@ public class LoginComponents extends JPanel
         return p;
     }
 
-    protected JComponent createregAndLoadPanel(final JFrame f) {
+    protected JComponent createregAndLoadPanel(JFrame globalParentFrame) {
         JPanel regAndLoad = new JPanel(new GridLayout(0, 2));
         Font font = new Font("Tamoha", Font.BOLD, 16);
 
@@ -142,9 +146,9 @@ public class LoginComponents extends JPanel
         registerButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
-                new RegistrationForm(f, loginField.getText(), String.valueOf(passwordField.getPassword()), userDAO, validator, userController);
+                new RegistrationForm(globalParentFrame, loginField.getText(), String.valueOf(passwordField.getPassword()), userDAO, validator, userController);
                 try {
-                    f.setVisible(false);
+                    globalParentFrame.setVisible(false);
                     getParent().setVisible(false);
                     dispose();
 
@@ -170,7 +174,7 @@ public class LoginComponents extends JPanel
                         File file = fileChooser.fc.getSelectedFile();
                         new MainFrameTraining();
 
-                        f.setVisible(false);
+                        globalParentFrame.setVisible(false);
                         getParent().setVisible(false);
                         dispose();
                     }
@@ -191,19 +195,49 @@ public class LoginComponents extends JPanel
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
         //String password = passwordField.getPassword().toString();
-        String password = passwordField.getText();
-        if (OK.equals(cmd)) { //Process the password.
+        String password = passwordField.getText(); //String.valueOf(passwordField);
+        String login = loginField.getText();
+        if (OK.equals(cmd)) {
+            //Process the password.
+//            if (loginField.getText().isEmpty() && password.isEmpty()) {
+//                errorValidationDialog(LOGIN_AND_PASSWORD_IS_EMPTY);
+//            } else if (validator.loginValidator(login) && validator.passwordValidator(password)) {
+//                //todo User entering
+//
+//                    //userController.findUser(login, password);
+//                    //userController.findUser(login, password);
+//
+//                JOptionPane.showMessageDialog(controllingFrame,
+//                        "All is good.");
+//
+//            } else if (!validator.loginValidator(login)) {
+//                errorValidationDialog(LOGIN_ERROR);
+//            } else if (!validator.passwordValidator(password)) {
+//                errorValidationDialog(PASSWORD_ERROR);
+//            }
             if (loginField.getText().isEmpty() && password.isEmpty()) {
+                errorValidationDialog(LOGIN_AND_PASSWORD_IS_EMPTY);
+            } else if (!validator.loginValidator(login)) {
                 errorValidationDialog(LOGIN_ERROR);
-            } else if (validator.loginValidator(loginField.getText()) && validator.passwordValidator(password)) {
-                //todo User entering
-                JOptionPane.showMessageDialog(controllingFrame,
-                        "All is good.");
-            } else if (!validator.loginValidator(loginField.getText())) {
-                errorValidationDialog(PASSWORD_ERROR);
             } else if (!validator.passwordValidator(password)) {
-                errorValidationDialog(EMAIL_ERROR);
+                errorValidationDialog(PASSWORD_ERROR);
+            } else if (validator.loginValidator(login) && validator.passwordValidator(password)) {
+                //todo User entering
+
+                try {
+                    userController.findUser(login, password);
+                    globalParentFrame.setVisible(false);
+                    new TrainingSelectFrame(userController.findUser(login, password), userDAO, validator, userController);
+
+                } catch (UserNotFoundException e1) {
+                    showJOptionPane(USER_NOT_FOUND);
+                }
+
+//                JOptionPane.showMessageDialog(controllingFrame,
+//                        "All is good.");
+
             }
+
         }
 //repushing comment
         passwordField.selectAll();

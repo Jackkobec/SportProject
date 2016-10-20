@@ -1,5 +1,6 @@
 package model.app_db;
 
+import model.exceptions.UserNotFoundException;
 import model.roles.Training;
 import model.roles.User;
 
@@ -10,12 +11,18 @@ import java.util.List;
  */
 public interface UserDAO extends AppDBInterface {
 
-    public User createUser(User user);
+    User createUser(User user);
 
-    public User updateUser(User user);
+    User updateUser(User user);
 
     List<Training> getTrainingsOfUser(User user);
 
     String getUsersFromDB();
+
+    User getUserFromDB(User user);
+
+    User findUser(User user);
+
+    User findUser(String login, String pass) throws UserNotFoundException;
 
 }

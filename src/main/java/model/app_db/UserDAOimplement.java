@@ -1,6 +1,7 @@
 package model.app_db;
 
 import model.exceptions.IncorrectUserException;
+import model.exceptions.UserNotFoundException;
 import model.roles.Training;
 import model.roles.User;
 
@@ -26,8 +27,8 @@ public class UserDAOimplement implements UserDAO {
 
     @Override
     public User updateUser(User newUser) {
-       // User res = null;
-        Set<User> useSet  = appDB.getUserAccounts().keySet();
+        // User res = null;
+        Set<User> useSet = appDB.getUserAccounts().keySet();
         for (User us : useSet) {
 //            if (us.getId() == newUser.getId()) {
 //
@@ -38,7 +39,7 @@ public class UserDAOimplement implements UserDAO {
             if (us.getId() == newUser.getId()) {
                 useSet.remove(us);
                 appDB.getUserAccounts().put(newUser, new ArrayList<>());
-               return newUser;
+                return newUser;
             }
         }
         try {
@@ -57,5 +58,25 @@ public class UserDAOimplement implements UserDAO {
     @Override
     public String getUsersFromDB() {
         return appDB.getUserAccounts().toString();
+    }
+
+    @Override
+    public User getUserFromDB(User user) {
+        return null;
+    }
+
+    @Override
+    public User findUser(User user) {
+        return null;
+    }
+
+    @Override
+    public User findUser(String login, String pass) throws UserNotFoundException {
+        for (User us : appDB.getUserAccounts().keySet()) {
+            if (us.getLogin().equals(login) && us.getPassword().equals(pass)) {
+                return us;
+            }
+        }
+        throw new UserNotFoundException("User Not Found!");
     }
 }

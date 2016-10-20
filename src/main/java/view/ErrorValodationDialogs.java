@@ -33,6 +33,14 @@ public class ErrorValodationDialogs {
                         "Error Message",
                         JOptionPane.ERROR_MESSAGE);
                 break;
+
+
+            case LOGIN_AND_PASSWORD_IS_EMPTY:
+                JOptionPane.showMessageDialog(controllingFrame,
+                        "Enter Login and Password.",
+                        "Error Message",
+                        JOptionPane.ERROR_MESSAGE);
+                break;
         }
     }
 }

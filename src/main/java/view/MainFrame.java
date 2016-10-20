@@ -9,13 +9,14 @@ import java.awt.*;
  * Created by Стас on 19.09.2016.
  */
 public class MainFrame extends JFrame {
-    private final JTabbedPane pane = new JTabbedPane();
+    private static int sizeWidth = 800;
+    private static int sizeHeight = 600;
 
-    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    public static int sizeWidth = 800;
-    public static int sizeHeight = 600;
-    public int locationX = (screenSize.width - sizeWidth) / 2;
-    public int locationY = (screenSize.height - sizeHeight) / 2;
+    private final JTabbedPane pane = new JTabbedPane();
+    private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+    private int locationX = (screenSize.width - sizeWidth) / 2;
+    private int locationY = (screenSize.height - sizeHeight) / 2;
 
     public MainFrame() throws HeadlessException {
 

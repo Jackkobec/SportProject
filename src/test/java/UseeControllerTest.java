@@ -15,6 +15,8 @@ import static org.junit.Assert.assertTrue;
  * Created by Jack on 15.10.2016.
  */
 public class UseeControllerTest {
+    // constructor
+    // or before
     AppDB appDB = new AppDB();
     UserDAO userDAO = new UserDAOimplement(appDB);
     UserController userController = new UserControllerImpl(userDAO);

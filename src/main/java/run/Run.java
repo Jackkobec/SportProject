@@ -18,10 +18,10 @@ public class Run {
         UserDAO userDAO = new UserDAOimplement(appDB);//todo factory better then this
         UserController userController = new UserControllerImpl(userDAO);
         Validator validator = new LoginFormValidation();//todo factory better then this
-//todo dont forget add initialisation of the controllers and other data
-        new LoginForm(userDAO, validator, userController);
+        //todo dont forget add initialisation of the controllers and other data
+        //new LoginForm(userDAO, validator, userController);
         //new UserUpdateForm(null,userController.createUserCont(new User("Vasa", "777", null, null, SELECTED_AND_SAVED, "C:\\")) , userDAO, validator, userController);
-        //new MainFrameTraining();
+        new MainFrameTraining();
         //new MainFrame();
         // new NewTestFame();
        // new TrainingSelectFrame();

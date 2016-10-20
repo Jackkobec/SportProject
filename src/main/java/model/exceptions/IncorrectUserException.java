@@ -5,5 +5,6 @@ package model.exceptions;
  */
 public class IncorrectUserException extends Exception {
     public IncorrectUserException(String s) {
+        super(s);
     }
 }

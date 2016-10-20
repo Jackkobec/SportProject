@@ -10,14 +10,15 @@ import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.*;
 import java.util.List;
+
+import static model.enums.JOptionsPaneEnums.ENUM_LOGOUT;
+import static model.enums.JOptionsPaneEnums.WRITTE_RESULT_CURRENT_GYMNASTIC;
+import static view.JOptionPaneManager.showJOptionPane;
 
 /**
  * MainFrameTraining
@@ -25,13 +26,13 @@ import java.util.List;
 public class MainFrameTraining extends MainFrame {
     private final JTabbedPane pane = new JTabbedPane();
 
-    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    public static int sizeWidth = 800;
-    public static int sizeHeight = 600;
-    public int locationX = (screenSize.width - sizeWidth) / 2;
-    public int locationY = (screenSize.height - sizeHeight) / 2;
+    private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private static int sizeWidth = 800;
+    private static int sizeHeight = 600;
+    private int locationX = (screenSize.width - sizeWidth) / 2;
+    private int locationY = (screenSize.height - sizeHeight) / 2;
 
-    List<Gymnastic> defaultGymnastics = new DefaultData().createListOfDefaultGymnastics();
+    private List<Gymnastic> defaultGymnastics = new DefaultData().createListOfDefaultGymnastics();
 
     public MainFrameTraining() throws HeadlessException {
 
@@ -104,14 +105,14 @@ public class MainFrameTraining extends MainFrame {
         logout.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Object[] options = {"Да", "Нет!"};
-                int n = JOptionPane.showOptionDialog(new JFrame(), "Кнопка не активна. Её целесообразность решается.",
-                        "Подтверждение", JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                int n = showJOptionPane(ENUM_LOGOUT);
                 //проверяем если нисего не было выбрано и был нажат крестик - то просто закрываем диалог и возвращаемся в программу
                 if (n == 1 || n == -1) {
                     return;
-                } else return;
+                } else {
+                    dispose();
+                    new LoginForm(null, null, null);
+                }//todo change null to correct value
             }
         });
         innerTrainingPanelNorthPanel.add(logout, BorderLayout.EAST);
@@ -275,28 +276,28 @@ public class MainFrameTraining extends MainFrame {
                 }
                 switch (radioButtonText) {
                     case "5 подходов":
-                        setBy12.hide();
-                        setBy7.hide();
-                        confirmSetButton.hide();
-                        setDefaultRepeatOfSets.show();
+                        setBy12.setVisible(false);
+                        setBy7.setVisible(false);
+                        confirmSetButton.setVisible(false);
+                        setDefaultRepeatOfSets.setVisible(true);
 
                         curentGymnastycResaltsTable[0].setModel(new CurrentResaltTableModel(5));
                         curentGymnastycResaltsTable[0].revalidate();
                         break;
                     case "1-2 подхода":
-                        setBy5.hide();
-                        setBy7.hide();
-                        confirmSetButton.hide();
-                        setDefaultRepeatOfSets.show();
+                        setBy5.setVisible(false);
+                        setBy7.setVisible(false);
+                        confirmSetButton.setVisible(false);
+                        setDefaultRepeatOfSets.setVisible(true);
 
                         curentGymnastycResaltsTable[0].setModel(new CurrentResaltTableModel(2));
                         curentGymnastycResaltsTable[0].revalidate();
                         break;
                     case "7 подходов":
-                        setBy12.hide();
-                        setBy5.hide();
-                        confirmSetButton.hide();
-                        setDefaultRepeatOfSets.show();
+                        setBy12.setVisible(false);
+                        setBy5.setVisible(false);
+                        confirmSetButton.setVisible(false);
+                        setDefaultRepeatOfSets.setVisible(true);
 
                         curentGymnastycResaltsTable[0].setModel(new CurrentResaltTableModel(7));
                         curentGymnastycResaltsTable[0].revalidate();
@@ -308,10 +309,7 @@ public class MainFrameTraining extends MainFrame {
         writeResultsOfSetsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Object[] options = {"Да", "Нет!"};
-                int n = JOptionPane.showOptionDialog(new JFrame(), "Записать результаты текущего упражнения в таблицу результатов?",
-                        "Подтверждение", JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                int n = showJOptionPane(WRITTE_RESULT_CURRENT_GYMNASTIC);
                 //проверяем если нисего не было выбрано и был нажат крестик - то просто закрываем диалог и возвращаемся в программу
                 if (n == 1 || n == -1) {
                     return;
@@ -321,7 +319,7 @@ public class MainFrameTraining extends MainFrame {
                         curentGymnastycResaltsTable[0].getCellEditor().stopCellEditing();
 
 
-                        HashMap<String, List<Object>> resultsOfCurrentMap = new HashMap<>();
+                        Map<String, List<Object>> resultsOfCurrentMap = new HashMap<>();
 
                         List<Object> resultsOfCurrentTrAttay = new ArrayList<>();
                         resultsOfCurrentTrAttay.clear();

@@ -44,6 +44,7 @@ public class FileTree {
                 new TreeCellRenderer() {
                     // заготовка возвращаемого из renderer-а компонента
                     JLabel jLabel = new JLabel("XXX");
+                    // todo use non absolute path
                     public final ImageIcon ICON_FILE = new ImageIcon("c:\\tmp\\file.png");
                     public final ImageIcon ICON_DIR = new ImageIcon("c:\\tmp\\dir.png");
                     public final ImageIcon ICON_MYCOMP = new ImageIcon("c:\\tmp\\comp.png");

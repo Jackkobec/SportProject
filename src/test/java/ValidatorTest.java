@@ -11,6 +11,9 @@ import static org.junit.Assert.assertTrue;
  * ValidatorTest
  */
 public class ValidatorTest {
+
+    // access modifiers and
+    // little methods
     Validator validator = new LoginFormValidation();
 
     @Test

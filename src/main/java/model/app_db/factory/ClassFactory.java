@@ -4,7 +4,7 @@ import model.IOActions;
 import model.IOActionsImplement;
 
 /**
- * Created by Jack on 16.10.2016.
+ * todo lazy singleton
  */
 public class ClassFactory {
     private IOActions ioActions = new IOActionsImplement();

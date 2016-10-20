@@ -12,6 +12,9 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import static model.enums.JOptionsPaneEnums.ENUM_LOGOUT;
+import static view.JOptionPaneManager.showJOptionPane;
+
 /**
  * Created by Jack on 18.10.2016.
  */
@@ -21,11 +24,11 @@ public class TrainingSelectFrame extends MainFrame implements ActionListener {
     private UserDAO userDAO;
     private Validator validator;
 
-    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    public static int sizeWidth = 800;
-    public static int sizeHeight = 600;
-    public int locationX = (screenSize.width - sizeWidth) / 2;
-    public int locationY = (screenSize.height - sizeHeight) / 2;
+    private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private static int sizeWidth = 800;
+    private static int sizeHeight = 600;
+    private int locationX = (screenSize.width - sizeWidth) / 2;
+    private int locationY = (screenSize.height - sizeHeight) / 2;
 
     private static String LOGOUT = "Logout";
     private static String EDIT = "Edit";
@@ -50,6 +53,7 @@ public class TrainingSelectFrame extends MainFrame implements ActionListener {
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
     }
+
     //setter for change user
     public void setLoginedCurrentUser(User loginedCurrentUser) {
         this.loginedCurrentUser = loginedCurrentUser;
@@ -75,7 +79,7 @@ public class TrainingSelectFrame extends MainFrame implements ActionListener {
         //панель для отображения логина юзера и кнопки Edit
         JPanel userProfileInnerPanelForButtonsEdit = new JPanel(new GridLayout());
 
-        JLabel userLabel = new JLabel("User: "+ loginedCurrentUser.getLogin() + "  ");
+        JLabel userLabel = new JLabel("User: " + loginedCurrentUser.getLogin() + "  ");
         JButton userEditButton = new JButton("Edit");
         userEditButton.setActionCommand(EDIT);
         userEditButton.addActionListener(this);
@@ -106,14 +110,14 @@ public class TrainingSelectFrame extends MainFrame implements ActionListener {
             dispose();
         }
         if (LOGOUT.equals(cmd)) {
-            Object[] options = {"Да", "Нет!"};
-            int n = JOptionPane.showOptionDialog(new JFrame(), "Кнопка не активна. Её целесообразность решается.",
-                    "Подтверждение", JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+            int n = showJOptionPane(ENUM_LOGOUT);
             //проверяем если нисего не было выбрано и был нажат крестик - то просто закрываем диалог и возвращаемся в программу
             if (n == 1 || n == -1) {
                 return;
-            } else return;
+            } else {
+                dispose();
+                new LoginForm(userDAO, validator, userController);
+            }
         }
     }
 }

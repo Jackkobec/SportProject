@@ -3,6 +3,7 @@ package view;
 import controller.interfaces.UserController;
 import controller.validation.Validator;
 import model.app_db.UserDAO;
+import model.enums.JOptionsPaneEnums;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,6 +13,12 @@ import java.io.File;
 import java.util.Arrays;
 
 import static com.sun.deploy.uitoolkit.ToolkitStore.dispose;
+import static model.enums.JOptionsPaneEnums.ENUM_HELP;
+import static model.enums.ValidationErrors.EMAIL_ERROR;
+import static model.enums.ValidationErrors.LOGIN_ERROR;
+import static model.enums.ValidationErrors.PASSWORD_ERROR;
+import static view.ErrorValodationDialogs.errorValidationDialog;
+import static view.JOptionPaneManager.showJOptionPane;
 
 
 /* LoginComponents.java requires no other files. */
@@ -73,6 +80,8 @@ public class LoginComponents extends JPanel
         p.setBackground(Color.orange);
         loginField = new JTextField(10);
         loginField.setActionCommand(OK);
+        //всплывающая подсказка при фокусе
+        loginField.setToolTipText("Enter your Login. Length: 3-15, Symbols: A-Z,a-z,0-9_");
         loginField.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
@@ -82,6 +91,7 @@ public class LoginComponents extends JPanel
         //Create everything.
         passwordField = new JPasswordField(10);
         passwordField.setActionCommand(OK);
+        passwordField.setToolTipText("Enter your Password. Length: 3-15, Symbols: A-Z,a-z,0-9_");
         passwordField.addActionListener(this);
 
         Font font = new Font("Tamoha", Font.BOLD, 16);
@@ -132,7 +142,7 @@ public class LoginComponents extends JPanel
         registerButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
-                new RegistrationForm(f, loginField.getText(), passwordField.getPassword().toString(), userDAO, validator, userController);
+                new RegistrationForm(f, loginField.getText(), String.valueOf(passwordField.getPassword()), userDAO, validator, userController);
                 try {
                     f.setVisible(false);
                     getParent().setVisible(false);
@@ -184,38 +194,23 @@ public class LoginComponents extends JPanel
         String password = passwordField.getText();
         if (OK.equals(cmd)) { //Process the password.
             if (loginField.getText().isEmpty() && password.isEmpty()) {
-                JOptionPane.showMessageDialog(controllingFrame,
-                        "Please enter login and password",
-                        "Error Message",
-                        JOptionPane.ERROR_MESSAGE);
+                errorValidationDialog(LOGIN_ERROR);
             } else if (validator.loginValidator(loginField.getText()) && validator.passwordValidator(password)) {
                 //todo User entering
                 JOptionPane.showMessageDialog(controllingFrame,
                         "All is good.");
             } else if (!validator.loginValidator(loginField.getText())) {
-                JOptionPane.showMessageDialog(controllingFrame,
-                        "Invalid login. Try again.",
-                        "Error Message",
-                        JOptionPane.ERROR_MESSAGE);
-                //send request for compare 2 arrays
+                errorValidationDialog(PASSWORD_ERROR);
             } else if (!validator.passwordValidator(password)) {
-                JOptionPane.showMessageDialog(controllingFrame,
-                        "Invalid password. Try again.",
-                        "Error Message",
-                        JOptionPane.ERROR_MESSAGE);
+                errorValidationDialog(EMAIL_ERROR);
             }
         }
 //repushing comment
         passwordField.selectAll();
         resetFocus();
         if (HELP.equals(cmd)) { //The user has asked for help.
-            JOptionPane.showMessageDialog(controllingFrame,
-                    "Войдите под раннее соданым аккаунтом или зарегистрируйтесь.\n"
-                            + "Так же Вы можете запустить программу из совего приватного файла тренировок\n"
-                            + "При регистрации Вам будет предложено выбрать место хранения приватного файла,\n"
-                            + "в котором будут храниться Ваши данные и резальтаты тренировок.");
+            showJOptionPane(ENUM_HELP);
         }
-
     }
 
 

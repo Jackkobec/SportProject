@@ -10,7 +10,7 @@ import java.io.File;
  * FileSaveAction
  */
 public class FileSaveAction extends AbstractAction {
-    final private FileChooser fileChooser;
+    private final FileChooser fileChooser;
 
     public FileSaveAction(String text, ImageIcon icon, String desc, Integer mnemonic) {
         super(text, icon);

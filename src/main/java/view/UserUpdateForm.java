@@ -22,6 +22,10 @@ import static javax.swing.JFileChooser.DIRECTORIES_ONLY;
 import static model.app_db.constants.Constants.PATH_FOR_SAVE_USER_REG_DATA;
 import static model.enums.PrivateFileStatus.SELECTED_AND_SAVED;
 import static model.enums.PrivateFileStatus.UNSELECTED;
+import static model.enums.ValidationErrors.EMAIL_ERROR;
+import static model.enums.ValidationErrors.LOGIN_ERROR;
+import static model.enums.ValidationErrors.PASSWORD_ERROR;
+import static view.ErrorValodationDialogs.errorValidationDialog;
 
 /**
  * Created by Jack on 16.10.2016.
@@ -33,14 +37,14 @@ public class UserUpdateForm extends JFrame implements ActionListener {
     private Validator validator;
     private User currentUser;
 
-    FileSystemModel fileSystemDataModel = new FileSystemModel();
-    JTree tree = new JTree(fileSystemDataModel);
+    private FileSystemModel fileSystemDataModel = new FileSystemModel();
+    private JTree tree = new JTree(fileSystemDataModel);
 
-    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    public static int sizeWidth = 388;
-    public static int sizeHeight = 480;
-    public int locationX = (screenSize.width - sizeWidth) / 2;
-    public int locationY = (screenSize.height - sizeHeight) / 2;
+    private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private static int sizeWidth = 388;
+    private static int sizeHeight = 480;
+    private int locationX = (screenSize.width - sizeWidth) / 2;
+    private int locationY = (screenSize.height - sizeHeight) / 2;
 
     private static String CONFIRM = "confirm";
     private static String BACK = "back";
@@ -54,7 +58,7 @@ public class UserUpdateForm extends JFrame implements ActionListener {
     private JTextField phone;
     private JTextField address;
 
-    String statusPtivateFile;
+    private String statusPtivateFile;
 
     public UserUpdateForm(JFrame f, User currentUser, UserDAO userDAO, Validator validator, UserController userController) throws HeadlessException {
         this.parentFrame = f;
@@ -84,25 +88,31 @@ public class UserUpdateForm extends JFrame implements ActionListener {
 
         loginField = new JTextField(10);
         loginField.setActionCommand(CONFIRM);
+        loginField.setToolTipText("Enter your Login. Length: 3-15, Symbols: A-Z,a-z,0-9_");
 
         //Create everything.
         passwordField = new JPasswordField(10);
         passwordField.setActionCommand(CONFIRM);
-
+        passwordField.setToolTipText("Enter your Password. Length: 3-15, Symbols: A-Z,a-z,0-9_");
         //set empty text on the password field
         passwordField.setText("");
 
         fioFild = new JTextField(20);
         fioFild.setActionCommand(CONFIRM);
+        fioFild.setToolTipText("Enter your Name. Example: Jack");
 
         email = new JTextField(16);
         email.setActionCommand(CONFIRM);
+        email.setToolTipText("Enter your Email. Example: sport@gmail.com");
 
         phone = new JTextField(16);
         phone.setActionCommand(CONFIRM);
+        phone.setToolTipText("Enter your Phone. Example: 077 777 77 77");
 
         address = new JTextField(22);
         address.setActionCommand(CONFIRM);
+        address.setToolTipText("Enter your Address. Example: Shevchenko str. 7");
+
         //auto-complete data
         if (null != currentUser) {
             loginField.setText(currentUser.getLogin());
@@ -315,20 +325,13 @@ public class UserUpdateForm extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(controllingFrame,
                         "All is good.");
             } else if (!validator.loginValidator(loginField.getText())) {
-                JOptionPane.showMessageDialog(controllingFrame,
-                        "Invalid login. Try again.",
-                        "Error Message",
-                        JOptionPane.ERROR_MESSAGE);
+                errorValidationDialog(LOGIN_ERROR);
+
             } else if (!validator.passwordValidator(password)) {
-                JOptionPane.showMessageDialog(controllingFrame,
-                        "Invalid password. Try again.",
-                        "Error Message",
-                        JOptionPane.ERROR_MESSAGE);
+                errorValidationDialog(PASSWORD_ERROR);
+
             } else if (!validator.emailValidator(email.getText())) {
-                JOptionPane.showMessageDialog(controllingFrame,
-                        "Invalid email. Try again.",
-                        "Error Message",
-                        JOptionPane.ERROR_MESSAGE);
+                errorValidationDialog(EMAIL_ERROR);
             }
             dispose();
             new TrainingSelectFrame(currentUser, userDAO, validator, userController);

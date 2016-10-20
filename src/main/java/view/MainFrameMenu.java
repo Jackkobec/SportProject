@@ -3,24 +3,22 @@ package view;
 import view.actions.FileOpenAction;
 import view.actions.FileSaveAction;
 import view.actions.HelpAbourAutorAction;
-import view.view_components.components.MenuLookDemo;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.io.File;
 
 /**
  * MainFrameMenu
  */
 public class MainFrameMenu implements ActionListener {
     //  private static String OPEN = "open";
-    JTextArea output;
-    JScrollPane scrollPane;
-    FileChooser menuFileChoser = new FileChooser();
-    Font font = new Font("Tamoha", Font.BOLD, 14);
+    private JTextArea output;
+    private JScrollPane scrollPane;
+    private FileChooser menuFileChoser = new FileChooser();
+    private Font font = new Font("Tamoha", Font.BOLD, 14);
 
 
     public JMenuBar createMenuBar() {

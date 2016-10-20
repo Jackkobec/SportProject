@@ -3,7 +3,7 @@ package model.app_db;
 import model.roles.Gymnastic;
 
 /**
- * GymnasticDAO
+ * GymnasticDAO todo use exceptions , for eg. NoGymnasticsFoundException
  */
 public interface GymnasticDAO extends AppDBInterface {
 

@@ -15,22 +15,25 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 
 import static javax.swing.JFileChooser.DIRECTORIES_ONLY;
-import static model.app_db.constants.Constants.PATH_FOR_SAVE_USER_REG_DATA;
+import static model.app_db.constants.MyConstants.BACK_ON_CLOSE;
+import static model.app_db.constants.MyConstants.PATH_FOR_SAVE_USER_REG_DATA;
 import static model.enums.PrivateFileStatus.SELECTED_AND_SAVED;
 import static model.enums.PrivateFileStatus.UNSELECTED;
-import static model.enums.ValidationErrors.EMAIL_ERROR;
-import static model.enums.ValidationErrors.LOGIN_ERROR;
-import static model.enums.ValidationErrors.PASSWORD_ERROR;
+import static model.enums.ValidationErrors.*;
 import static view.ErrorValodationDialogs.errorValidationDialog;
 
 /**
  * Created by Jack on 16.10.2016.
  */
 public class UserUpdateForm extends JFrame implements ActionListener {
+    private int defaultCloseOperation = HIDE_ON_CLOSE;
+
+
     private JFrame parentFrame;
     private UserController userController;
     private UserDAO userDAO;
@@ -76,7 +79,58 @@ public class UserUpdateForm extends JFrame implements ActionListener {
         addComponents(f, getContentPane());
         getRootPane().setBackground(Color.orange);
         setVisible(true);
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(BACK_ON_CLOSE);
+    }
+
+    @Override
+    public void setDefaultCloseOperation(int operation) {
+        if (operation != DO_NOTHING_ON_CLOSE &&
+                operation != HIDE_ON_CLOSE &&
+                operation != DISPOSE_ON_CLOSE &&
+                operation != EXIT_ON_CLOSE &&
+                operation != BACK_ON_CLOSE) {
+            throw new IllegalArgumentException("defaultCloseOperation must be one of: DO_NOTHING_ON_CLOSE, HIDE_ON_CLOSE, DISPOSE_ON_CLOSE, or EXIT_ON_CLOSE");
+        }
+
+        if (operation == EXIT_ON_CLOSE) {
+            SecurityManager security = System.getSecurityManager();
+            if (security != null) {
+                security.checkExit(0);
+            }
+        }
+        if (this.defaultCloseOperation != operation) {
+            int oldValue = this.defaultCloseOperation;
+            this.defaultCloseOperation = operation;
+            firePropertyChange("defaultCloseOperation", oldValue, operation);
+        }
+    }
+
+    @Override
+    protected void processWindowEvent(final WindowEvent e) {
+        super.processWindowEvent(e);
+
+        if (e.getID() == WindowEvent.WINDOW_CLOSING) {
+            switch (defaultCloseOperation) {
+                case HIDE_ON_CLOSE:
+                    setVisible(false);
+                    break;
+                case DISPOSE_ON_CLOSE:
+                    dispose();
+                    break;
+                case EXIT_ON_CLOSE:
+                    // This needs to match the checkExit call in
+                    // setDefaultCloseOperation
+                    System.exit(0);
+                    break;
+                case DO_NOTHING_ON_CLOSE:
+                    //My CloseOperation - to do back when close clicked
+                case BACK_ON_CLOSE:
+                    dispose();
+                    new TrainingSelectFrame(currentUser, userDAO, validator, userController);
+                    break;
+                default:
+            }
+        }
     }
 
     public void addComponents(JFrame f, Container contentPane) {
@@ -286,7 +340,6 @@ public class UserUpdateForm extends JFrame implements ActionListener {
         String password = passwordField.getText();
         if (BACK.equals(cmd)) {
             dispose();
-
             new TrainingSelectFrame(currentUser, userDAO, validator, userController);
         }
         if (CONFIRM.equals(cmd)) {

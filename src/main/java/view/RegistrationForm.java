@@ -17,8 +17,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-import static model.app_db.constants.Constants.PATH_FOR_SAVE_PRIVATE_FILE;
-import static model.app_db.constants.Constants.PATH_FOR_SAVE_USER_REG_DATA;
+import static model.app_db.constants.MyConstants.PATH_FOR_SAVE_PRIVATE_FILE;
+import static model.app_db.constants.MyConstants.PATH_FOR_SAVE_USER_REG_DATA;
 import static model.enums.ValidationErrors.*;
 import static view.ErrorValodationDialogs.errorValidationDialog;
 

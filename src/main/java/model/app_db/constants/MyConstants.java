@@ -8,4 +8,6 @@ public class MyConstants {
     public final static String PATH_FOR_SAVE_USER_REG_DATA = "src/main/java/resources/pathForSaveUserRegData.txt";
     //constant for My Close Operation
     public static final int BACK_ON_CLOSE = 7;
+
+    public final static String PATH_TO_PROPERTIES_FILE = "/app.properties";
 }

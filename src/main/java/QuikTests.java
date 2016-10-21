@@ -1,9 +1,14 @@
+import controller.internetActions.emailActions.EmailLetterTemplate;
+import controller.internetActions.emailActions.SMTPemailSender;
+
 import java.net.MalformedURLException;
 
 /**
  * QuikTests
  */
 public class QuikTests {
+
+
     public static void main(String[] args) throws MalformedURLException {
 //        File[] froots = File.listRoots();
 //        for (int i = 0; i <froots.length ; i++) {
@@ -28,6 +33,10 @@ public class QuikTests {
 //                }
 //            }
 //        }
-       // runbr();
+        // runbr();
+
+        SMTPemailSender smtp = new SMTPemailSender("my.email.sender.java@gmail.com", "emailsender");
+        System.out.println((smtp.sentMessage(new EmailLetterTemplate("forlabs@mail.ru", "Тема", "Тело письма", "Сигнатура письма"))) ? "Письмо успешно отправлено" :
+                "Ошибка отпраки");
     }
 }

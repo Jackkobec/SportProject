@@ -55,6 +55,16 @@ public class User {
         this.id = id;
     }
 
+    public User(String login, String password, Contacts contacts, List<Training> userTrainings, int id, PrivateFileStatus privateFileStatus, String privateFilePath) {
+        this.login = login;
+        this.password = password;
+        this.contacts = contacts;
+        this.userTrainings = userTrainings;
+        this.id = id;
+        this.privateFileStatus = privateFileStatus;
+        this.privateFilePath = privateFilePath;
+    }
+
     public String getLogin() {
         return login;
     }
@@ -111,6 +121,36 @@ public class User {
         this.privateFileStatus = privateFileStatus;
 
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (id != user.id) return false;
+        if (login != null ? !login.equals(user.login) : user.login != null) return false;
+        if (password != null ? !password.equals(user.password) : user.password != null) return false;
+        if (contacts != null ? !contacts.equals(user.contacts) : user.contacts != null) return false;
+        if (userTrainings != null ? !userTrainings.equals(user.userTrainings) : user.userTrainings != null)
+            return false;
+        if (privateFileStatus != user.privateFileStatus) return false;
+        return privateFilePath != null ? privateFilePath.equals(user.privateFilePath) : user.privateFilePath == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = login != null ? login.hashCode() : 0;
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (contacts != null ? contacts.hashCode() : 0);
+        result = 31 * result + (userTrainings != null ? userTrainings.hashCode() : 0);
+        result = 31 * result + id;
+        result = 31 * result + (privateFileStatus != null ? privateFileStatus.hashCode() : 0);
+        result = 31 * result + (privateFilePath != null ? privateFilePath.hashCode() : 0);
+        return result;
     }
 
     @Override

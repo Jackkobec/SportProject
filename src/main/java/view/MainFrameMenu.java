@@ -2,7 +2,7 @@ package view;
 
 import view.actions.FileOpenAction;
 import view.actions.FileSaveAction;
-import view.actions.HelpAbourAutorAction;
+import view.actions.HelpAboutAuthorAction;
 
 import javax.swing.*;
 import java.awt.*;
@@ -138,8 +138,8 @@ public class MainFrameMenu implements ActionListener {
                 "This menu does nothing");
 
         //a group of JMenuItems
-        HelpAbourAutorAction helpAbourAutorAction = new HelpAbourAutorAction("About Autor", null, "About Autor", KeyEvent.VK_A);
-        menuItem = new JMenuItem(helpAbourAutorAction);
+        HelpAboutAuthorAction helpAboutAuthorAction = new HelpAboutAuthorAction("About Autor", null, "About Autor", KeyEvent.VK_A);
+        menuItem = new JMenuItem(helpAboutAuthorAction);
         menuItem.setBackground(Color.orange);
         menuItem.setFont(font);
 

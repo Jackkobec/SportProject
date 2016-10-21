@@ -12,14 +12,17 @@ import java.io.IOException;
 /**
  * Created by Jack on 17.10.2016.
  */
-public class HelpAbourAutorAction extends AbstractAction {
-    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    public static int sizeWidth = 435;
-    public static int sizeHeight = 520;
-    public int locationX = (screenSize.width - sizeWidth) / 2;
-    public int locationY = (screenSize.height - sizeHeight) / 2;
+public class HelpAboutAuthorAction extends AbstractAction {
 
-    public HelpAbourAutorAction(String text, ImageIcon icon, String desc, Integer mnemonic) {
+    private static int sizeWidth = 435;
+    private static int sizeHeight = 520;
+
+    private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private int locationX = (screenSize.width - sizeWidth) / 2;
+    private int locationY = (screenSize.height - sizeHeight) / 2;
+    private LinkMouseAdapter linkMouseAdapter = new LinkMouseAdapter();
+
+    public HelpAboutAuthorAction(String text, ImageIcon icon, String desc, Integer mnemonic) {
         super(text, icon);
         putValue(SHORT_DESCRIPTION, desc);
         putValue(MNEMONIC_KEY, mnemonic);
@@ -28,6 +31,12 @@ public class HelpAbourAutorAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         JLabel aboutAuthorLabel = new JLabel("<html><font size=\"5\" color=\"orange\" face=\"Arial\">Информация об авторе:</font></html>");
+        aboutAuthorLabel.setHorizontalAlignment(JLabel.CENTER);
+        //HAND_CURSOR when touch
+        aboutAuthorLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        //move link after left click
+        aboutAuthorLabel.addMouseListener(linkMouseAdapter);
+
         JPanel imgPanel = new JPanel() {
             public void paint(Graphics g) {
                 super.paint(g);
@@ -39,13 +48,16 @@ public class HelpAbourAutorAction extends AbstractAction {
                 }
             }
         };
+        imgPanel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        imgPanel.addMouseListener(linkMouseAdapter);
 
         JPanel authorContactsPanel = new JPanel(new GridLayout(3, 0));
-        JLabel skypeANDmail = new JLabel("<html><font size=\"5\" color=\"orange\" face=\"Arial\">Skype: </font>" +
-                "<font size=\"5\" color=\"green\" face=\"Arial\">skypejs77</font>" +
-                "<font size=\"5\" color=\"orange\" face=\"Arial\">Email: </font>" +
-                "<font size=\"5\" color=\"green\" face=\"Arial\">jackkobec@gmail.com</html>"
-        );
+        JLabel skypeLabel = new JLabel("<html><font size=\"5\" color=\"orange\" face=\"Arial\">Skype: </font>" +
+                "<font size=\"5\" color=\"green\" face=\"Arial\">skypejs77</font>");
+        skypeLabel.setHorizontalAlignment(JLabel.CENTER);
+        JLabel emailLabel = new JLabel("<html><font size=\"5\" color=\"orange\" face=\"Arial\">Email: </font>" +
+                "<font size=\"5\" color=\"green\" face=\"Arial\">jackkobec@gmail.com</html>");
+        emailLabel.setHorizontalAlignment(JLabel.CENTER);
 
         JButton copyButton = new JButton("Копировать данные");
         copyButton.addActionListener(new ActionListener() {
@@ -65,18 +77,19 @@ public class HelpAbourAutorAction extends AbstractAction {
 
             }
         });
-        authorContactsPanel.add(skypeANDmail);
+        authorContactsPanel.add(skypeLabel);
+        authorContactsPanel.add(emailLabel);
         authorContactsPanel.add(copyButton);
 
-        JFrame f = new JFrame();
-        f.setLayout(new BorderLayout());
-        f.setTitle("About Aothor");
+        JFrame aboutAuthorFrame = new JFrame();
+        aboutAuthorFrame.setLayout(new BorderLayout());
+        aboutAuthorFrame.setTitle("About Aothor");
 
-        f.setBounds(locationX, locationY, sizeWidth, sizeHeight);
-        f.setMinimumSize(new Dimension(435, 520));
-        f.add(aboutAuthorLabel, BorderLayout.NORTH);
-        f.add(imgPanel, BorderLayout.CENTER);
-        f.add(authorContactsPanel, BorderLayout.SOUTH);
-        f.setVisible(true);
+        aboutAuthorFrame.setBounds(locationX, locationY, sizeWidth, sizeHeight);
+        aboutAuthorFrame.setMinimumSize(new Dimension(435, 520));
+        aboutAuthorFrame.add(aboutAuthorLabel, BorderLayout.NORTH);
+        aboutAuthorFrame.add(imgPanel, BorderLayout.CENTER);
+        aboutAuthorFrame.add(authorContactsPanel, BorderLayout.SOUTH);
+        aboutAuthorFrame.setVisible(true);
     }
 }

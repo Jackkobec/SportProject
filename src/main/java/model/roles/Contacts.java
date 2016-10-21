@@ -61,6 +61,29 @@ public class Contacts {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Contacts contacts = (Contacts) o;
+
+        if (email != null ? !email.equals(contacts.email) : contacts.email != null) return false;
+        if (name != null ? !name.equals(contacts.name) : contacts.name != null) return false;
+        if (phone != null ? !phone.equals(contacts.phone) : contacts.phone != null) return false;
+        return adress != null ? adress.equals(contacts.adress) : contacts.adress == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = email != null ? email.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (phone != null ? phone.hashCode() : 0);
+        result = 31 * result + (adress != null ? adress.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "Contacts{" +
                 "email='" + email + '\'' +

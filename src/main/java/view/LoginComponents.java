@@ -1,11 +1,10 @@
 package view;
 
+
 import controller.interfaces.UserController;
 import controller.validation.Validator;
 import model.app_db.UserDAO;
-import model.enums.JOptionsPaneEnums;
 import model.exceptions.UserNotFoundException;
-import model.roles.User;
 
 import javax.swing.*;
 import java.awt.*;
@@ -233,6 +232,8 @@ public class LoginComponents extends JPanel
                     showJOptionPane(USER_NOT_FOUND);
                 }
 
+
+                //launchBrowser(txtBrowserURILabel.getText());
 //                JOptionPane.showMessageDialog(controllingFrame,
 //                        "All is good.");
 
@@ -253,6 +254,7 @@ public class LoginComponents extends JPanel
      * After this method returns, you should invoke eraseArray
      * on the passed-in array.
      */
+
 
     private static boolean isPasswordCorrect(char[] input) {
         boolean isCorrect = true;

@@ -62,6 +62,35 @@ public class Gymnastic {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Gymnastic gymnastic = (Gymnastic) o;
+
+        if (Double.compare(gymnastic.complexity, complexity) != 0) return false;
+        if (Double.compare(gymnastic.numbersOfRepeats, numbersOfRepeats) != 0) return false;
+        if (numberOfSets != gymnastic.numberOfSets) return false;
+        if (name != null ? !name.equals(gymnastic.name) : gymnastic.name != null) return false;
+        return info != null ? info.equals(gymnastic.info) : gymnastic.info == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = name != null ? name.hashCode() : 0;
+        temp = Double.doubleToLongBits(complexity);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (info != null ? info.hashCode() : 0);
+        temp = Double.doubleToLongBits(numbersOfRepeats);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + numberOfSets;
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "Gymnastic{" +
                 "name='" + name + '\'' +

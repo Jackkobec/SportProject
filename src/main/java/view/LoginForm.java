@@ -12,10 +12,10 @@ import java.awt.*;
  */
 public class LoginForm extends JFrame {
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    public static int sizeWidth = 640;
-    public static int sizeHeight = 480;
-    public int locationX = (screenSize.width - sizeWidth) / 2;
-    public int locationY = (screenSize.height - sizeHeight) / 2;
+    private static int sizeWidth = 640;
+    private static int sizeHeight = 480;
+    private int locationX = (screenSize.width - sizeWidth) / 2;
+    private int locationY = (screenSize.height - sizeHeight) / 2;
 
     private UserDAO userDAO;
     private Validator validator;

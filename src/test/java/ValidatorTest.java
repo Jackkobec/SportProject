@@ -1,5 +1,6 @@
 import controller.validation.LoginFormValidation;
 import controller.validation.Validator;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -12,9 +13,12 @@ import static org.junit.Assert.assertTrue;
  */
 public class ValidatorTest {
 
-    // access modifiers and
-    // little methods
-    Validator validator = new LoginFormValidation();
+    private Validator validator;
+
+    @Before
+    public void InitData() {
+        validator = new LoginFormValidation();
+    }
 
     @Test
     public void testValidationLogin() {

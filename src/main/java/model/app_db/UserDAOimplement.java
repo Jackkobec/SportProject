@@ -30,12 +30,7 @@ public class UserDAOimplement implements UserDAO {
         // User res = null;
         Set<User> useSet = appDB.getUserAccounts().keySet();
         for (User us : useSet) {
-//            if (us.getId() == newUser.getId()) {
-//
-//                us = newUser;
-//                res = us;
-//                return res;
-//            }
+
             if (us.getId() == newUser.getId()) {
                 useSet.remove(us);
                 appDB.getUserAccounts().put(newUser, new ArrayList<>());

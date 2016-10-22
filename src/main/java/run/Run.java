@@ -10,6 +10,7 @@ import model.app_db.UserDAOimplement;
 import model.roles.Contacts;
 import model.roles.User;
 import view.LoginForm;
+import view.MainFrameTraining;
 import view.TrainingSelectFrame;
 
 /**
@@ -35,7 +36,7 @@ public class Run {
         //new MainFrameTraining();
         //new MainFrame();
         // new NewTestFame();
-         new TrainingSelectFrame(testUser, userDAO, validator, userController);
+        new TrainingSelectFrame(testUser, userDAO, validator, userController);
 
     }
 }

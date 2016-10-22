@@ -1,6 +1,6 @@
 package view.view_components.components.splitpane;
 
-import view.view_components.components.Posrednic;
+import view.view_components.components.ButtonManager;
 import view.view_components.components.listpane.MyListPane;
 
 import javax.swing.*;
@@ -19,12 +19,12 @@ public class GymSelectionMouseAdapter extends MouseAdapter {
     private static JFrame controllingFrame; //needed for dialogs
     private MySplitPane mySplitPane;
     private MyListPane myListPane;
-    Posrednic posrednic;
+    ButtonManager buttonManager;
 
-    public GymSelectionMouseAdapter(MySplitPane mySplitPane, MyListPane myListPane, Posrednic posrednic) {
+    public GymSelectionMouseAdapter(MySplitPane mySplitPane, MyListPane myListPane, ButtonManager buttonManager) {
         this.mySplitPane = mySplitPane;
         this.myListPane = myListPane;
-        this.posrednic = posrednic;
+        this.buttonManager = buttonManager;
     }
 
     public void mouseClicked(MouseEvent e) {
@@ -35,8 +35,8 @@ public class GymSelectionMouseAdapter extends MouseAdapter {
                         "Упражнение " + mySplitPane.list.getSelectedValue().toString() + " добавлено.",
                         "Info Message",
                         JOptionPane.INFORMATION_MESSAGE);
-                posrednic.changeButtonColor(Color.RED);
-                posrednic.setEnableButton();
+                buttonManager.changeButtonColor(Color.RED);
+                buttonManager.setEnableButton();
             } else {
                 JOptionPane.showMessageDialog(controllingFrame,
                         "Упражнение уже есть в списке",

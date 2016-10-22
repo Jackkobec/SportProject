@@ -5,9 +5,8 @@ import controller.validation.Validator;
 import model.app_db.UserDAO;
 import model.roles.User;
 import view.view_components.CommunicationFactoryForMouseAdapter;
-import view.view_components.components.Posrednic;
+import view.view_components.components.ButtonManager;
 import view.view_components.components.VerticalButton;
-import view.view_components.components.listpane.MyListPane;
 import view.view_components.components.splitpane.MySplitPane;
 
 import javax.swing.*;
@@ -112,10 +111,10 @@ public class TrainingSelectFrame extends MainFrame implements ActionListener {
          * Пробуем подход посредника фабрики
          */
         //test pattern
-        Posrednic posrednic = new Posrednic();
+        ButtonManager buttonManager = new ButtonManager();
         //
-        CommunicationFactoryForMouseAdapter communicationFactoryForMouseAdapter = new CommunicationFactoryForMouseAdapter();
-        MySplitPane mySplitPanel = new MySplitPane(communicationFactoryForMouseAdapter, posrednic);//split panel
+        CommunicationFactoryForMouseAdapter communicationFactoryForMouseAdapter = new CommunicationFactoryForMouseAdapter(buttonManager);
+        MySplitPane mySplitPanel = new MySplitPane(communicationFactoryForMouseAdapter, buttonManager);//split panel
 
         //это вторая панель справа от splitpane сюда напихаем таблицу отобранных упражнений
         JPanel innerPanelForSelectedFromSplitpaneGyms = new JPanel(new BorderLayout());
@@ -143,7 +142,7 @@ public class TrainingSelectFrame extends MainFrame implements ActionListener {
         innerPanelForSelectedFromSplitpaneGyms.add(selectedGymsLabel, BorderLayout.NORTH);
         innerPanelForSelectedFromSplitpaneGyms.add(new VerticalButton("Место для панели флагов",false), BorderLayout.WEST);
         innerPanelForSelectedFromSplitpaneGyms.add(myListPane, BorderLayout.CENTER);
-        innerPanelForSelectedFromSplitpaneGyms.add(posrednic.createDisabletButton(), BorderLayout.SOUTH);//save and start button
+        innerPanelForSelectedFromSplitpaneGyms.add(buttonManager.createDisabletButton(), BorderLayout.SOUTH);//save and start button
 
         innerTrainingPanelCenterPanel.add(innerInnerTrainingPanelCenterPanel, BorderLayout.NORTH);
                 //

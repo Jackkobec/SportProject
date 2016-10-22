@@ -1,6 +1,6 @@
 package view.view_components.components.listpane;
 
-import view.view_components.components.splitpane.GymSelectionMouseAdapter;
+import view.view_components.components.ButtonManager;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -24,10 +24,10 @@ public class MyListPane extends JPanel
     private static final String fireString = "Удалить";
     private JButton fireButton;
     private JTextField employeeName;
-   // private GymSelectionMouseAdapter gymSelectionMouseAdapter;
-    public MyListPane() {
+    private ButtonManager buttonManager;
+    public MyListPane(ButtonManager buttonManager) {
         super(new BorderLayout());
-       // this.gymSelectionMouseAdapter = gymSelectionMouseAdapter;
+        this.buttonManager = buttonManager;
 
         listModel = new DefaultListModel();
         listModel.addElement("Например жим лежа");
@@ -77,6 +77,7 @@ public class MyListPane extends JPanel
         add(listScrollPane, BorderLayout.CENTER);
         add(buttonPane, BorderLayout.PAGE_END);
     }
+    //метод для внешнего вызова
     public boolean addToTheEndOfList(String newGymName) {
         //User didn't type in a unique name...
         if (newGymName.equals("") || alreadyInList(newGymName)) {
@@ -178,6 +179,9 @@ public class MyListPane extends JPanel
             //Select the new item and make it visible.
             list.setSelectedIndex(index);
             list.ensureIndexIsVisible(index);
+
+            buttonManager.changeButtonColor(Color.RED);
+            buttonManager.setEnableButton();
         }
 
 

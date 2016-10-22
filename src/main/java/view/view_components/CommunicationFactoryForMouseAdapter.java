@@ -1,8 +1,7 @@
 package view.view_components;
 
+import view.view_components.components.ButtonManager;
 import view.view_components.components.listpane.MyListPane;
-
-import javax.swing.*;
 
 /**
  * CommunicationFactoryForMouseAdapter
@@ -12,7 +11,10 @@ import javax.swing.*;
  * @skype skypejs77
  */
 public class CommunicationFactoryForMouseAdapter {
+    ButtonManager buttonManager;
+    public MyListPane myListPane;
 
-    public MyListPane myListPane = new MyListPane();
-
+    public CommunicationFactoryForMouseAdapter(ButtonManager buttonManager) {
+        this.myListPane = new MyListPane(this.buttonManager = buttonManager);
+    }
 }

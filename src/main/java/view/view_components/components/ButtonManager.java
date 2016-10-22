@@ -6,7 +6,7 @@ import java.awt.*;
 /**
  * Created by Jack on 22.10.2016.
  */
-public class Posrednic {
+public class ButtonManager {
     private JButton saveAndStart;
 
     public JButton createDisabletButton() {

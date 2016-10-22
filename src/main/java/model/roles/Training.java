@@ -6,6 +6,10 @@ import java.util.Map;
 
 /**
  * Training
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
 public class Training {
 

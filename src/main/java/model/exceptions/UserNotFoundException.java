@@ -1,7 +1,11 @@
 package model.exceptions;
 
 /**
- * Created by Jack on 20.10.2016.
+ * UserNotFoundException
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
 public class UserNotFoundException extends Throwable {
     public UserNotFoundException(String s) {

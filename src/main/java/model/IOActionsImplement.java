@@ -6,7 +6,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * Created by Jack on 16.10.2016.
+ * IOActionsImplement
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
 public class IOActionsImplement implements IOActions {
 

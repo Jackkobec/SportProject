@@ -22,6 +22,10 @@ import static view.JOptionPaneManager.showJOptionPane;
 
 /**
  * MainFrameTraining
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
 public class MainFrameTraining extends MainFrame {
     private final JTabbedPane pane = new JTabbedPane();

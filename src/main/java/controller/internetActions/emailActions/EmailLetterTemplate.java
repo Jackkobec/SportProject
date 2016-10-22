@@ -1,5 +1,11 @@
 package controller.internetActions.emailActions;
-
+/**
+ * EmailLetterTemplate
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
+ */
 public class EmailLetterTemplate {
     private String emailTo;
     private String subject;

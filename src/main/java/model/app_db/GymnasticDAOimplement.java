@@ -3,9 +3,13 @@ package model.app_db;
 import model.roles.Gymnastic;
 
 /**
- * GymnasticDAOinplement
+ * GymnasticDAOimplement
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
-public class GymnasticDAOinplement implements GymnasticDAO {
+public class GymnasticDAOimplement implements GymnasticDAO {
     private AppDB appDB;
 
     @Override

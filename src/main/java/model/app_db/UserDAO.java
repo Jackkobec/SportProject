@@ -8,6 +8,10 @@ import java.util.List;
 
 /**
  * UserDAO
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
 public interface UserDAO extends AppDBInterface {
 

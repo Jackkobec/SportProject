@@ -6,9 +6,15 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 /**
- * Created by Jack on 21.10.2016.
+ * InternetActionsImpl
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
-public class InternetActionsImpl {
+public class InternetActionsImpl implements InternetActions {
+
+    @Override
     public  void runBrowser(String url) {
         Desktop desktop;
 

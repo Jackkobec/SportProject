@@ -12,6 +12,10 @@ import java.awt.event.KeyEvent;
 
 /**
  * MainFrameMenu
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
 public class MainFrameMenu implements ActionListener {
     //  private static String OPEN = "open";

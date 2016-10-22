@@ -9,6 +9,10 @@ import java.awt.*;
 
 /**
  * LoginForm
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
 public class LoginForm extends JFrame {
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();

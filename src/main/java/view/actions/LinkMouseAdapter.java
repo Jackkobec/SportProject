@@ -6,7 +6,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 /**
- * Created by Jack on 21.10.2016.
+ * LinkMouseAdapter
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
 public class LinkMouseAdapter extends MouseAdapter {
     private String url = "github.com/jackkobec";

@@ -2,6 +2,10 @@ package model.roles;
 
 /**
  * Gymnastic
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
 public class Gymnastic {
     private String name;

@@ -1,7 +1,11 @@
 package model.enums;
 
 /**
- * Created by Jack on 16.10.2016.
+ * PrivateFileStatus
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
 public enum PrivateFileStatus {
     DEFAULT, UNSELECTED, SELECTED_AND_SAVED;

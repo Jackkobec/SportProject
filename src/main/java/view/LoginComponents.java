@@ -17,11 +17,17 @@ import static com.sun.deploy.uitoolkit.ToolkitStore.dispose;
 import static model.enums.JOptionsPaneEnums.ENUM_HELP;
 import static model.enums.JOptionsPaneEnums.USER_NOT_FOUND;
 import static model.enums.ValidationErrors.*;
-import static view.ErrorValodationDialogs.errorValidationDialog;
+import static view.ErrorValidationDialogs.errorValidationDialog;
 import static view.JOptionPaneManager.showJOptionPane;
 
 
-/* LoginComponents.java requires no other files. */
+/**
+ * LoginComponents
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
+ */
 
 public class LoginComponents extends JPanel
         implements ActionListener {
@@ -222,10 +228,10 @@ public class LoginComponents extends JPanel
                 errorValidationDialog(PASSWORD_ERROR);
             } else if (validator.loginValidator(login) && validator.passwordValidator(password)) {
                 //todo User entering
-
                 try {
                     userController.findUser(login, password);
-                    globalParentFrame.setVisible(false);
+                    //globalParentFrame.setVisible(false);
+                    globalParentFrame.dispose();
                     new TrainingSelectFrame(userController.findUser(login, password), userDAO, validator, userController);
 
                 } catch (UserNotFoundException e1) {

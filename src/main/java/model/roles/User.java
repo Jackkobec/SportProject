@@ -5,7 +5,11 @@ import model.enums.PrivateFileStatus;
 import java.util.List;
 
 /**
- * User class
+ * User
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
 public class User {
 

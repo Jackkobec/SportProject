@@ -1,7 +1,11 @@
 package view;
 
 /**
- * Created by Стас on 20.09.2016.
+ * NewTestFame
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
 public class NewTestFame extends MainFrame {
 

@@ -8,7 +8,11 @@ import java.beans.PropertyChangeListener;
 import java.io.File;
 
 /**
- * Created by Стас on 20.09.2016.
+ * FileOpenAction
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
 public class FileOpenAction extends AbstractAction {
     final private FileChooser fileChooser;

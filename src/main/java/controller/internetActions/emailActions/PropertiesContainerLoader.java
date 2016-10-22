@@ -5,7 +5,13 @@ import java.io.IOException;
 import java.util.Properties;
 
 import static model.app_db.constants.MyConstants.PATH_TO_PROPERTIES_FILE;
-
+/**
+ * PropertiesContainerLoader
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
+ */
 public class PropertiesContainerLoader {
 
     private static Properties properties = load();

@@ -7,6 +7,10 @@ import java.util.Set;
 
 /**
  * CurrentResaltTableModel
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
 public class CurrentResaltTableModel extends AbstractTableModel {
     protected int userChooseNamberOfRepeats;

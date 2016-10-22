@@ -19,9 +19,13 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Created by Jack on 15.10.2016.
+ * UserControllerTest
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
-public class UseeControllerTest {
+public class UserControllerTest {
 
     private AppDB appDB;
     private UserDAO userDAO;

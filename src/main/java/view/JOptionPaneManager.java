@@ -6,6 +6,10 @@ import javax.swing.*;
 
 /**
  * Created by Jack on 20.10.2016.
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
 public class JOptionPaneManager {
     private static JFrame controllingFrame; //needed for dialogs

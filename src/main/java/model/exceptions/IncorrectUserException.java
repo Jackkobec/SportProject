@@ -1,7 +1,11 @@
 package model.exceptions;
 
 /**
- * Created by Jack on 18.10.2016.
+ * IncorrectUserException
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
 public class IncorrectUserException extends Exception {
     public IncorrectUserException(String s) {

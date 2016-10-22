@@ -7,6 +7,10 @@ import model.roles.User;
 
 /**
  * UserControllerImpl
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
 public class UserControllerImpl implements UserController {
     private UserDAO userDAO;

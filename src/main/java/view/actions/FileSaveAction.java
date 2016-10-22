@@ -8,6 +8,10 @@ import java.io.File;
 
 /**
  * FileSaveAction
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
 public class FileSaveAction extends AbstractAction {
     private final FileChooser fileChooser;

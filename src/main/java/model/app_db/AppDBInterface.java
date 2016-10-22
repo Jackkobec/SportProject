@@ -4,6 +4,10 @@ import model.roles.Gymnastic;
 
 /**
  * AppDBInterface
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
 public interface AppDBInterface {
 

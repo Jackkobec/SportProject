@@ -1,7 +1,11 @@
 package controller.validation;
 
 /**
- * Validator interface
+ * Validator
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
 public interface Validator {
 

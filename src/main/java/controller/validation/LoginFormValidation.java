@@ -4,6 +4,10 @@ import java.util.regex.Pattern;
 
 /**
  * LoginFormValidation
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
 public class LoginFormValidation implements Validator {
 

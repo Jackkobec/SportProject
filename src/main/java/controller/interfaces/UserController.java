@@ -4,7 +4,11 @@ import model.exceptions.UserNotFoundException;
 import model.roles.User;
 
 /**
+ * UserController
  *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
 public interface UserController {
     User createUserCont(User user);

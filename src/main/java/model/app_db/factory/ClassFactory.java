@@ -4,7 +4,11 @@ import model.IOActions;
 import model.IOActionsImplement;
 
 /**
- * todo lazy singleton
+ * ClassFactory
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
 public class ClassFactory {
     private IOActions ioActions = new IOActionsImplement();

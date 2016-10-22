@@ -16,7 +16,11 @@ import static model.enums.JOptionsPaneEnums.ENUM_LOGOUT;
 import static view.JOptionPaneManager.showJOptionPane;
 
 /**
- * Created by Jack on 18.10.2016.
+ * TrainingSelectFrame
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
 public class TrainingSelectFrame extends MainFrame implements ActionListener {
     private User loginedCurrentUser;

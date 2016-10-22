@@ -9,10 +9,15 @@ import model.app_db.UserDAO;
 import model.app_db.UserDAOimplement;
 import model.roles.Contacts;
 import model.roles.User;
+import view.LoginForm;
 import view.TrainingSelectFrame;
 
 /**
  * Run
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
 public class Run {
     public static void main(String[] args) {
@@ -25,12 +30,12 @@ public class Run {
         appDB.addUser(testUser);//test User
         testUser.setId(77);
 
-        //new LoginForm(userDAO, validator, userController);
+        new LoginForm(userDAO, validator, userController);
         //new UserUpdateForm(null,userController.createUserCont(new User("Vasa", "777", null, null, SELECTED_AND_SAVED, "C:\\")) , userDAO, validator, userController);
         //new MainFrameTraining();
         //new MainFrame();
         // new NewTestFame();
-        new TrainingSelectFrame(testUser, userDAO, validator, userController);
+        // new TrainingSelectFrame(testUser, userDAO, validator, userController);
 
     }
 }

@@ -1,7 +1,11 @@
 package controller.internetActions;
 
 /**
- * Created by Jack on 21.10.2016.
+ * InternetActions
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
 public interface InternetActions {
 

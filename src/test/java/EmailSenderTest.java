@@ -8,7 +8,11 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Created by Jack on 21.10.2016.
+ * EmailSenderTest
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
 public class EmailSenderTest {
     private SMTPemailSender smtp;

@@ -10,6 +10,10 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * ValidatorTest
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
 public class ValidatorTest {
 

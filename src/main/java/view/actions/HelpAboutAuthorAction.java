@@ -10,7 +10,11 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Created by Jack on 17.10.2016.
+ * HelpAboutAuthorAction
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
 public class HelpAboutAuthorAction extends AbstractAction {
 

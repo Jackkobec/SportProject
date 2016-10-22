@@ -6,7 +6,11 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Created by Стас on 19.09.2016.
+ * MainFrame
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
 public class MainFrame extends JFrame {
     private static int sizeWidth = 800;

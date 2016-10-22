@@ -20,11 +20,15 @@ import java.io.IOException;
 import static model.app_db.constants.MyConstants.PATH_FOR_SAVE_PRIVATE_FILE;
 import static model.app_db.constants.MyConstants.PATH_FOR_SAVE_USER_REG_DATA;
 import static model.enums.ValidationErrors.*;
-import static view.ErrorValodationDialogs.errorValidationDialog;
+import static view.ErrorValidationDialogs.errorValidationDialog;
 
 
 /**
  * RegistrationForm
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
 public class RegistrationForm extends JFrame implements ActionListener {
     private UserController userController;

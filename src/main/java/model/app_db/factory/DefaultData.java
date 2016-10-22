@@ -8,6 +8,10 @@ import java.util.List;
 
 /**
  * DefaultData
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
 public class DefaultData {
     private AppDB appDB;

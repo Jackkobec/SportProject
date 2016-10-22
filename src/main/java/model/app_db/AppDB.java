@@ -9,6 +9,10 @@ import java.util.*;
 
 /**
  * AppDB
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
 public class AppDB {
     private static int userIdCounter = 1;

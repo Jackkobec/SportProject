@@ -11,6 +11,10 @@ import java.util.Set;
 
 /**
  * UserDAOimplement
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
 public class UserDAOimplement implements UserDAO {
 

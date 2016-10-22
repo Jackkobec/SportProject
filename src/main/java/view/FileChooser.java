@@ -8,6 +8,10 @@ import java.awt.event.ActionListener;
 
 /**
  * FileChooser
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
 public class FileChooser extends JPanel {
     public JFileChooser fc;

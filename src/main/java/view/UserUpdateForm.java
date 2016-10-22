@@ -25,10 +25,14 @@ import static model.app_db.constants.MyConstants.PATH_FOR_SAVE_USER_REG_DATA;
 import static model.enums.PrivateFileStatus.SELECTED_AND_SAVED;
 import static model.enums.PrivateFileStatus.UNSELECTED;
 import static model.enums.ValidationErrors.*;
-import static view.ErrorValodationDialogs.errorValidationDialog;
+import static view.ErrorValidationDialogs.errorValidationDialog;
 
 /**
- * Created by Jack on 16.10.2016.
+ * UserUpdateForm
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
 public class UserUpdateForm extends JFrame implements ActionListener {
     private int defaultCloseOperation = HIDE_ON_CLOSE;

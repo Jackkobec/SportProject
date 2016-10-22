@@ -1,5 +1,7 @@
 package view.view_components.components.splitpane;
 
+import view.view_components.CommunicationFactoryForMouseAdapter;
+
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -15,14 +17,16 @@ import java.awt.*;
 public class MySplitPane extends JPanel
         implements ListSelectionListener {
     private JLabel picture;
-    private JList list;
+    public JList list;
     private JSplitPane splitPane;
     private String[] imageNames = {"Отжимания", "Брусья", "Подтягивания", "Приседания", "Подъемы ног", "Борцовский мостик"};
 
     private JLabel label;
-    private GymSelectionMouseAdapter gymSelectionMouseAdapter = new GymSelectionMouseAdapter();
-
-    public MySplitPane() {
+    public GymSelectionMouseAdapter gymSelectionMouseAdapter;
+    private CommunicationFactoryForMouseAdapter communicationFactoryForMouseAdapter;
+    public MySplitPane(CommunicationFactoryForMouseAdapter communicationFactoryForMouseAdapter) {
+        this.communicationFactoryForMouseAdapter = communicationFactoryForMouseAdapter;
+        this.gymSelectionMouseAdapter = new GymSelectionMouseAdapter(this, communicationFactoryForMouseAdapter.myListPane);
 
         list = new JList(imageNames);
         list.setBackground(Color.orange);//
@@ -147,7 +151,7 @@ public class MySplitPane extends JPanel
     }
 
 
-    private static void createAndShowGUI() {
+   /* private static void createAndShowGUI() {
         //Create and set up the window.
         JFrame frame = new JFrame("MySplit Pane");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -167,5 +171,5 @@ public class MySplitPane extends JPanel
                 createAndShowGUI();
             }
         });
-    }
+    }*/
 }

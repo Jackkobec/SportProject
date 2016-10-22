@@ -1,6 +1,7 @@
 package view.view_components.components.splitpane;
 
 import view.view_components.CommunicationFactoryForMouseAdapter;
+import view.view_components.components.Posrednic;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -24,9 +25,12 @@ public class MySplitPane extends JPanel
     private JLabel label;
     public GymSelectionMouseAdapter gymSelectionMouseAdapter;
     private CommunicationFactoryForMouseAdapter communicationFactoryForMouseAdapter;
-    public MySplitPane(CommunicationFactoryForMouseAdapter communicationFactoryForMouseAdapter) {
+    Posrednic posrednic;
+
+    public MySplitPane(CommunicationFactoryForMouseAdapter communicationFactoryForMouseAdapter, Posrednic posrednic) {
         this.communicationFactoryForMouseAdapter = communicationFactoryForMouseAdapter;
-        this.gymSelectionMouseAdapter = new GymSelectionMouseAdapter(this, communicationFactoryForMouseAdapter.myListPane);
+        this.posrednic = posrednic;
+        this.gymSelectionMouseAdapter = new GymSelectionMouseAdapter(this, communicationFactoryForMouseAdapter.myListPane, posrednic);
 
         list = new JList(imageNames);
         list.setBackground(Color.orange);//

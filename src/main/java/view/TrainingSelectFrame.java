@@ -5,6 +5,7 @@ import controller.validation.Validator;
 import model.app_db.UserDAO;
 import model.roles.User;
 import view.view_components.CommunicationFactoryForMouseAdapter;
+import view.view_components.components.Posrednic;
 import view.view_components.components.VerticalButton;
 import view.view_components.components.listpane.MyListPane;
 import view.view_components.components.splitpane.MySplitPane;
@@ -110,17 +111,19 @@ public class TrainingSelectFrame extends MainFrame implements ActionListener {
         /**
          * Пробуем подход посредника фабрики
          */
+        //test pattern
+        Posrednic posrednic = new Posrednic();
+        //
         CommunicationFactoryForMouseAdapter communicationFactoryForMouseAdapter = new CommunicationFactoryForMouseAdapter();
-        MySplitPane mySplitPanel = new MySplitPane(communicationFactoryForMouseAdapter);//split panel
+        MySplitPane mySplitPanel = new MySplitPane(communicationFactoryForMouseAdapter, posrednic);//split panel
 
-       // mySplitPanel.gymSelectionMouseAdapter = communicationFactoryForMouseAdapter.gymSelectionMouseAdapter;
         //это вторая панель справа от splitpane сюда напихаем таблицу отобранных упражнений
-        JPanel innerPanelForSelectedFronSplitpaneGyms = new JPanel(new BorderLayout());
+        JPanel innerPanelForSelectedFromSplitpaneGyms = new JPanel(new BorderLayout());
         //слева splitpane
         innerInnerTrainingPanelCenterPanel.add(mySplitPanel.getSplitPane());
-       // innerInnerTrainingPanelCenterPanel.setMinimumSize(new Dimension(400,200));//
+        // innerInnerTrainingPanelCenterPanel.setMinimumSize(new Dimension(400,200));//
         //справа таблица отобранных со сплитпана упражнений
-        innerInnerTrainingPanelCenterPanel.add(innerPanelForSelectedFronSplitpaneGyms);
+        innerInnerTrainingPanelCenterPanel.add(innerPanelForSelectedFromSplitpaneGyms);
         //
         JPanel test = new JPanel();
         test.setPreferredSize(new Dimension(100,100));
@@ -137,9 +140,10 @@ public class TrainingSelectFrame extends MainFrame implements ActionListener {
         JComponent myListPane = communicationFactoryForMouseAdapter.myListPane;
         myListPane.setOpaque(true); //content panes must be opaque
 
-        innerPanelForSelectedFronSplitpaneGyms.add(selectedGymsLabel, BorderLayout.NORTH);
-        innerPanelForSelectedFronSplitpaneGyms.add(new VerticalButton("Место для панели флагов",false), BorderLayout.WEST);
-        innerPanelForSelectedFronSplitpaneGyms.add(myListPane, BorderLayout.CENTER);
+        innerPanelForSelectedFromSplitpaneGyms.add(selectedGymsLabel, BorderLayout.NORTH);
+        innerPanelForSelectedFromSplitpaneGyms.add(new VerticalButton("Место для панели флагов",false), BorderLayout.WEST);
+        innerPanelForSelectedFromSplitpaneGyms.add(myListPane, BorderLayout.CENTER);
+        innerPanelForSelectedFromSplitpaneGyms.add(posrednic.createDisabletButton(), BorderLayout.SOUTH);//save and start button
 
         innerTrainingPanelCenterPanel.add(innerInnerTrainingPanelCenterPanel, BorderLayout.NORTH);
                 //

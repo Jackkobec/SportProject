@@ -30,11 +30,12 @@ public class MyListPane extends JPanel
        // this.gymSelectionMouseAdapter = gymSelectionMouseAdapter;
 
         listModel = new DefaultListModel();
-        listModel.addElement("Jane Doe");
-        listModel.addElement("John Smith");
-        listModel.addElement("Kathy Green");
+        listModel.addElement("Например жим лежа");
+//        listModel.addElement("John Smith");
+//        listModel.addElement("Kathy Green");
 
         //Create the list and put it in a scroll pane.
+
         list = new JList(listModel);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setBackground(Color.cyan);
@@ -59,7 +60,8 @@ public class MyListPane extends JPanel
         employeeName.getDocument().addDocumentListener(hireListener);
         String name = listModel.getElementAt(
                 list.getSelectedIndex()).toString();
-
+        //очищаем лист от баянов, нужных для инициализации
+        listModel.removeAllElements();
         //Create a panel that uses BoxLayout.
         JPanel buttonPane = new JPanel();
         buttonPane.setLayout(new BoxLayout(buttonPane,

@@ -2,6 +2,8 @@ package view.view_components;
 
 import view.view_components.components.listpane.MyListPane;
 
+import javax.swing.*;
+
 /**
  * CommunicationFactoryForMouseAdapter
  *

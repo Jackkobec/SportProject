@@ -5,7 +5,11 @@ import javax.swing.event.CellEditorListener;
 import java.util.EventObject;
 
 /**
- * Created by Стас on 22.09.2016.
+ * CellEditorCurrentResaltTable
+ *
+ * @author Jack
+ * @email jackkobec@gmail.com
+ * @skype skypejs77
  */
 public class CellEditorCurrentResaltTable implements CellEditor {
 

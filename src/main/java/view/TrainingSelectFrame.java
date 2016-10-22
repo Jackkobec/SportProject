@@ -4,6 +4,9 @@ import controller.interfaces.UserController;
 import controller.validation.Validator;
 import model.app_db.UserDAO;
 import model.roles.User;
+import view.view_components.components.VerticalButton;
+import view.view_components.components.listpane.MyListPane;
+import view.view_components.components.splitpane.MySplitPane;
 
 import javax.swing.*;
 import java.awt.*;
@@ -99,8 +102,42 @@ public class TrainingSelectFrame extends MainFrame implements ActionListener {
         innerTrainingPanelNorthPanel.add(userProfilePanel, BorderLayout.CENTER);
         innerTrainingPanelNorthPanel.add(logoutButton, BorderLayout.EAST);
 
+        //panel whith splitpane
+        JPanel innerTrainingPanelCenterPanel = new JPanel(new BorderLayout());
+        //это внутренняя панель, кна которой будет splitpane и таблица иди список отобранных со splitpane упражнений
+        JPanel innerInnerTrainingPanelCenterPanel = new JPanel(new GridLayout(0,2));
 
+        MySplitPane mySplitPanel = new MySplitPane();//split panel
+        //это вторая панель справа от splitpane сюда напихаем таблицу отобранных упражнений
+        JPanel innerPanelForSelectedFronSplitpaneGyms = new JPanel(new BorderLayout());
+        //слева splitpane
+        innerInnerTrainingPanelCenterPanel.add(mySplitPanel.getSplitPane());
+       // innerInnerTrainingPanelCenterPanel.setMinimumSize(new Dimension(400,200));//
+        //справа таблица отобранных со сплитпана упражнений
+        innerInnerTrainingPanelCenterPanel.add(innerPanelForSelectedFronSplitpaneGyms);
+        //
+        JPanel test = new JPanel();
+        test.setPreferredSize(new Dimension(100,100));
+        //
+        //innerInnerTrainingPanelCenterPanel.add(test,BorderLayout.EAST);
+        //Label Выбранные упражнения
+        Font font = new Font("Tamoha", Font.BOLD, 14);
+        JLabel selectedGymsLabel = new JLabel("Выбранные упражнения:");
+        selectedGymsLabel.setHorizontalAlignment(JLabel.CENTER);
+        selectedGymsLabel.setFont(font);
+        selectedGymsLabel.setForeground(Color.ORANGE.darker());
+        //jlist с таблицей отобранных упражнений, и кнопкой добавит ьсвоё и удалить
+        JComponent myListPane = new MyListPane();
+        myListPane.setOpaque(true); //content panes must be opaque
+
+        innerPanelForSelectedFronSplitpaneGyms.add(selectedGymsLabel, BorderLayout.NORTH);
+        innerPanelForSelectedFronSplitpaneGyms.add(new VerticalButton("Место для панели флагов",false), BorderLayout.WEST);
+        innerPanelForSelectedFronSplitpaneGyms.add(myListPane, BorderLayout.CENTER);
+
+        innerTrainingPanelCenterPanel.add(innerInnerTrainingPanelCenterPanel, BorderLayout.NORTH);
+                //
         innerTrainingPanelForCenter.add(innerTrainingPanelNorthPanel, BorderLayout.NORTH);
+        innerTrainingPanelForCenter.add(innerTrainingPanelCenterPanel, BorderLayout.CENTER);
 
         contentPane.add(menuBar, BorderLayout.NORTH);
         contentPane.add(innerTrainingPanelForCenter, BorderLayout.CENTER);
